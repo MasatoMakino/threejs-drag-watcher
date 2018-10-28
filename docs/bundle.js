@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./example/main.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./docs/main.js");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -122,15 +122,15 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _Dra
 
 /***/ }),
 
-/***/ "./example/main.js":
-/*!*************************!*\
-  !*** ./example/main.js ***!
-  \*************************/
+/***/ "./docs/main.js":
+/*!**********************!*\
+  !*** ./docs/main.js ***!
+  \**********************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _bin_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../bin/index */ \"./bin/index.js\");\n/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! three */ \"./node_modules/three/build/three.module.js\");\n\n\nconst W = 1920;\nconst H = 1080;\n\nconst onDomContentsLoaded = () => {\n  // シーンを作成\n  const scene = new three__WEBPACK_IMPORTED_MODULE_1__[\"Scene\"]();\n  const camera = new three__WEBPACK_IMPORTED_MODULE_1__[\"PerspectiveCamera\"](45, W / H, 1, 10000);\n  camera.position.set(0, 0, 1000);\n  scene.add(camera);\n  const renderOption = {\n    canvas: document.getElementById(\"webgl-canvas\"),\n    antialias: true\n  };\n  const renderer = new three__WEBPACK_IMPORTED_MODULE_1__[\"WebGLRenderer\"](renderOption);\n  renderer.setClearColor(new three__WEBPACK_IMPORTED_MODULE_1__[\"Color\"](0x000000));\n  renderer.setSize(W, H);\n  renderer.setPixelRatio(window.devicePixelRatio); //平行光源オブジェクト(light)の設定\n\n  const ambientLight = new three__WEBPACK_IMPORTED_MODULE_1__[\"AmbientLight\"](0xffffff, 1.0);\n  scene.add(ambientLight);\n  renderer.render(scene, camera); //ドラッグ監視処理を開始\n\n  const watcher = new _bin_index__WEBPACK_IMPORTED_MODULE_0__[\"DragWatcher\"](renderer);\n  watcher.addEventListener(_bin_index__WEBPACK_IMPORTED_MODULE_0__[\"DragEventType\"].DRAG, e => {\n    console.log(e);\n  });\n  watcher.addEventListener(_bin_index__WEBPACK_IMPORTED_MODULE_0__[\"DragEventType\"].DRAG_START, e => {\n    console.log(e);\n  });\n  watcher.addEventListener(_bin_index__WEBPACK_IMPORTED_MODULE_0__[\"DragEventType\"].DRAG_END, e => {\n    console.log(e);\n  });\n  watcher.addEventListener(_bin_index__WEBPACK_IMPORTED_MODULE_0__[\"DragEventType\"].ZOOM, e => {\n    console.log(e);\n  });\n};\n/**\n * DOMContentLoaded以降に初期化処理を実行する\n */\n\n\nwindow.onload = onDomContentsLoaded;\n\n//# sourceURL=webpack:///./example/main.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _bin_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../bin/index */ \"./bin/index.js\");\n/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! three */ \"./node_modules/three/build/three.module.js\");\n\n\nconst W = 1920;\nconst H = 1080;\n\nconst onDomContentsLoaded = () => {\n  // シーンを作成\n  const scene = new three__WEBPACK_IMPORTED_MODULE_1__[\"Scene\"]();\n  const camera = new three__WEBPACK_IMPORTED_MODULE_1__[\"PerspectiveCamera\"](45, W / H, 1, 10000);\n  camera.position.set(0, 0, 1000);\n  scene.add(camera);\n  const renderOption = {\n    canvas: document.getElementById(\"webgl-canvas\"),\n    antialias: true\n  };\n  const renderer = new three__WEBPACK_IMPORTED_MODULE_1__[\"WebGLRenderer\"](renderOption);\n  renderer.setClearColor(new three__WEBPACK_IMPORTED_MODULE_1__[\"Color\"](0x000000));\n  renderer.setSize(W, H);\n  renderer.setPixelRatio(window.devicePixelRatio); //平行光源オブジェクト(light)の設定\n\n  const ambientLight = new three__WEBPACK_IMPORTED_MODULE_1__[\"AmbientLight\"](0xffffff, 1.0);\n  scene.add(ambientLight);\n  renderer.render(scene, camera); //ドラッグ監視処理を開始\n\n  const watcher = new _bin_index__WEBPACK_IMPORTED_MODULE_0__[\"DragWatcher\"](renderer);\n  watcher.addEventListener(_bin_index__WEBPACK_IMPORTED_MODULE_0__[\"DragEventType\"].DRAG, e => {\n    console.log(e);\n  });\n  watcher.addEventListener(_bin_index__WEBPACK_IMPORTED_MODULE_0__[\"DragEventType\"].DRAG_START, e => {\n    console.log(e);\n  });\n  watcher.addEventListener(_bin_index__WEBPACK_IMPORTED_MODULE_0__[\"DragEventType\"].DRAG_END, e => {\n    console.log(e);\n  });\n  watcher.addEventListener(_bin_index__WEBPACK_IMPORTED_MODULE_0__[\"DragEventType\"].ZOOM, e => {\n    console.log(e);\n  });\n};\n/**\n * DOMContentLoaded以降に初期化処理を実行する\n */\n\n\nwindow.onload = onDomContentsLoaded;\n\n//# sourceURL=webpack:///./docs/main.js?");
 
 /***/ }),
 
