@@ -1,8 +1,8 @@
-import { EventDispatcher, WebGLRenderer } from "three";
+import { EventDispatcher } from "three";
 import { DragEvent, DragEventType } from "./DragEvent";
 
 /**
- * 1.ステージ全体がドラッグされている状態を確認する
+ * 1.カンバス全体がドラッグされている状態を確認する
  * 2.マウスホイールが操作されている状態を確認する
  * この二つを実行するためのクラスです。
  */
@@ -10,14 +10,11 @@ import { DragEvent, DragEventType } from "./DragEvent";
 export class DragWatcher extends EventDispatcher {
   protected positionX!: number;
   protected positionY!: number;
-  protected isDrag: boolean;
+  protected isDrag: boolean = false;
 
-  constructor(renderer: WebGLRenderer) {
+  constructor(canvas: HTMLCanvasElement) {
     super();
 
-    this.isDrag = false;
-
-    const canvas: HTMLCanvasElement = renderer.domElement;
     canvas.addEventListener("mousemove", this.onDocumentMouseMove, false);
     canvas.addEventListener("mousedown", this.onDocumentMouseDown, false);
     canvas.addEventListener("mouseup", this.onDocumentMouseUp, false);
@@ -75,8 +72,15 @@ export class DragWatcher extends EventDispatcher {
 
   private onMouseWheel = (e: any) => {
     const evt: DragEvent = new DragEvent(DragEventType.ZOOM);
-    const direction = e.detail < 0 || e.wheelDelta > 0 ? 1 : -1;
-    evt.deltaScroll = direction;
+
+    console.log(e.detail, e.wheelDelta);
+    if (e.detail != null) {
+      evt.deltaScroll = e.detail < 0 ? 1 : -1;
+    }
+    if (e.wheelDelta != null) {
+      evt.deltaScroll = e.wheelDelta > 0 ? 1 : -1;
+    }
+
     this.dispatchEvent(evt);
   };
 }

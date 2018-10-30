@@ -27,7 +27,7 @@ const onDomContentsLoaded = () => {
   renderer.render(scene, camera);
 
   //ドラッグ監視処理を開始
-  const watcher = new DragWatcher(renderer);
+  const watcher = new DragWatcher(renderer.domElement);
   watcher.addEventListener(DragEventType.DRAG, e => {
     console.log(e);
   });
