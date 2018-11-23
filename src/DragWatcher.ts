@@ -73,7 +73,6 @@ export class DragWatcher extends EventDispatcher {
   private onMouseWheel = (e: any) => {
     const evt: DragEvent = new DragEvent(DragEventType.ZOOM);
 
-    console.log(e.detail, e.wheelDelta);
     if (e.detail != null) {
       evt.deltaScroll = e.detail < 0 ? 1 : -1;
     }
