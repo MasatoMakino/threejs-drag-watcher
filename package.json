@@ -1,6 +1,6 @@
 {
   "name": "threejs-drag-watcher",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "main": "./bin/index.js",
   "types": "./bin/index.d.ts",
   "repository": "https://MasatoMakino@github.com/MasatoMakino/threejs-drag-watcher.git",
@@ -13,14 +13,14 @@
   "devDependencies": {
     "@babel/core": "^7.1.6",
     "@babel/preset-env": "^7.1.6",
-    "@types/jest": "^23.3.9",
+    "@types/jest": "^24.0.0",
     "@types/three": "^0.93.10",
     "babel-loader": "^8.0.4",
     "http-server": "^0.11.1",
     "husky": "^1.2.0",
-    "jest": "^23.6.0",
+    "jest": "^24.1.0",
     "prettier": "^1.15.2",
-    "three": "^0.98.0",
+    "three": "^0.101.1",
     "ts-jest": "^23.10.5",
     "typescript": "^3.1.6",
     "webpack": "^4.26.0",
@@ -28,14 +28,16 @@
   },
   "scripts": {
     "test": "jest --coverage",
-    "build": " npm run prettier:src && tsc && npm run babel",
+    "build": "npm run prettier:src && tsc && npm run babel && npm run doc",
     "prettier:src": "prettier --write './!(bin)/**/*.{js,ts,json}' ",
     "server": "http-server ./docs/ -o",
-    "babel": "webpack --mode development --module-bind js=babel-loader ./docs/main.js --output ./docs/bundle.js"
+    "babel": "webpack --mode development --module-bind js=babel-loader ./docs/main.js --output ./docs/bundle.js",
+    "doc": "npm run doc:card",
+    "doc:card": "repoimg -n MasatoMakino/threejs-drag-watcher -o ./docs/card.png"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run build"
+      "pre-commit": "npm run prettier:src"
     }
   }
 }
