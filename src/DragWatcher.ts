@@ -27,33 +27,34 @@ export class DragWatcher extends EventDispatcher {
     if (this.isDrag) return;
 
     this.isDrag = true;
-    this.positionX = event.layerX;
-    this.positionY = event.layerY;
+    this.updatePosition(event);
 
-    const evt: DragEvent = new DragEvent(DragEventType.DRAG_START);
-    evt.positionX = event.layerX;
-    evt.positionY = event.layerY;
-    this.dispatchEvent(evt);
+    this.dispatchDragEvent(DragEventType.DRAG_START, event);
   };
 
   protected onDocumentMouseMove = (event: MouseEvent) => {
-    const moveEvt: DragEvent = new DragEvent(DragEventType.MOVE);
-    moveEvt.positionX = event.layerX;
-    moveEvt.positionY = event.layerY;
-    this.dispatchEvent(moveEvt);
+    this.dispatchDragEvent(DragEventType.MOVE, event);
 
     if (!this.isDrag) return;
-
-    const evt: DragEvent = new DragEvent(DragEventType.DRAG);
-    evt.positionX = event.layerX;
-    evt.positionY = event.layerY;
-    evt.deltaX = event.layerX - this.positionX;
-    evt.deltaY = event.layerY - this.positionY;
-    this.dispatchEvent(evt);
-
-    this.positionX = event.layerX;
-    this.positionY = event.layerY;
+    this.dispatchDragEvent(DragEventType.DRAG, event);
+    this.updatePosition(event);
   };
+
+  private updatePosition(event: MouseEvent): void {
+    this.positionX = event.offsetX;
+    this.positionY = event.offsetY;
+  }
+
+  private dispatchDragEvent(type: DragEventType, event: MouseEvent): void {
+    const evt: DragEvent = new DragEvent(type);
+    evt.positionX = event.offsetX;
+    evt.positionY = event.offsetY;
+    if (type === DragEventType.DRAG) {
+      evt.deltaX = event.offsetX - this.positionX;
+      evt.deltaY = event.offsetY - this.positionY;
+    }
+    this.dispatchEvent(evt);
+  }
 
   protected onDocumentMouseLeave = (event: MouseEvent) => {
     this.onDocumentMouseUp(event);
@@ -64,10 +65,7 @@ export class DragWatcher extends EventDispatcher {
 
     this.isDrag = false;
 
-    const evt: DragEvent = new DragEvent(DragEventType.DRAG_END);
-    evt.positionX = event.layerX;
-    evt.positionY = event.layerY;
-    this.dispatchEvent(evt);
+    this.dispatchDragEvent(DragEventType.DRAG_END, event);
   };
 
   private onMouseWheel = (e: any) => {
