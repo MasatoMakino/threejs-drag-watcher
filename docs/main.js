@@ -1,5 +1,7 @@
 import { DragWatcher, DragEvent, DragEventType } from "../bin/index";
 import * as THREE from "three";
+import { SleepWatcher } from "../bin/";
+import { SleepEventType } from "../bin/SleepEvent";
 
 const W = 1920;
 const H = 1080;
@@ -40,6 +42,15 @@ const onDomContentsLoaded = () => {
   watcher.addEventListener(DragEventType.ZOOM, e => {
     console.log(e);
   });
+
+  const sleepWatcher = new SleepWatcher(watcher, {timeOut_ms:2*1000});
+  sleepWatcher.addEventListener(SleepEventType.SLEEP, e => {
+    console.log(e);
+  });
+  sleepWatcher.addEventListener(SleepEventType.WAKEUP, e => {
+    console.log(e);
+  });
+  sleepWatcher.start();
 };
 
 /**

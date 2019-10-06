@@ -13,28 +13,15 @@ export class DragWatcher extends EventDispatcher {
             if (this.isDrag)
                 return;
             this.isDrag = true;
-            this.positionX = event.layerX;
-            this.positionY = event.layerY;
-            const evt = new DragEvent(DragEventType.DRAG_START);
-            evt.positionX = event.layerX;
-            evt.positionY = event.layerY;
-            this.dispatchEvent(evt);
+            this.updatePosition(event);
+            this.dispatchDragEvent(DragEventType.DRAG_START, event);
         };
         this.onDocumentMouseMove = (event) => {
-            const moveEvt = new DragEvent(DragEventType.MOVE);
-            moveEvt.positionX = event.layerX;
-            moveEvt.positionY = event.layerY;
-            this.dispatchEvent(moveEvt);
+            this.dispatchDragEvent(DragEventType.MOVE, event);
             if (!this.isDrag)
                 return;
-            const evt = new DragEvent(DragEventType.DRAG);
-            evt.positionX = event.layerX;
-            evt.positionY = event.layerY;
-            evt.deltaX = event.layerX - this.positionX;
-            evt.deltaY = event.layerY - this.positionY;
-            this.dispatchEvent(evt);
-            this.positionX = event.layerX;
-            this.positionY = event.layerY;
+            this.dispatchDragEvent(DragEventType.DRAG, event);
+            this.updatePosition(event);
         };
         this.onDocumentMouseLeave = (event) => {
             this.onDocumentMouseUp(event);
@@ -43,10 +30,7 @@ export class DragWatcher extends EventDispatcher {
             if (!this.isDrag)
                 return;
             this.isDrag = false;
-            const evt = new DragEvent(DragEventType.DRAG_END);
-            evt.positionX = event.layerX;
-            evt.positionY = event.layerY;
-            this.dispatchEvent(evt);
+            this.dispatchDragEvent(DragEventType.DRAG_END, event);
         };
         this.onMouseWheel = (e) => {
             const evt = new DragEvent(DragEventType.ZOOM);
@@ -64,5 +48,19 @@ export class DragWatcher extends EventDispatcher {
         canvas.addEventListener("mouseleave", this.onDocumentMouseLeave, false);
         canvas.addEventListener("mousewheel", this.onMouseWheel, false); // IE9, Chrome, Safari, Opera
         canvas.addEventListener("DOMMouseScroll", this.onMouseWheel, false); // Firefox
+    }
+    updatePosition(event) {
+        this.positionX = event.offsetX;
+        this.positionY = event.offsetY;
+    }
+    dispatchDragEvent(type, event) {
+        const evt = new DragEvent(type);
+        evt.positionX = event.offsetX;
+        evt.positionY = event.offsetY;
+        if (type === DragEventType.DRAG) {
+            evt.deltaX = event.offsetX - this.positionX;
+            evt.deltaY = event.offsetY - this.positionY;
+        }
+        this.dispatchEvent(evt);
     }
 }

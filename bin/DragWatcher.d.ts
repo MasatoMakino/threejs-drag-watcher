@@ -11,6 +11,8 @@ export declare class DragWatcher extends EventDispatcher {
     constructor(canvas: HTMLCanvasElement);
     protected onDocumentMouseDown: (event: MouseEvent) => void;
     protected onDocumentMouseMove: (event: MouseEvent) => void;
+    private updatePosition;
+    private dispatchDragEvent;
     protected onDocumentMouseLeave: (event: MouseEvent) => void;
     protected onDocumentMouseUp: (event: MouseEvent) => void;
     private onMouseWheel;
