@@ -30,7 +30,7 @@ describe("threejs-drag-watcher", () => {
 
     const dispatchWheelEvent = (option: object) => {
       option = Object.assign(getBasicOption(), option);
-      const evt = new (<any>WheelEvent)("mousewheel", option);
+      const evt = new (<any>WheelEvent)("wheel", option);
       canvas.dispatchEvent(evt);
     };
 

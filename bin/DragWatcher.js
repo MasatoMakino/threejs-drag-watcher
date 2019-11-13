@@ -46,8 +46,7 @@ export class DragWatcher extends EventDispatcher {
         canvas.addEventListener("mousedown", this.onDocumentMouseDown, false);
         canvas.addEventListener("mouseup", this.onDocumentMouseUp, false);
         canvas.addEventListener("mouseleave", this.onDocumentMouseLeave, false);
-        canvas.addEventListener("mousewheel", this.onMouseWheel, false); // IE9, Chrome, Safari, Opera
-        canvas.addEventListener("DOMMouseScroll", this.onMouseWheel, false); // Firefox
+        canvas.addEventListener("wheel", this.onMouseWheel, false);
     }
     updatePosition(event) {
         this.positionX = event.offsetX;
