@@ -76,6 +76,9 @@ export class DragWatcher extends EventDispatcher {
     if (e.wheelDelta != null) {
       evt.deltaScroll = e.wheelDelta > 0 ? 1 : -1;
     }
+    if (e.deltaY != null) {
+      evt.deltaScroll = e.deltaY > 0 ? 1 : -1;
+    }
 
     this.dispatchEvent(evt);
   };
