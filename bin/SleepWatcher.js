@@ -60,11 +60,13 @@ export class SleepWatcher extends EventDispatcher {
         watcher.removeEventListener(DragEventType.DRAG, this.resetTimer);
         watcher.removeEventListener(DragEventType.DRAG_START, this.resetTimer);
         watcher.removeEventListener(DragEventType.DRAG_END, this.resetTimer);
+        watcher.removeEventListener(DragEventType.ZOOM, this.resetTimer);
     }
     startMouseEventListeners() {
         const watcher = this.dragWatcher;
         watcher.addEventListener(DragEventType.DRAG, this.resetTimer);
         watcher.addEventListener(DragEventType.DRAG_START, this.resetTimer);
         watcher.addEventListener(DragEventType.DRAG_END, this.resetTimer);
+        watcher.addEventListener(DragEventType.ZOOM, this.resetTimer);
     }
 }
