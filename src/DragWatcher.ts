@@ -1,5 +1,6 @@
 import { EventDispatcher } from "three";
 import { DragEvent, DragEventType } from "./DragEvent";
+import { RAFTicker, RAFTickerEventType, RAFTickerEvent } from "raf-ticker";
 
 /**
  * 1.カンバス全体がドラッグされている状態を確認する
@@ -12,14 +13,30 @@ export class DragWatcher extends EventDispatcher {
   protected positionY!: number;
   protected isDrag: boolean = false;
 
-  constructor(canvas: HTMLCanvasElement) {
+  protected hasThrottled: boolean = false;
+  public throttlingTime_ms: number;
+  protected throttlingDelta: number = 0;
+
+  constructor(
+    canvas: HTMLCanvasElement,
+    option?: { throttlingTime_ms?: number }
+  ) {
     super();
+
+    this.throttlingTime_ms = option?.throttlingTime_ms ?? 50;
 
     canvas.addEventListener("mousemove", this.onDocumentMouseMove, false);
     canvas.addEventListener("mousedown", this.onDocumentMouseDown, false);
     canvas.addEventListener("mouseup", this.onDocumentMouseUp, false);
     canvas.addEventListener("mouseleave", this.onDocumentMouseLeave, false);
     canvas.addEventListener("wheel", this.onMouseWheel, false);
+
+    RAFTicker.addEventListener(RAFTickerEventType.tick, (e: RAFTickerEvent) => {
+      this.throttlingDelta += e.delta;
+      if (this.throttlingDelta < this.throttlingTime_ms) return;
+      this.hasThrottled = false;
+      this.throttlingDelta %= this.throttlingTime_ms;
+    });
   }
 
   protected onDocumentMouseDown = (event: MouseEvent) => {
@@ -32,6 +49,9 @@ export class DragWatcher extends EventDispatcher {
   };
 
   protected onDocumentMouseMove = (event: MouseEvent) => {
+    if (this.hasThrottled) return;
+    this.hasThrottled = true;
+
     this.dispatchDragEvent(DragEventType.MOVE, event);
 
     if (!this.isDrag) return;
