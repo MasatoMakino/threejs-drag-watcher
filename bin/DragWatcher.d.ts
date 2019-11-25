@@ -8,7 +8,12 @@ export declare class DragWatcher extends EventDispatcher {
     protected positionX: number;
     protected positionY: number;
     protected isDrag: boolean;
-    constructor(canvas: HTMLCanvasElement);
+    protected hasThrottled: boolean;
+    throttlingTime_ms: number;
+    protected throttlingDelta: number;
+    constructor(canvas: HTMLCanvasElement, option?: {
+        throttlingTime_ms?: number;
+    });
     protected onDocumentMouseDown: (event: MouseEvent) => void;
     protected onDocumentMouseMove: (event: MouseEvent) => void;
     private updatePosition;

@@ -1,14 +1,18 @@
 import { EventDispatcher } from "three";
 import { DragEvent, DragEventType } from "./DragEvent";
+import { RAFTicker, RAFTickerEventType } from "raf-ticker";
 /**
  * 1.カンバス全体がドラッグされている状態を確認する
  * 2.マウスホイールが操作されている状態を確認する
  * この二つを実行するためのクラスです。
  */
 export class DragWatcher extends EventDispatcher {
-    constructor(canvas) {
+    constructor(canvas, option) {
+        var _a, _b;
         super();
         this.isDrag = false;
+        this.hasThrottled = false;
+        this.throttlingDelta = 0;
         this.onDocumentMouseDown = (event) => {
             if (this.isDrag)
                 return;
@@ -17,6 +21,9 @@ export class DragWatcher extends EventDispatcher {
             this.dispatchDragEvent(DragEventType.DRAG_START, event);
         };
         this.onDocumentMouseMove = (event) => {
+            if (this.hasThrottled)
+                return;
+            this.hasThrottled = true;
             this.dispatchDragEvent(DragEventType.MOVE, event);
             if (!this.isDrag)
                 return;
@@ -45,11 +52,19 @@ export class DragWatcher extends EventDispatcher {
             }
             this.dispatchEvent(evt);
         };
+        this.throttlingTime_ms = (_b = (_a = option) === null || _a === void 0 ? void 0 : _a.throttlingTime_ms, (_b !== null && _b !== void 0 ? _b : 50));
         canvas.addEventListener("mousemove", this.onDocumentMouseMove, false);
         canvas.addEventListener("mousedown", this.onDocumentMouseDown, false);
         canvas.addEventListener("mouseup", this.onDocumentMouseUp, false);
         canvas.addEventListener("mouseleave", this.onDocumentMouseLeave, false);
         canvas.addEventListener("wheel", this.onMouseWheel, false);
+        RAFTicker.addEventListener(RAFTickerEventType.tick, (e) => {
+            this.throttlingDelta += e.delta;
+            if (this.throttlingDelta < this.throttlingTime_ms)
+                return;
+            this.hasThrottled = false;
+            this.throttlingDelta %= this.throttlingTime_ms;
+        });
     }
     updatePosition(event) {
         this.positionX = event.offsetX;
