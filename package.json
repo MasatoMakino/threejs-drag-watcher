@@ -1,6 +1,6 @@
 {
   "name": "threejs-drag-watcher",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "main": "./bin/index.js",
   "types": "./bin/index.d.ts",
   "repository": "https://MasatoMakino@github.com/MasatoMakino/threejs-drag-watcher.git",
@@ -39,7 +39,7 @@
     "start:dev": "gulp start_dev",
     "build": "gulp build && npm run doc:card",
     "build:clean": "gulp build_clean && npm run doc:card",
-    "doc:card": "repoimg -n MasatoMakino/RAF-ticker -o ./docs/card.png",
+    "doc:card": "repoimg -n MasatoMakino/threejs-drag-watcher -o ./docs/card.png",
     "checkout:docs": "git checkout HEAD ./docs/api/ ./docs/demo/"
   },
   "husky": {

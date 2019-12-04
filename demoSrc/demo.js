@@ -1,6 +1,6 @@
-import { DragWatcher, DragEvent, DragEventType } from "../bin/index";
+import { DragWatcher, DragEvent, DragEventType } from "../bin";
 import * as THREE from "three";
-import { SleepWatcher } from "../bin/";
+import { SleepWatcher } from "../bin";
 import { SleepEventType } from "../bin/SleepEvent";
 
 const W = 1920;
@@ -31,7 +31,7 @@ const onDomContentsLoaded = () => {
   //ドラッグ監視処理を開始
   const watcher = new DragWatcher(renderer.domElement);
   watcher.addEventListener(DragEventType.DRAG, e => {
-    console.log( watcher.throttlingTime_ms, performance.now(), e );
+    console.log(watcher.throttlingTime_ms, performance.now(), e);
   });
   watcher.addEventListener(DragEventType.DRAG_START, e => {
     console.log(e);
@@ -43,7 +43,7 @@ const onDomContentsLoaded = () => {
     console.log(e);
   });
 
-  const sleepWatcher = new SleepWatcher(watcher, {timeOut_ms:2*1000});
+  const sleepWatcher = new SleepWatcher(watcher, { timeOut_ms: 2 * 1000 });
   sleepWatcher.addEventListener(SleepEventType.SLEEP, e => {
     console.log(e);
   });
