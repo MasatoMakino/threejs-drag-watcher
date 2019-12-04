@@ -14,7 +14,7 @@ export class DragWatcher extends EventDispatcher {
   protected isDrag: boolean = false;
 
   protected hasThrottled: boolean = false;
-  public throttlingTime_ms: number;
+  public throttlingTime_ms: number = 16;
   protected throttlingDelta: number = 0;
 
   constructor(
@@ -23,7 +23,8 @@ export class DragWatcher extends EventDispatcher {
   ) {
     super();
 
-    this.throttlingTime_ms = option?.throttlingTime_ms ?? 50;
+    this.throttlingTime_ms =
+      option?.throttlingTime_ms ?? this.throttlingTime_ms;
 
     canvas.addEventListener("mousemove", this.onDocumentMouseMove, false);
     canvas.addEventListener("mousedown", this.onDocumentMouseDown, false);
