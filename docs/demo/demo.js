@@ -207,7 +207,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /*!**********************!*\
   !*** ./bin/index.js ***!
   \**********************/
-/*! exports provided: SleepEventType, SleepEvent, DragEvent, DragEventType, DragWatcher, SleepWatcher */
+/*! exports provided: DragEvent, DragEventType, SleepEventType, SleepEvent, SleepWatcher, DragWatcher */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
