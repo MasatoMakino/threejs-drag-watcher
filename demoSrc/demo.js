@@ -1,7 +1,11 @@
-import { DragWatcher, DragEvent, DragEventType } from "../bin";
+import {
+  DragWatcher,
+  DragEvent,
+  DragEventType,
+  SleepWatcher,
+  SleepEventType
+} from "../lib";
 import * as THREE from "three";
-import { SleepWatcher } from "../bin";
-import { SleepEventType } from "../bin/SleepEvent";
 
 const W = 1920;
 const H = 1080;

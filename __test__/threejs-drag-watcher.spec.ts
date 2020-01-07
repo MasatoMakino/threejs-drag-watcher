@@ -1,6 +1,4 @@
-import { DragWatcher } from "../src";
-import { DragEventType } from "../src";
-import { DragEvent } from "../src";
+import { DragWatcher, DragEventType, DragEvent } from "../src";
 
 const W = 1920;
 const H = 1080;
@@ -34,17 +32,11 @@ describe("threejs-drag-watcher", () => {
       canvas.dispatchEvent(evt);
     };
 
-    dispatchWheelEvent({ detail: 1 });
-    expectWheel(-1);
-
-    dispatchWheelEvent({ detail: -1 });
+    dispatchWheelEvent({ deltaY: 1 });
     expectWheel(1);
 
-    // dispatchWheelEvent({ wheelDelta: -1 });
-    // expectWheel(-1);
-    //
-    // dispatchWheelEvent({ wheelDelta: 1 });
-    // expectWheel(1);
+    dispatchWheelEvent({ deltaY: -1 });
+    expectWheel(-1);
 
     watcher.removeEventListener(DragEventType.ZOOM, e => {});
     spy.mockClear();
