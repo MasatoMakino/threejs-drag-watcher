@@ -1,6 +1,7 @@
-import { EventDispatcher } from "three";
-import { DragEvent, DragEventType } from "./DragEvent";
-import { RAFTicker, RAFTickerEventType } from "raf-ticker";
+import {EventDispatcher} from "three";
+import {DragEvent, DragEventType} from "./DragEvent";
+import {RAFTicker, RAFTickerEventType} from "raf-ticker";
+
 /**
  * 1.カンバス全体がドラッグされている状態を確認する
  * 2.マウスホイールが操作されている状態を確認する
@@ -8,7 +9,7 @@ import { RAFTicker, RAFTickerEventType } from "raf-ticker";
  */
 export class DragWatcher extends EventDispatcher {
     constructor(canvas, option) {
-        var _a, _b;
+        var _a;
         super();
         this.isDrag = false;
         this.hasThrottled = false;
@@ -53,7 +54,7 @@ export class DragWatcher extends EventDispatcher {
             }
             this.dispatchEvent(evt);
         };
-        this.throttlingTime_ms = (_b = (_a = option) === null || _a === void 0 ? void 0 : _a.throttlingTime_ms, (_b !== null && _b !== void 0 ? _b : this.throttlingTime_ms));
+        this.throttlingTime_ms = (_a = option === null || option === void 0 ? void 0 : option.throttlingTime_ms) !== null && _a !== void 0 ? _a : this.throttlingTime_ms;
         canvas.addEventListener("mousemove", this.onDocumentMouseMove, false);
         canvas.addEventListener("mousedown", this.onDocumentMouseDown, false);
         canvas.addEventListener("mouseup", this.onDocumentMouseUp, false);
