@@ -1,6 +1,6 @@
+import {RAFTicker, RAFTickerEventType} from "raf-ticker";
 import {EventDispatcher} from "three";
 import {DragEvent, DragEventType} from "./DragEvent";
-import {RAFTicker, RAFTickerEventType} from "raf-ticker";
 
 /**
  * 1.カンバス全体がドラッグされている状態を確認する
@@ -60,7 +60,7 @@ export class DragWatcher extends EventDispatcher {
         canvas.addEventListener("mouseup", this.onDocumentMouseUp, false);
         canvas.addEventListener("mouseleave", this.onDocumentMouseLeave, false);
         canvas.addEventListener("wheel", this.onMouseWheel, false);
-        RAFTicker.addEventListener(RAFTickerEventType.tick, (e) => {
+        RAFTicker.on(RAFTickerEventType.tick, (e) => {
             this.throttlingDelta += e.delta;
             if (this.throttlingDelta < this.throttlingTime_ms)
                 return;
