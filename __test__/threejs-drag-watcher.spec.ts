@@ -1,4 +1,4 @@
-import { DragWatcher, DragEventType, DragEvent } from "../src";
+import { DragEvent, DragEventType, DragWatcher } from "../src";
 
 const W = 1920;
 const H = 1080;
@@ -18,7 +18,7 @@ describe("threejs-drag-watcher", () => {
       .spyOn(watcher, "dispatchEvent")
       .mockImplementation((e: Event) => null);
 
-    watcher.addEventListener(DragEventType.ZOOM, e => {});
+    watcher.addEventListener(DragEventType.ZOOM, (e) => {});
 
     const expectWheel = (scroll: number) => {
       const dragEvt = new DragEvent(DragEventType.ZOOM);
@@ -38,35 +38,7 @@ describe("threejs-drag-watcher", () => {
     dispatchWheelEvent({ deltaY: -1 });
     expectWheel(-1);
 
-    watcher.removeEventListener(DragEventType.ZOOM, e => {});
+    watcher.removeEventListener(DragEventType.ZOOM, (e) => {});
     spy.mockClear();
   });
-  /*
-  test("drag", () => {
-    const spy = jest
-      .spyOn(watcher, "dispatchEvent")
-      .mockImplementation((e: Event) => null);
-    watcher.addEventListener(DragEventType.DRAG_START, e => {});
-    watcher.addEventListener(DragEventType.DRAG, e => {});
-    watcher.addEventListener(DragEventType.DRAG_END, e => {});
-
-    const dispatchMouseEvent = (type: string, option: any) => {
-      const init = Object.assign(getBasicOption(), option);
-      const evt = new Event(type, init);
-      console.log(type, init, evt);
-      canvas.dispatchEvent(evt);
-    };
-
-    const expectMouse = (type: DragEventType, option: object) => {
-      let e = new DragEvent(type);
-      e = Object.assign(e, option);
-      expect(spy).toHaveBeenLastCalledWith(e);
-    };
-
-    dispatchMouseEvent("mousedown", { clientX: 100, layerX: 100, layerY: 100 });
-    expectMouse(DragEventType.DRAG_START, { positionX: 100, positionY: 100 });
-
-    spy.mockClear();
-  });
-  */
 });
