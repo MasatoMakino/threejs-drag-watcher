@@ -35,10 +35,8 @@ export class FakeMouseEvent extends MouseEvent {
 
     this.offsetX = values.offsetX;
     this.offsetY = values.offsetY;
-
     this.pageX = values.pageX;
     this.pageY = values.pageY;
-
     this.x = values.x;
     this.y = values.y;
   }
@@ -48,15 +46,15 @@ export function getMouseEvent(
   type: string,
   values?: FakeMouseEventInit
 ): FakeMouseEvent {
-  values = values ?? {};
-  values.bubbles = values.cancelable ?? true;
-  values.cancelable = values.cancelable ?? true;
-  values.offsetX = values.offsetX ?? 0;
-  values.offsetY = values.offsetY ?? 0;
-  values.pageX = values.pageX ?? 0;
-  values.pageY = values.pageY ?? 0;
-  values.x = values.x ?? 0;
-  values.y = values.y ?? 0;
+  values ??= {};
+  values.bubbles ??= true;
+  values.cancelable ??= true;
+  values.offsetX ??= 0;
+  values.offsetY ??= 0;
+  values.pageX ??= 0;
+  values.pageY ??= 0;
+  values.x ??= 0;
+  values.y ??= 0;
 
   return new FakeMouseEvent(type, values);
 }
