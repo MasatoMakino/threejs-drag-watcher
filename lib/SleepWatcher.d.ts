@@ -1,5 +1,6 @@
-import { EventDispatcher } from "three";
-import { DragWatcher } from "./DragWatcher";
+import {EventDispatcher} from "three";
+import {DragWatcher} from "./DragWatcher";
+
 export declare class SleepWatcher extends EventDispatcher {
     private dragWatcher;
     private sleepTimerID;
@@ -26,5 +27,6 @@ export declare class SleepWatcher extends EventDispatcher {
     stop(): void;
     protected stopMouseEventListeners(): void;
     protected startMouseEventListeners(): void;
+    protected switchMouseEventListeners(isAddListener: boolean): void;
 }
 //# sourceMappingURL=SleepWatcher.d.ts.map
