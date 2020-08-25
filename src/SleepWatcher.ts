@@ -1,7 +1,7 @@
 import { EventDispatcher } from "three";
+import { DragEventType } from "./DragEvent";
 import { DragWatcher } from "./DragWatcher";
 import { SleepEvent, SleepEventType } from "./SleepEvent";
-import { DragEventType } from "./DragEvent";
 
 export class SleepWatcher extends EventDispatcher {
   private dragWatcher: DragWatcher;
@@ -65,18 +65,26 @@ export class SleepWatcher extends EventDispatcher {
   }
 
   protected stopMouseEventListeners(): void {
-    const watcher = this.dragWatcher;
-    watcher.removeEventListener(DragEventType.DRAG, this.resetTimer);
-    watcher.removeEventListener(DragEventType.DRAG_START, this.resetTimer);
-    watcher.removeEventListener(DragEventType.DRAG_END, this.resetTimer);
-    watcher.removeEventListener(DragEventType.ZOOM, this.resetTimer);
+    this.switchMouseEventListeners(false);
   }
 
   protected startMouseEventListeners(): void {
+    this.switchMouseEventListeners(true);
+  }
+
+  protected switchMouseEventListeners(isAddListener: boolean): void {
     const watcher = this.dragWatcher;
-    watcher.addEventListener(DragEventType.DRAG, this.resetTimer);
-    watcher.addEventListener(DragEventType.DRAG_START, this.resetTimer);
-    watcher.addEventListener(DragEventType.DRAG_END, this.resetTimer);
-    watcher.addEventListener(DragEventType.ZOOM, this.resetTimer);
+    [
+      DragEventType.DRAG,
+      DragEventType.DRAG_START,
+      DragEventType.DRAG_END,
+      DragEventType.ZOOM,
+    ].forEach((type) => {
+      if (isAddListener) {
+        watcher.addEventListener(type, this.resetTimer);
+      } else {
+        watcher.removeEventListener(type, this.resetTimer);
+      }
+    });
   }
 }
