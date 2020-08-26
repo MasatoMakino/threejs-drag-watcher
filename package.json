@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "@types/jest": "^26.0.10",
+    "fake-mouse-event": "https://github.com/MasatoMakino/fake-mouse-event.git",
     "gulp": "^4.0.2",
     "gulptask-demo-page": "https://github.com/MasatoMakino/gulptask-demo-page.git",
     "gulptask-dev-server": "https://github.com/MasatoMakino/gulptask-dev-server.git",

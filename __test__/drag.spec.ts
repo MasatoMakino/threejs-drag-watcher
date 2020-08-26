@@ -1,7 +1,7 @@
+import { FakeMouseEventInit, getMouseEvent } from "fake-mouse-event";
 import { RAFTicker, RAFTickerEventType } from "raf-ticker";
 import { DragEventType } from "../src";
-import { FakeMouseEventInit, getMouseEvent } from "./FakeMouseEventGenerator";
-import { generateWatcher } from "./WatherGenerator";
+import { generateWatcher } from "./WatcherGenerator";
 import Mock = jest.Mock;
 
 const { canvas, watcher } = generateWatcher();

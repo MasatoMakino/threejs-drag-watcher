@@ -3435,6 +3435,10 @@ extsprintf@^1.2.0:
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.4.0.tgz#e2689f8f356fad62cca65a3a91c5df5f9551692f"
   integrity sha1-4mifjzVvrWLMplo6kcXfX5VRaS8=
 
+"fake-mouse-event@https://github.com/MasatoMakino/fake-mouse-event.git":
+  version "0.0.1"
+  resolved "https://github.com/MasatoMakino/fake-mouse-event.git#569c2cd7ee610c22f928e0b069f2023641d9eec4"
+
 fancy-log@^1.3.2:
   version "1.3.3"
   resolved "https://registry.yarnpkg.com/fancy-log/-/fancy-log-1.3.3.tgz#dbc19154f558690150a23953a0adbd035be45fc7"
