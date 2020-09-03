@@ -11,6 +11,7 @@ const mockCallback = jest.fn((e) => {
 const mockMoveCallback = jest.fn((e) => {
   e;
 });
+
 describe("threejs-drag-watcher", () => {
   watcher.addEventListener(DragEventType.DRAG_START, mockCallback);
   watcher.addEventListener(DragEventType.MOVE, mockMoveCallback);
