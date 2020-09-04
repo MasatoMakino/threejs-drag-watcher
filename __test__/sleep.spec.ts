@@ -98,6 +98,10 @@ describe("threejs-drag-watcher", () => {
 
     dispatchMouseEvent("mousedown", { offsetX: 0, offsetY: 0 });
     interval(timeout_ms * 0.8);
+    expect(mockSleep).not.toBeCalled();
+    expect(mockWakeup).not.toBeCalled();
+    clearMockFunctions();
+
     dispatchMouseEvent("mousemove", { offsetX: 10, offsetY: 10 });
     interval(timeout_ms * 0.8);
     dispatchMouseEvent("mousemove", { offsetX: 20, offsetY: 20 });
@@ -114,7 +118,7 @@ describe("threejs-drag-watcher", () => {
     clearMockFunctions();
   });
 
-  test("drag and pause", () => {
+  test("DRAG_START and pause", () => {
     sleepWatcher.start();
 
     dispatchMouseEvent("mousedown", { offsetX: 0, offsetY: 0 });
@@ -127,6 +131,28 @@ describe("threejs-drag-watcher", () => {
     interval(timeout_ms * 1.2);
     expect(mockSleep).not.toBeCalled();
     expect(mockWakeup).not.toBeCalled();
+    clearMockFunctions();
+  });
+
+  test("DRAG_END and SLEEP", () => {
+    sleepWatcher.start();
+
+    dispatchMouseEvent("mousedown", { offsetX: 0, offsetY: 0 });
+    interval(timeout_ms * 0.8);
+    dispatchMouseEvent("mousemove", { offsetX: 10, offsetY: 10 });
+    interval(timeout_ms * 1.2);
+    dispatchMouseEvent("mouseup", { offsetX: 10, offsetY: 10 });
+    expect(mockSleep).not.toBeCalled();
+    expect(mockWakeup).not.toBeCalled();
+
+    interval(timeout_ms);
+    expect(mockSleep).toBeCalled();
+    expect(mockWakeup).not.toBeCalled();
+    clearMockFunctions();
+
+    dispatchMouseEvent("mousedown", { offsetX: 0, offsetY: 0 });
+    expect(mockSleep).not.toBeCalled();
+    expect(mockWakeup).toBeCalled();
     clearMockFunctions();
   });
 });

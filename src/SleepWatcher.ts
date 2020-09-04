@@ -55,6 +55,31 @@ export class SleepWatcher extends EventDispatcher {
     this.resetTimer();
   }
 
+  protected startMouseEventListeners(): void {
+    const watcher = this.dragWatcher;
+    watcher.addEventListener(DragEventType.ZOOM, this.resetTimer);
+
+    watcher.addEventListener(DragEventType.DRAG_START, this.pauseTimer);
+    watcher.removeEventListener(DragEventType.DRAG_END, this.resumeTimer);
+  }
+
+  private pauseTimer = () => {
+    this.stopTimer();
+    this.wakeup();
+
+    const watcher = this.dragWatcher;
+    watcher.removeEventListener(DragEventType.DRAG_START, this.pauseTimer);
+    watcher.addEventListener(DragEventType.DRAG_END, this.resumeTimer);
+  };
+
+  private resumeTimer = () => {
+    this.resetTimer();
+
+    const watcher = this.dragWatcher;
+    watcher.addEventListener(DragEventType.DRAG_START, this.pauseTimer);
+    watcher.removeEventListener(DragEventType.DRAG_END, this.resumeTimer);
+  };
+
   /**
    * マウスの監視を停止する
    */
@@ -65,26 +90,9 @@ export class SleepWatcher extends EventDispatcher {
   }
 
   protected stopMouseEventListeners(): void {
-    this.switchMouseEventListeners(false);
-  }
-
-  protected startMouseEventListeners(): void {
-    this.switchMouseEventListeners(true);
-  }
-
-  protected switchMouseEventListeners(isAddListener: boolean): void {
     const watcher = this.dragWatcher;
-    [
-      DragEventType.DRAG,
-      DragEventType.DRAG_START,
-      DragEventType.DRAG_END,
-      DragEventType.ZOOM,
-    ].forEach((type) => {
-      if (isAddListener) {
-        watcher.addEventListener(type, this.resetTimer);
-      } else {
-        watcher.removeEventListener(type, this.resetTimer);
-      }
-    });
+    watcher.removeEventListener(DragEventType.ZOOM, this.resetTimer);
+    watcher.removeEventListener(DragEventType.DRAG_START, this.pauseTimer);
+    watcher.removeEventListener(DragEventType.DRAG_END, this.resumeTimer);
   }
 }
