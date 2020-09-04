@@ -1,3 +1,5 @@
+import { FakeMouseEventInit, getMouseEvent } from "fake-mouse-event";
+import { RAFTicker, RAFTickerEventType } from "raf-ticker";
 import { SleepEventType, SleepWatcher } from "../src";
 import { generateWatcher } from "./WatcherGenerator";
 
@@ -35,7 +37,7 @@ describe("threejs-drag-watcher", () => {
     expect(mockWakeup).not.toBeCalled();
     clearMockFunctions();
 
-    jest.advanceTimersByTime(timeout_ms);
+    interval(timeout_ms);
     expect(mockSleep).not.toBeCalled();
     expect(mockWakeup).not.toBeCalled();
     clearMockFunctions();
@@ -53,7 +55,7 @@ describe("threejs-drag-watcher", () => {
 
   test("start and < timeout_ms", () => {
     sleepWatcher.start();
-    jest.advanceTimersByTime(timeout_ms * 0.1);
+    interval(timeout_ms * 0.1);
     expect(mockSleep).not.toBeCalled();
     expect(mockWakeup).not.toBeCalled();
     clearMockFunctions();
@@ -65,7 +67,7 @@ describe("threejs-drag-watcher", () => {
     expect(mockWakeup).not.toBeCalled();
     clearMockFunctions();
 
-    jest.advanceTimersByTime(timeout_ms);
+    interval(timeout_ms);
     expect(mockSleep).toBeCalled();
     expect(mockWakeup).not.toBeCalled();
     clearMockFunctions();
@@ -75,9 +77,69 @@ describe("threejs-drag-watcher", () => {
     expect(mockWakeup).toBeCalled();
     clearMockFunctions();
   });
+
+  test("mouse down and wakeup", () => {
+    sleepWatcher.start();
+
+    interval(timeout_ms);
+    expect(mockSleep).toBeCalled();
+    expect(mockWakeup).not.toBeCalled();
+    clearMockFunctions();
+
+    dispatchMouseEvent("mousedown", { offsetX: 0, offsetY: 0 });
+    expect(mockSleep).not.toBeCalled();
+    expect(mockWakeup).toBeCalled();
+    clearMockFunctions();
+  });
+
+  test("drag", () => {
+    sleepWatcher.start();
+
+    dispatchMouseEvent("mousedown", { offsetX: 0, offsetY: 0 });
+    interval(timeout_ms * 0.8);
+    dispatchMouseEvent("mousemove", { offsetX: 10, offsetY: 10 });
+    interval(timeout_ms * 0.8);
+    dispatchMouseEvent("mousemove", { offsetX: 20, offsetY: 20 });
+    interval(timeout_ms * 0.8);
+    dispatchMouseEvent("mouseup", { offsetX: 20, offsetY: 20 });
+    interval(timeout_ms * 0.8);
+    expect(mockSleep).not.toBeCalled();
+    expect(mockWakeup).not.toBeCalled();
+    clearMockFunctions();
+
+    interval(timeout_ms);
+    expect(mockSleep).toBeCalled();
+    expect(mockWakeup).not.toBeCalled();
+    clearMockFunctions();
+  });
 });
 
+/**
+ * モック関数のリセット処理
+ */
 const clearMockFunctions = () => {
   mockWakeup.mockClear();
   mockSleep.mockClear();
+};
+
+/**
+ * SleepWatcherとCanvasの時間を進める
+ * @param timeout_ms
+ */
+const interval = (timeout_ms: number) => {
+  jest.advanceTimersByTime(timeout_ms);
+  RAFTicker.emit(RAFTickerEventType.tick, {
+    timestamp: 0,
+    delta: timeout_ms,
+  });
+};
+
+/**
+ * 偽のマウスイベントをCanvasから発行する。
+ * @param type
+ * @param option
+ */
+const dispatchMouseEvent = (type: string, option?: FakeMouseEventInit) => {
+  const evt = getMouseEvent(type, option);
+  canvas.dispatchEvent(evt);
 };

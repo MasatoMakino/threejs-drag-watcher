@@ -3436,8 +3436,8 @@ extsprintf@^1.2.0:
   integrity sha1-4mifjzVvrWLMplo6kcXfX5VRaS8=
 
 "fake-mouse-event@https://github.com/MasatoMakino/fake-mouse-event.git":
-  version "0.0.2"
-  resolved "https://github.com/MasatoMakino/fake-mouse-event.git#ff2c7214b94ac0092b8546514bb5624af67ccdf2"
+  version "0.0.3"
+  resolved "https://github.com/MasatoMakino/fake-mouse-event.git#c071a9abb5d03a93dee1ba4add3ed04c002b1506"
 
 fancy-log@^1.3.2:
   version "1.3.3"
