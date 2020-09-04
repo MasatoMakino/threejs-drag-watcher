@@ -20,6 +20,7 @@ describe("threejs-drag-watcher", () => {
 
   afterEach(() => {
     sleepWatcher.stop();
+    dispatchMouseEvent("mouseup", { offsetX: 0, offsetY: 0 });
     clearMockFunctions();
   });
 
