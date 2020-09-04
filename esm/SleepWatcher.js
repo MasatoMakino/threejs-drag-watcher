@@ -28,6 +28,19 @@ export class SleepWatcher extends EventDispatcher {
             this.dispatchEvent(new SleepEvent(SleepEventType.WAKEUP));
             this.isSleep = false;
         };
+        this.pauseTimer = () => {
+            this.stopTimer();
+            this.wakeup();
+            const watcher = this.dragWatcher;
+            watcher.removeEventListener(DragEventType.DRAG_START, this.pauseTimer);
+            watcher.addEventListener(DragEventType.DRAG_END, this.resumeTimer);
+        };
+        this.resumeTimer = () => {
+            this.resetTimer();
+            const watcher = this.dragWatcher;
+            watcher.addEventListener(DragEventType.DRAG_START, this.pauseTimer);
+            watcher.removeEventListener(DragEventType.DRAG_END, this.resumeTimer);
+        };
         if (!option)
             option = {};
         if (option.timeOut_ms != null)
@@ -48,6 +61,12 @@ export class SleepWatcher extends EventDispatcher {
         this.startMouseEventListeners();
         this.resetTimer();
     }
+    startMouseEventListeners() {
+        const watcher = this.dragWatcher;
+        watcher.addEventListener(DragEventType.ZOOM, this.resetTimer);
+        watcher.addEventListener(DragEventType.DRAG_START, this.pauseTimer);
+        watcher.removeEventListener(DragEventType.DRAG_END, this.resumeTimer);
+    }
     /**
      * マウスの監視を停止する
      */
@@ -57,25 +76,9 @@ export class SleepWatcher extends EventDispatcher {
         this.stopMouseEventListeners();
     }
     stopMouseEventListeners() {
-        this.switchMouseEventListeners(false);
-    }
-    startMouseEventListeners() {
-        this.switchMouseEventListeners(true);
-    }
-    switchMouseEventListeners(isAddListener) {
         const watcher = this.dragWatcher;
-        [
-            DragEventType.DRAG,
-            DragEventType.DRAG_START,
-            DragEventType.DRAG_END,
-            DragEventType.ZOOM,
-        ].forEach((type) => {
-            if (isAddListener) {
-                watcher.addEventListener(type, this.resetTimer);
-            }
-            else {
-                watcher.removeEventListener(type, this.resetTimer);
-            }
-        });
+        watcher.removeEventListener(DragEventType.ZOOM, this.resetTimer);
+        watcher.removeEventListener(DragEventType.DRAG_START, this.pauseTimer);
+        watcher.removeEventListener(DragEventType.DRAG_END, this.resumeTimer);
     }
 }

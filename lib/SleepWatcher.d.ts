@@ -21,12 +21,13 @@ export declare class SleepWatcher extends EventDispatcher {
      * マウス監視を開始する
      */
     start(): void;
+    protected startMouseEventListeners(): void;
+    private pauseTimer;
+    private resumeTimer;
     /**
      * マウスの監視を停止する
      */
     stop(): void;
     protected stopMouseEventListeners(): void;
-    protected startMouseEventListeners(): void;
-    protected switchMouseEventListeners(isAddListener: boolean): void;
 }
 //# sourceMappingURL=SleepWatcher.d.ts.map
