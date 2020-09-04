@@ -112,6 +112,18 @@ describe("threejs-drag-watcher", () => {
     expect(mockWakeup).not.toBeCalled();
     clearMockFunctions();
   });
+
+  test("drag and pause", () => {
+    sleepWatcher.start();
+
+    dispatchMouseEvent("mousedown", { offsetX: 0, offsetY: 0 });
+    interval(timeout_ms * 0.8);
+    dispatchMouseEvent("mousemove", { offsetX: 10, offsetY: 10 });
+    interval(timeout_ms * 1.2);
+    expect(mockSleep).not.toBeCalled();
+    expect(mockWakeup).not.toBeCalled();
+    clearMockFunctions();
+  });
 });
 
 /**
