@@ -65,7 +65,6 @@ export class SleepWatcher extends EventDispatcher {
         const watcher = this.dragWatcher;
         watcher.addEventListener(DragEventType.ZOOM, this.resetTimer);
         watcher.addEventListener(DragEventType.DRAG_START, this.pauseTimer);
-        watcher.removeEventListener(DragEventType.DRAG_END, this.resumeTimer);
     }
     /**
      * マウスの監視を停止する
