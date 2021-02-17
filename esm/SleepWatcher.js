@@ -1,7 +1,6 @@
-import {EventDispatcher} from "three";
-import {DragEventType} from "./DragEvent";
-import {SleepEvent, SleepEventType} from "./SleepEvent";
-
+import { EventDispatcher } from "three";
+import { DragEventType } from "./DragEvent";
+import { SleepEvent, SleepEventType } from "./SleepEvent";
 export class SleepWatcher extends EventDispatcher {
     constructor(dragWatcher, option) {
         super();

@@ -1,7 +1,6 @@
-import {RAFTicker, RAFTickerEventType} from "raf-ticker";
-import {EventDispatcher} from "three";
-import {DragEvent, DragEventType} from "./DragEvent";
-
+import { RAFTicker, RAFTickerEventType } from "raf-ticker";
+import { EventDispatcher } from "three";
+import { DragEvent, DragEventType } from "./DragEvent";
 /**
  * 1.カンバス全体がドラッグされている状態を確認する
  * 2.マウスホイールが操作されている状態を確認する

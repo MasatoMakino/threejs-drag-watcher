@@ -1,6 +1,5 @@
-import {EventDispatcher} from "three";
-import {DragWatcher} from "./DragWatcher";
-
+import { EventDispatcher } from "three";
+import { DragWatcher } from "./DragWatcher";
 export declare class SleepWatcher extends EventDispatcher {
     private dragWatcher;
     private sleepTimerID;

@@ -7,6 +7,7 @@
 	<meta name="description" content="Documentation for threejs-drag-watcher">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
 </head>
 <body>
 <header>
@@ -40,8 +41,6 @@
 							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
 							<input type="checkbox" id="tsd-filter-externals" checked />
 							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
-							<input type="checkbox" id="tsd-filter-only-exported" />
-							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
 						</div>
 					</div>
 					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
@@ -53,7 +52,7 @@
 		<div class="container">
 			<ul class="tsd-breadcrumb">
 				<li>
-					<a href="../globals.html">Globals</a>
+					<a href="../modules.html">threejs-drag-watcher</a>
 				</li>
 				<li>
 					<a href="sleepwatcher.html">SleepWatcher</a>
@@ -86,7 +85,7 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="sleepwatcher.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="sleepwatcher.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-private tsd-is-private-protected">
@@ -101,11 +100,11 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="sleepwatcher.html#addeventlistener" class="tsd-kind-icon">add<wbr>Event<wbr>Listener</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="sleepwatcher.html#dispatchevent" class="tsd-kind-icon">dispatch<wbr>Event</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="sleepwatcher.html#haseventlistener" class="tsd-kind-icon">has<wbr>Event<wbr>Listener</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="sleepwatcher.html#addeventlistener" class="tsd-kind-icon">add<wbr>Event<wbr>Listener</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="sleepwatcher.html#dispatchevent" class="tsd-kind-icon">dispatch<wbr>Event</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="sleepwatcher.html#haseventlistener" class="tsd-kind-icon">has<wbr>Event<wbr>Listener</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="sleepwatcher.html#pausetimer" class="tsd-kind-icon">pause<wbr>Timer</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="sleepwatcher.html#removeeventlistener" class="tsd-kind-icon">remove<wbr>Event<wbr>Listener</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="sleepwatcher.html#removeeventlistener" class="tsd-kind-icon">remove<wbr>Event<wbr>Listener</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="sleepwatcher.html#resettimer" class="tsd-kind-icon">reset<wbr>Timer</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="sleepwatcher.html#resumetimer" class="tsd-kind-icon">resume<wbr>Timer</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="sleepwatcher.html#sleep" class="tsd-kind-icon">sleep</a></li>
@@ -122,24 +121,23 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Sleep<wbr>Watcher<span class="tsd-signature-symbol">(</span>dragWatcher<span class="tsd-signature-symbol">: </span><a href="dragwatcher.html" class="tsd-signature-type">DragWatcher</a>, option<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-symbol">{ </span>timeOut_ms<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="sleepwatcher.html" class="tsd-signature-type">SleepWatcher</a></li>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Sleep<wbr>Watcher<span class="tsd-signature-symbol">(</span>dragWatcher<span class="tsd-signature-symbol">: </span><a href="dragwatcher.html" class="tsd-signature-type" data-tsd-kind="Class">DragWatcher</a>, option<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-symbol">{ </span>timeOut_ms<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="sleepwatcher.html" class="tsd-signature-type" data-tsd-kind="Class">SleepWatcher</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides EventDispatcher.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/threejs-drag-watcher/blob/49706fb/src/SleepWatcher.ts#L10">src/SleepWatcher.ts:10</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/threejs-drag-watcher/blob/0c3d999/src/SleepWatcher.ts#L10">src/SleepWatcher.ts:10</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>dragWatcher: <a href="dragwatcher.html" class="tsd-signature-type">DragWatcher</a></h5>
+									<h5>dragWatcher: <a href="dragwatcher.html" class="tsd-signature-type" data-tsd-kind="Class">DragWatcher</a></h5>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> option: <span class="tsd-signature-symbol">{ </span>timeOut_ms<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span></h5>
@@ -150,7 +148,7 @@
 									</ul>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="sleepwatcher.html" class="tsd-signature-type">SleepWatcher</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="sleepwatcher.html" class="tsd-signature-type" data-tsd-kind="Class">SleepWatcher</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -160,10 +158,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="dragwatcher" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> drag<wbr>Watcher</h3>
-					<div class="tsd-signature tsd-kind-icon">drag<wbr>Watcher<span class="tsd-signature-symbol">:</span> <a href="dragwatcher.html" class="tsd-signature-type">DragWatcher</a></div>
+					<div class="tsd-signature tsd-kind-icon">drag<wbr>Watcher<span class="tsd-signature-symbol">:</span> <a href="dragwatcher.html" class="tsd-signature-type" data-tsd-kind="Class">DragWatcher</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/MasatoMakino/threejs-drag-watcher/blob/49706fb/src/SleepWatcher.ts#L7">src/SleepWatcher.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/MasatoMakino/threejs-drag-watcher/blob/0c3d999/src/SleepWatcher.ts#L7">src/SleepWatcher.ts:7</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -173,7 +171,7 @@
 					<div class="tsd-signature tsd-kind-icon">is<wbr>Sleep<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/MasatoMakino/threejs-drag-watcher/blob/49706fb/src/SleepWatcher.ts#L10">src/SleepWatcher.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/MasatoMakino/threejs-drag-watcher/blob/0c3d999/src/SleepWatcher.ts#L10">src/SleepWatcher.ts:10</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -183,33 +181,32 @@
 					<div class="tsd-signature tsd-kind-icon">sleep<wbr>TimerID<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/MasatoMakino/threejs-drag-watcher/blob/49706fb/src/SleepWatcher.ts#L8">src/SleepWatcher.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/MasatoMakino/threejs-drag-watcher/blob/0c3d999/src/SleepWatcher.ts#L8">src/SleepWatcher.ts:8</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="timeout_ms" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> time<wbr>Out_<wbr>ms</h3>
-					<div class="tsd-signature tsd-kind-icon">time<wbr>Out_<wbr>ms<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 10 * 1000</span></div>
+					<div class="tsd-signature tsd-kind-icon">time<wbr>Out_<wbr>ms<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/MasatoMakino/threejs-drag-watcher/blob/49706fb/src/SleepWatcher.ts#L9">src/SleepWatcher.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/MasatoMakino/threejs-drag-watcher/blob/0c3d999/src/SleepWatcher.ts#L9">src/SleepWatcher.ts:9</a></li>
 						</ul>
 					</aside>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-external">
 					<a name="addeventlistener" class="tsd-anchor"></a>
 					<h3>add<wbr>Event<wbr>Listener</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
 						<li class="tsd-signature tsd-kind-icon">add<wbr>Event<wbr>Listener<span class="tsd-signature-symbol">(</span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, listener<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Event</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="dragwatcher.html">DragWatcher</a>.<a href="dragwatcher.html#addeventlistener">addEventListener</a></p>
 								<ul>
 									<li>Defined in node_modules/three/src/core/EventDispatcher.d.ts:27</li>
 								</ul>
@@ -234,7 +231,7 @@
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-signature">
-											<ul class="tsd-signatures tsd-kind-type-literal">
+											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-external">
 												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Event</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
@@ -256,16 +253,15 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-external">
 					<a name="dispatchevent" class="tsd-anchor"></a>
 					<h3>dispatch<wbr>Event</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
 						<li class="tsd-signature tsd-kind-icon">dispatch<wbr>Event<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="dragwatcher.html">DragWatcher</a>.<a href="dragwatcher.html#dispatchevent">dispatchEvent</a></p>
 								<ul>
 									<li>Defined in node_modules/three/src/core/EventDispatcher.d.ts:47</li>
 								</ul>
@@ -293,16 +289,15 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-external">
 					<a name="haseventlistener" class="tsd-anchor"></a>
 					<h3>has<wbr>Event<wbr>Listener</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
 						<li class="tsd-signature tsd-kind-icon">has<wbr>Event<wbr>Listener<span class="tsd-signature-symbol">(</span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, listener<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Event</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="dragwatcher.html">DragWatcher</a>.<a href="dragwatcher.html#haseventlistener">hasEventListener</a></p>
 								<ul>
 									<li>Defined in node_modules/three/src/core/EventDispatcher.d.ts:34</li>
 								</ul>
@@ -327,7 +322,7 @@
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-signature">
-											<ul class="tsd-signatures tsd-kind-type-literal">
+											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-external">
 												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Event</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
@@ -359,23 +354,22 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/threejs-drag-watcher/blob/49706fb/src/SleepWatcher.ts#L64">src/SleepWatcher.ts:64</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/threejs-drag-watcher/blob/0c3d999/src/SleepWatcher.ts#L64">src/SleepWatcher.ts:64</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-external">
 					<a name="removeeventlistener" class="tsd-anchor"></a>
 					<h3>remove<wbr>Event<wbr>Listener</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
 						<li class="tsd-signature tsd-kind-icon">remove<wbr>Event<wbr>Listener<span class="tsd-signature-symbol">(</span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, listener<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Event</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="dragwatcher.html">DragWatcher</a>.<a href="dragwatcher.html#removeeventlistener">removeEventListener</a></p>
 								<ul>
 									<li>Defined in node_modules/three/src/core/EventDispatcher.d.ts:41</li>
 								</ul>
@@ -400,7 +394,7 @@
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-signature">
-											<ul class="tsd-signatures tsd-kind-type-literal">
+											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-external">
 												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Event</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
@@ -432,7 +426,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/threejs-drag-watcher/blob/49706fb/src/SleepWatcher.ts#L24">src/SleepWatcher.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/threejs-drag-watcher/blob/0c3d999/src/SleepWatcher.ts#L24">src/SleepWatcher.ts:24</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -443,10 +437,8 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> e: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> = null</span></h5>
+									<h5>e: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> = null</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<div class="lead">
-										</div>
 									</div>
 								</li>
 							</ul>
@@ -464,7 +456,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/threejs-drag-watcher/blob/49706fb/src/SleepWatcher.ts#L73">src/SleepWatcher.ts:73</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/threejs-drag-watcher/blob/0c3d999/src/SleepWatcher.ts#L73">src/SleepWatcher.ts:73</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -481,7 +473,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/threejs-drag-watcher/blob/49706fb/src/SleepWatcher.ts#L37">src/SleepWatcher.ts:37</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/threejs-drag-watcher/blob/0c3d999/src/SleepWatcher.ts#L37">src/SleepWatcher.ts:37</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -498,7 +490,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/threejs-drag-watcher/blob/49706fb/src/SleepWatcher.ts#L52">src/SleepWatcher.ts:52</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/threejs-drag-watcher/blob/0c3d999/src/SleepWatcher.ts#L52">src/SleepWatcher.ts:52</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -520,7 +512,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/threejs-drag-watcher/blob/49706fb/src/SleepWatcher.ts#L58">src/SleepWatcher.ts:58</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/threejs-drag-watcher/blob/0c3d999/src/SleepWatcher.ts#L58">src/SleepWatcher.ts:58</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -537,7 +529,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/threejs-drag-watcher/blob/49706fb/src/SleepWatcher.ts#L84">src/SleepWatcher.ts:84</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/threejs-drag-watcher/blob/0c3d999/src/SleepWatcher.ts#L84">src/SleepWatcher.ts:84</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -559,7 +551,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/threejs-drag-watcher/blob/49706fb/src/SleepWatcher.ts#L90">src/SleepWatcher.ts:90</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/threejs-drag-watcher/blob/0c3d999/src/SleepWatcher.ts#L90">src/SleepWatcher.ts:90</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -576,7 +568,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/threejs-drag-watcher/blob/49706fb/src/SleepWatcher.ts#L31">src/SleepWatcher.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/threejs-drag-watcher/blob/0c3d999/src/SleepWatcher.ts#L31">src/SleepWatcher.ts:31</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -593,7 +585,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/MasatoMakino/threejs-drag-watcher/blob/49706fb/src/SleepWatcher.ts#L43">src/SleepWatcher.ts:43</a></li>
+									<li>Defined in <a href="https://github.com/MasatoMakino/threejs-drag-watcher/blob/0c3d999/src/SleepWatcher.ts#L43">src/SleepWatcher.ts:43</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -605,8 +597,8 @@
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
-					<li class="globals  ">
-						<a href="../globals.html"><em>Globals</em></a>
+					<li class=" ">
+						<a href="../modules.html">Exports</a>
 					</li>
 				</ul>
 			</nav>
@@ -632,7 +624,7 @@
 					<li class="current tsd-kind-class">
 						<a href="sleepwatcher.html" class="tsd-kind-icon">Sleep<wbr>Watcher</a>
 						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
 								<a href="sleepwatcher.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
@@ -647,19 +639,19 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="sleepwatcher.html#timeout_ms" class="tsd-kind-icon">time<wbr>Out_<wbr>ms</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-external">
 								<a href="sleepwatcher.html#addeventlistener" class="tsd-kind-icon">add<wbr>Event<wbr>Listener</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-external">
 								<a href="sleepwatcher.html#dispatchevent" class="tsd-kind-icon">dispatch<wbr>Event</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-external">
 								<a href="sleepwatcher.html#haseventlistener" class="tsd-kind-icon">has<wbr>Event<wbr>Listener</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
 								<a href="sleepwatcher.html#pausetimer" class="tsd-kind-icon">pause<wbr>Timer</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-external">
 								<a href="sleepwatcher.html#removeeventlistener" class="tsd-kind-icon">remove<wbr>Event<wbr>Listener</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
@@ -714,9 +706,6 @@
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
 			</ul>
 		</div>
 	</div>
