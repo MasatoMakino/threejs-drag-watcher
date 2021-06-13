@@ -53,7 +53,8 @@ export class DragWatcher extends EventDispatcher {
             }
             this.dispatchEvent(evt);
         };
-        this.throttlingTime_ms = (_a = option === null || option === void 0 ? void 0 : option.throttlingTime_ms) !== null && _a !== void 0 ? _a : this.throttlingTime_ms;
+        this.throttlingTime_ms =
+            (_a = option === null || option === void 0 ? void 0 : option.throttlingTime_ms) !== null && _a !== void 0 ? _a : this.throttlingTime_ms;
         canvas.addEventListener("mousemove", this.onDocumentMouseMove, false);
         canvas.addEventListener("mousedown", this.onDocumentMouseDown, false);
         canvas.addEventListener("mouseup", this.onDocumentMouseUp, false);
