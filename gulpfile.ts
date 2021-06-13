@@ -1,12 +1,12 @@
 const { series } = require("gulp");
 
-const doc = require("gulptask-tsdoc").get();
-const server = require("gulptask-dev-server").get("./docs/demo");
-const { bundleDemo, watchDemo } = require("gulptask-demo-page").get({
+const doc = require("gulptask-tsdoc").generateTask();
+const server = require("gulptask-dev-server").generateTask("./docs/demo");
+const { bundleDemo, watchDemo } = require("gulptask-demo-page").generateTasks({
   externalScripts: [],
   body: `<canvas id="webgl-canvas" width="1920" height="1080"></canvas>`,
 });
-const { tsc, tscClean, watchTsc } = require("gulptask-tsc").get({
+const { tsc, tscClean, watchTsc } = require("gulptask-tsc").generateTasks({
   projects: ["tsconfig.cjs.json", "tsconfig.esm.json"],
 });
 

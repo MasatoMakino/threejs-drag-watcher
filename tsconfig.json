@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     /* Basic Options */
-    "target": "ES6",
+    "target": "ES2015",
 
     /* Module Resolution Options */
     "moduleResolution": "node",
