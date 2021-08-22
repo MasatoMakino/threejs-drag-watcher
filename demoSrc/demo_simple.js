@@ -3,11 +3,11 @@ import {
   DragWatcher,
   SleepEventType,
   SleepWatcher,
-} from "../lib";
+} from "../";
 import * as THREE from "three";
 
-const W = 1920;
-const H = 1080;
+const W = 1280;
+const H = 640;
 
 const onDomContentsLoaded = () => {
   // シーンを作成
@@ -18,7 +18,6 @@ const onDomContentsLoaded = () => {
 
   const renderOption = {
     canvas: document.getElementById("webgl-canvas"),
-    antialias: true,
   };
   const renderer = new THREE.WebGLRenderer(renderOption);
   renderer.setClearColor(new THREE.Color(0x000000));
