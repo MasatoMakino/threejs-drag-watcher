@@ -31,8 +31,8 @@ const onDomContentsLoaded = () => {
       shininess: 30,
     })
   );
-  const scene1 = new SceneSet(canvas, 20, 20, 400, 300, box, 0x222222);
-  const scene2 = new SceneSet(canvas, 480, 360, 120, 60, tri, 0x444444);
+  const scene1 = new SceneSet(renderer, 20, 20, 400, 300, box, 0x222222);
+  const scene2 = new SceneSet(renderer, 480, 360, 120, 60, tri, 0x444444);
 
   const render = () => {
     renderer.setClearColor(0x000000);
@@ -59,7 +59,7 @@ class SceneSet {
 
   dragManager;
 
-  constructor(canvas, x, y, width, height, mesh, bgColor) {
+  constructor(renderer, x, y, width, height, mesh, bgColor) {
     this.viewPort = new THREE.Vector4(x, y, width, height);
     this.mesh = mesh;
 
@@ -82,7 +82,7 @@ class SceneSet {
     spot2.position.set(-8, -6, 2);
     this.scene.add(spot2);
 
-    this.dragManager = new DragWatcher(canvas, { viewport: this.viewPort });
+    this.dragManager = new DragWatcher(renderer, { viewport: this.viewPort });
     this.dragManager.addEventListener(DragEventType.DRAG, (e) => {
       console.log(
         this.bgColor,

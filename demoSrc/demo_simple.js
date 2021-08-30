@@ -31,7 +31,7 @@ const onDomContentsLoaded = () => {
   renderer.render(scene, camera);
 
   //ドラッグ監視処理を開始
-  const watcher = new DragWatcher(renderer.domElement);
+  const watcher = new DragWatcher(renderer);
   watcher.addEventListener(DragEventType.DRAG, (e) => {
     console.log(
       `throttlingTime_ms : ${watcher.throttlingTime_ms}`,

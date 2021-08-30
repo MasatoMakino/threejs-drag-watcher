@@ -1,5 +1,5 @@
 import { RAFTicker, RAFTickerEvent, RAFTickerEventType } from "raf-ticker";
-import { EventDispatcher, Vector4 } from "three";
+import { EventDispatcher, Vector2, Vector4, WebGLRenderer } from "three";
 import { DragEvent, DragEventType } from "./DragEvent";
 
 /**
@@ -12,7 +12,7 @@ export class DragWatcher extends EventDispatcher {
   protected positionX!: number;
   protected positionY!: number;
   protected isDrag: boolean = false;
-  protected canvas: HTMLCanvasElement;
+  protected renderer: WebGLRenderer;
 
   protected hasThrottled: boolean = false;
   public throttlingTime_ms: number = 16;
@@ -20,7 +20,7 @@ export class DragWatcher extends EventDispatcher {
   protected viewport?: Vector4;
 
   constructor(
-    canvas: HTMLCanvasElement,
+    renderer: WebGLRenderer,
     option?: { throttlingTime_ms?: number; viewport?: Vector4 }
   ) {
     super();
@@ -28,16 +28,32 @@ export class DragWatcher extends EventDispatcher {
     this.throttlingTime_ms ??= option?.throttlingTime_ms;
     this.viewport ??= option?.viewport;
 
-    this.canvas = canvas;
-    this.canvas.addEventListener("mousemove", this.onDocumentMouseMove, false);
-    this.canvas.addEventListener("mousedown", this.onDocumentMouseDown, false);
-    this.canvas.addEventListener("mouseup", this.onDocumentMouseUp, false);
-    this.canvas.addEventListener(
+    this.renderer = renderer;
+    this.renderer.domElement.addEventListener(
+      "mousemove",
+      this.onDocumentMouseMove,
+      false
+    );
+    this.renderer.domElement.addEventListener(
+      "mousedown",
+      this.onDocumentMouseDown,
+      false
+    );
+    this.renderer.domElement.addEventListener(
+      "mouseup",
+      this.onDocumentMouseUp,
+      false
+    );
+    this.renderer.domElement.addEventListener(
       "mouseleave",
       this.onDocumentMouseLeave,
       false
     );
-    this.canvas.addEventListener("wheel", this.onMouseWheel, false);
+    this.renderer.domElement.addEventListener(
+      "wheel",
+      this.onMouseWheel,
+      false
+    );
 
     RAFTicker.on(RAFTickerEventType.tick, this.onTick);
   }
@@ -95,12 +111,12 @@ export class DragWatcher extends EventDispatcher {
         x: e.offsetX,
         y: e.offsetY,
       };
-    }else{
-      const rect = DragWatcher.convertToRect( this.canvas, this.viewport );
+    } else {
+      const rect = DragWatcher.convertToRect(this.renderer, this.viewport);
       return {
         x: e.offsetX - rect.x1,
-        y: e.offsetY - rect.y1
-      }
+        y: e.offsetY - rect.y1,
+      };
     }
   }
 
@@ -140,7 +156,7 @@ export class DragWatcher extends EventDispatcher {
   private isContain(event: MouseEvent): boolean {
     if (!this.viewport) return true;
 
-    const rect = DragWatcher.convertToRect(this.canvas, this.viewport);
+    const rect = DragWatcher.convertToRect(this.renderer, this.viewport);
 
     return (
       event.offsetX >= rect.x1 &&
@@ -151,30 +167,35 @@ export class DragWatcher extends EventDispatcher {
   }
 
   private static convertToRect(
-    canvas: HTMLCanvasElement,
+    renderer: WebGLRenderer,
     viewport: Vector4
-  ): { x1; x2; y1; y2 } {
+  ): { x1: number; x2: number; y1: number; y2: number } {
+    const size = renderer.getSize(new Vector2());
     return {
       x1: viewport.x,
       x2: viewport.x + viewport.width,
-      y1: canvas.height - (viewport.y + viewport.height),
-      y2: canvas.height - viewport.y,
+      y1: size.height - (viewport.y + viewport.height),
+      y2: size.height - viewport.y,
     };
   }
 
   public dispose(): void {
-    this.canvas.removeEventListener(
+    this.renderer.domElement.removeEventListener(
       "mousemove",
       this.onDocumentMouseMove,
       false
     );
-    this.canvas.removeEventListener(
+    this.renderer.domElement.removeEventListener(
       "mousedown",
       this.onDocumentMouseDown,
       false
     );
-    this.canvas.removeEventListener("mouseup", this.onDocumentMouseUp, false);
-    this.canvas.removeEventListener(
+    this.renderer.domElement.removeEventListener(
+      "mouseup",
+      this.onDocumentMouseUp,
+      false
+    );
+    this.renderer.domElement.removeEventListener(
       "mouseleave",
       this.onDocumentMouseLeave,
       false
