@@ -2,6 +2,9 @@ import * as THREE from "three";
 import { DragEventType, DragWatcher } from "../";
 import { TorusKnotGeometry, Mesh, MeshPhongMaterial } from "three";
 
+const W = 1280;
+const H = 640;
+
 const onDomContentsLoaded = () => {
   const canvas = document.getElementById("webgl-canvas");
   const renderOption = {
@@ -9,7 +12,7 @@ const onDomContentsLoaded = () => {
   };
   const renderer = new THREE.WebGLRenderer(renderOption);
   renderer.autoClear = false;
-  renderer.setSize(canvas.width, canvas.height);
+  renderer.setSize(W, H);
   renderer.setPixelRatio(window.devicePixelRatio);
 
   const box = new Mesh(
