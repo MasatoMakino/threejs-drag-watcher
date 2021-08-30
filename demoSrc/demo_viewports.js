@@ -82,7 +82,7 @@ class SceneSet {
     spot2.position.set(-8, -6, 2);
     this.scene.add(spot2);
 
-    this.dragManager = new DragWatcher(renderer, { viewport: this.viewPort });
+    this.dragManager = new DragWatcher(renderer.domElement, { viewport: this.viewPort });
     this.dragManager.addEventListener(DragEventType.DRAG, (e) => {
       console.log(
         this.bgColor,
