@@ -98,7 +98,7 @@ export class DragWatcher extends EventDispatcher {
             const rect = DragWatcher.convertToRect(this.canvas, this.viewport);
             return {
                 x: e.offsetX - rect.x1,
-                y: e.offsetY - rect.y1
+                y: e.offsetY - rect.y1,
             };
         }
     }
@@ -117,11 +117,18 @@ export class DragWatcher extends EventDispatcher {
             event.offsetY <= rect.y2);
     }
     static convertToRect(canvas, viewport) {
+        let height = 0;
+        if (canvas.style.width != null && canvas.style.height) {
+            height = parseInt(canvas.style.height);
+        }
+        else {
+            height = canvas.height / window.devicePixelRatio;
+        }
         return {
             x1: viewport.x,
             x2: viewport.x + viewport.width,
-            y1: canvas.height - (viewport.y + viewport.height),
-            y2: canvas.height - viewport.y,
+            y1: height - (viewport.y + viewport.height),
+            y2: height - viewport.y,
         };
     }
     dispose() {
