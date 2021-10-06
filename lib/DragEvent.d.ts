@@ -1,4 +1,5 @@
-export declare class DragEvent {
+import { Event } from "three";
+export declare class DragEvent implements Event {
     type: DragEventType;
     positionX: number;
     positionY: number;

@@ -1,11 +1,12 @@
 import { RAFTickerEvent } from "raf-ticker";
 import { EventDispatcher, Vector4 } from "three";
+import { DragEvent } from "./DragEvent";
 /**
  * 1.カンバス全体がドラッグされている状態を確認する
  * 2.マウスホイールが操作されている状態を確認する
  * この二つを実行するためのクラスです。
  */
-export declare class DragWatcher extends EventDispatcher {
+export declare class DragWatcher extends EventDispatcher<DragEvent> {
     protected positionX: number;
     protected positionY: number;
     protected isDrag: boolean;
