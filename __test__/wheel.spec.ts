@@ -10,7 +10,7 @@ describe("threejs-drag-watcher", () => {
     const { canvas, watcher } = generateWatcher();
     const spy = jest
       .spyOn(watcher, "dispatchEvent")
-      .mockImplementation((e: Event) => null);
+      .mockImplementation((e: DragEvent) => null);
     watcher.addEventListener(DragEventType.ZOOM, (e) => {});
 
     const expectWheel = (scroll: number) => {

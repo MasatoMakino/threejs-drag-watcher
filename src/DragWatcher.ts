@@ -8,7 +8,7 @@ import { DragEvent, DragEventType } from "./DragEvent";
  * この二つを実行するためのクラスです。
  */
 
-export class DragWatcher extends EventDispatcher {
+export class DragWatcher extends EventDispatcher<DragEvent> {
   protected positionX!: number;
   protected positionY!: number;
   protected isDrag: boolean = false;
