@@ -3,7 +3,7 @@ import { DragEventType } from "./DragEvent";
 import { DragWatcher } from "./DragWatcher";
 import { SleepEvent, SleepEventType } from "./SleepEvent";
 
-export class SleepWatcher extends EventDispatcher {
+export class SleepWatcher extends EventDispatcher<SleepEvent> {
   private dragWatcher: DragWatcher;
   private sleepTimerID;
   private timeOut_ms: number = 10 * 1000; //ミリsec
