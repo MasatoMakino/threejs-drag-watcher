@@ -1,5 +1,7 @@
-export class DragEvent {
-  public type: DragEventType;
+import { Event } from "three";
+
+export class DragEvent implements Event {
+  type: DragEventType;
 
   public positionX!: number;
   public positionY!: number;
@@ -17,5 +19,5 @@ export enum DragEventType {
   DRAG = "THREE_CANVAS_EVENT_DRAG",
   DRAG_END = "THREE_CANVAS_EVENT_DRAG_END",
   MOVE = "THREE_CANVAS_EVENT_MOVE",
-  ZOOM = "THREE_CANVAS_EVENT_ZOOM"
+  ZOOM = "THREE_CANVAS_EVENT_ZOOM",
 }
