@@ -1,1 +1,1 @@
-{"version":3,"file":"SleepEvent.d.ts","sourceRoot":"","sources":["../src/SleepEvent.ts"],"names":[],"mappings":"AAAA,oBAAY,cAAc;IACxB,KAAK,2BAA2B;IAChC,MAAM,4BAA4B;CACnC;AAED,qBAAa,UAAU;IACd,IAAI,EAAE,cAAc,CAAC;gBAEhB,IAAI,EAAE,cAAc;CAGjC"}
+{"version":3,"file":"SleepEvent.d.ts","sourceRoot":"","sources":["../src/SleepEvent.ts"],"names":[],"mappings":"AAAA,OAAO,EAAC,KAAK,EAAC,MAAM,OAAO,CAAC;AAE5B,oBAAY,cAAc;IACxB,KAAK,2BAA2B;IAChC,MAAM,4BAA4B;CACnC;AAED,qBAAa,UAAW,YAAW,KAAK;IACtC,IAAI,EAAE,cAAc,CAAC;gBAET,IAAI,EAAE,cAAc;CAGjC"}

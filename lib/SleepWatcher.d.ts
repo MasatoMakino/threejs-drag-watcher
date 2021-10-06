@@ -1,6 +1,7 @@
 import { EventDispatcher } from "three";
 import { DragWatcher } from "./DragWatcher";
-export declare class SleepWatcher extends EventDispatcher {
+import { SleepEvent } from "./SleepEvent";
+export declare class SleepWatcher extends EventDispatcher<SleepEvent> {
     private dragWatcher;
     private sleepTimerID;
     private timeOut_ms;
