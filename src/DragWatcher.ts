@@ -7,7 +7,6 @@ import { DragEvent, DragEventType } from "./DragEvent";
  * 2.マウスホイールが操作されている状態を確認する
  * この二つを実行するためのクラスです。
  */
-
 export class DragWatcher extends EventDispatcher<DragEvent> {
   protected positionX!: number;
   protected positionY!: number;
