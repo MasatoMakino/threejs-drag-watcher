@@ -14,7 +14,7 @@
 
 ## API 
 
-[API Document](https://masatomakino.github.io/threejs-drag-watcher/api/)
+[API Document](https://masatomakino.github.io/threejs-drag-watcher/api/index.html)
 
 ## License
 
