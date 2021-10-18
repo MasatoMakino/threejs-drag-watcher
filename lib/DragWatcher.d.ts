@@ -7,14 +7,14 @@ import { DragEvent } from "./DragEvent";
  * この二つを実行するためのクラスです。
  */
 export declare class DragWatcher extends EventDispatcher<DragEvent> {
-    protected positionX: number;
-    protected positionY: number;
-    protected isDrag: boolean;
-    protected canvas: HTMLCanvasElement;
-    protected hasThrottled: boolean;
+    private positionX;
+    private positionY;
+    private isDrag;
+    private canvas;
+    private hasThrottled;
     throttlingTime_ms: number;
-    protected throttlingDelta: number;
-    protected viewport?: Vector4;
+    private throttlingDelta;
+    private viewport?;
     constructor(canvas: HTMLCanvasElement, option?: {
         throttlingTime_ms?: number;
         viewport?: Vector4;
@@ -25,8 +25,8 @@ export declare class DragWatcher extends EventDispatcher<DragEvent> {
     private updatePosition;
     private dispatchDragEvent;
     private convertToLocalMousePoint;
-    protected onDocumentMouseLeave: (event: MouseEvent) => void;
-    protected onDocumentMouseUp: (event: MouseEvent) => void;
+    private onDocumentMouseLeave;
+    private onDocumentMouseUp;
     private onMouseWheel;
     /**
      * マウスポインタがviewport内に収まっているか否か
