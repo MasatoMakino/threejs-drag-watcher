@@ -8,15 +8,15 @@ import { DragEvent, DragEventType } from "./DragEvent";
  * この二つを実行するためのクラスです。
  */
 export class DragWatcher extends EventDispatcher<DragEvent> {
-  protected positionX!: number;
-  protected positionY!: number;
-  protected isDrag: boolean = false;
-  protected canvas: HTMLCanvasElement;
+  private positionX!: number;
+  private positionY!: number;
+  private isDrag: boolean = false;
+  private canvas: HTMLCanvasElement;
 
-  protected hasThrottled: boolean = false;
+  private hasThrottled: boolean = false;
   public throttlingTime_ms: number = 16;
-  protected throttlingDelta: number = 0;
-  protected viewport?: Vector4;
+  private throttlingDelta: number = 0;
+  private viewport?: Vector4;
 
   constructor(
     canvas: HTMLCanvasElement,
@@ -103,11 +103,11 @@ export class DragWatcher extends EventDispatcher<DragEvent> {
     }
   }
 
-  protected onDocumentMouseLeave = (event: MouseEvent) => {
+  private onDocumentMouseLeave = (event: MouseEvent) => {
     this.onDocumentMouseUp(event);
   };
 
-  protected onDocumentMouseUp = (event: MouseEvent) => {
+  private onDocumentMouseUp = (event: MouseEvent) => {
     if (!this.isDrag) return;
 
     this.isDrag = false;
