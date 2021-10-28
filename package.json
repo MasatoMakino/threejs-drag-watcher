@@ -21,10 +21,8 @@
     "@types/jest": "^27.0.2",
     "@types/three": "^0.132.2",
     "fake-mouse-event": "MasatoMakino/fake-mouse-event",
-    "gulp": "^4.0.2",
     "gulptask-demo-page": "MasatoMakino/gulptask-demo-page",
     "gulptask-dev-server": "MasatoMakino/gulptask-dev-server",
-    "gulptask-tsc": "MasatoMakino/gulptask-tsc",
     "husky": "^7.0.2",
     "jest": "^27.2.4",
     "prettier": "^2.4.1",
@@ -41,10 +39,14 @@
   "scripts": {
     "test": "jest",
     "coverage": "jest --coverage",
-    "start:dev": "gulp start_dev",
-    "build": "gulp build",
-    "build:clean": "gulp build_clean",
-    "checkout:docs": "git checkout HEAD ./docs/api/ ./docs/demo/"
+    "start:dev": "npm run server & npm run watch:tsc & npm run watch:demo",
+    "build": "npm run demo & npm run buildTS",
+    "demo": "npx gulptask-demo-page --body '<canvas id=\"webgl-canvas\" width=\"1280\" height=\"640\"></canvas>'",
+    "buildTS": "npx tsc --project tsconfig.cjs.json & tsc --project tsconfig.esm.json",
+    "typedocs": "npx typedoc --out ./docs/api src/index.ts",
+    "server": "npx gulptask-dev-server -b ./docs/demo",
+    "watch:demo": "npm run demo -- -W",
+    "watch:tsc": "tsc -W --incremental --project tsconfig.cjs.json & tsc -W --incremental --project tsconfig.esm.json"
   },
   "husky": {
     "hooks": {
