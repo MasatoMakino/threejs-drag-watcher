@@ -175,3 +175,5 @@ Temporary Items
 
 *.tsbuildinfo
 docs/
+lib
+esm

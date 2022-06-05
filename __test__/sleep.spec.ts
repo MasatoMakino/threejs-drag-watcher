@@ -1,5 +1,8 @@
-import { FakeMouseEventInit, getMouseEvent } from "fake-mouse-event";
-import { RAFTicker, RAFTickerEventType } from "raf-ticker";
+import {
+  FakeMouseEventInit,
+  getMouseEvent,
+} from "@masatomakino/fake-mouse-event";
+import { RAFTicker, RAFTickerEventType } from "@masatomakino/raf-ticker";
 import { SleepEventType, SleepWatcher } from "../src";
 import { generateWatcher } from "./WatcherGenerator";
 
