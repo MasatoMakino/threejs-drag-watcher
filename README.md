@@ -13,6 +13,12 @@
 
 [Demo](https://masatomakino.github.io/threejs-drag-watcher/demo/)
 
+## Install
+
+```shell
+npm i @masatomakino/threejs-drag-watcher --save-dev
+```
+
 ## API 
 
 [API Document](https://masatomakino.github.io/threejs-drag-watcher/api/index.html)
