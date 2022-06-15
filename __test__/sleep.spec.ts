@@ -173,6 +173,10 @@ describe("threejs-drag-watcher", () => {
     interval(timeout_ms * 0.6);
     expect(mockSleep).not.toBeCalled();
     clearMockFunctions();
+
+    interval(timeout_ms * 0.6);
+    expect(mockSleep).toBeCalled();
+    clearMockFunctions();
   });
 });
 
