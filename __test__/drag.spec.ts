@@ -16,17 +16,17 @@ const mockMoveCallback = jest.fn((e) => {
 });
 
 describe("threejs-drag-watcher", () => {
-  watcher.addEventListener(DragEventType.DRAG_START, mockCallback);
-  watcher.addEventListener(DragEventType.MOVE, mockMoveCallback);
-  watcher.addEventListener(DragEventType.DRAG, mockCallback);
-  watcher.addEventListener(DragEventType.DRAG_END, mockCallback);
+  watcher.addEventListener("drag_start", mockCallback);
+  watcher.addEventListener("move", mockMoveCallback);
+  watcher.addEventListener("drag", mockCallback);
+  watcher.addEventListener("drag_end", mockCallback);
 
   test("drag : mouse down", () => {
     dispatchMouseEvent("mousedown", {
       offsetX: 100,
       offsetY: 100,
     });
-    expectMouse(mockCallback, DragEventType.DRAG_START, {
+    expectMouse(mockCallback, "drag_start", {
       positionX: 100,
       positionY: 100,
     });
@@ -51,11 +51,11 @@ describe("threejs-drag-watcher", () => {
       offsetX: 105,
       offsetY: 105,
     });
-    expectMouse(mockMoveCallback, DragEventType.MOVE, {
+    expectMouse(mockMoveCallback, "move", {
       positionX: 105,
       positionY: 105,
     });
-    expectMouse(mockCallback, DragEventType.DRAG, {
+    expectMouse(mockCallback, "drag", {
       positionX: 105,
       positionY: 105,
       deltaX: 5,
@@ -91,12 +91,12 @@ describe("threejs-drag-watcher", () => {
       offsetX: 120,
       offsetY: 120,
     });
-    expectMouse(mockMoveCallback, DragEventType.MOVE, {
+    expectMouse(mockMoveCallback, "move", {
       positionX: 120,
       positionY: 120,
     });
     //delta値はスロットリング前の最後のものが利用される
-    expectMouse(mockCallback, DragEventType.DRAG, {
+    expectMouse(mockCallback, "drag", {
       positionX: 120,
       positionY: 120,
       deltaX: 15,
@@ -114,7 +114,7 @@ describe("threejs-drag-watcher", () => {
       offsetX: 105,
       offsetY: 105,
     });
-    expectMouse(mockMoveCallback, DragEventType.MOVE, {
+    expectMouse(mockMoveCallback, "move", {
       positionX: 105,
       positionY: 105,
     });

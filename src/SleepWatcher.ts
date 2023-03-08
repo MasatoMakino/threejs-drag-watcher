@@ -62,8 +62,8 @@ export class SleepWatcher extends EventDispatcher<SleepEvent> {
 
   protected startMouseEventListeners(): void {
     const watcher = this.dragWatcher;
-    watcher.addEventListener(DragEventType.ZOOM, this.resetTimer);
-    watcher.addEventListener(DragEventType.DRAG_START, this.pauseTimer);
+    watcher.addEventListener("zoom", this.resetTimer);
+    watcher.addEventListener("drag_start", this.pauseTimer);
   }
 
   private pauseTimer = () => {
@@ -71,16 +71,16 @@ export class SleepWatcher extends EventDispatcher<SleepEvent> {
     this.wakeup();
 
     const watcher = this.dragWatcher;
-    watcher.removeEventListener(DragEventType.DRAG_START, this.pauseTimer);
-    watcher.addEventListener(DragEventType.DRAG_END, this.resumeTimer);
+    watcher.removeEventListener("drag_start", this.pauseTimer);
+    watcher.addEventListener("drag_end", this.resumeTimer);
   };
 
   private resumeTimer = () => {
     this.resetTimer();
 
     const watcher = this.dragWatcher;
-    watcher.addEventListener(DragEventType.DRAG_START, this.pauseTimer);
-    watcher.removeEventListener(DragEventType.DRAG_END, this.resumeTimer);
+    watcher.addEventListener("drag_start", this.pauseTimer);
+    watcher.removeEventListener("drag_end", this.resumeTimer);
   };
 
   /**
@@ -94,8 +94,8 @@ export class SleepWatcher extends EventDispatcher<SleepEvent> {
 
   protected stopMouseEventListeners(): void {
     const watcher = this.dragWatcher;
-    watcher.removeEventListener(DragEventType.ZOOM, this.resetTimer);
-    watcher.removeEventListener(DragEventType.DRAG_START, this.pauseTimer);
-    watcher.removeEventListener(DragEventType.DRAG_END, this.resumeTimer);
+    watcher.removeEventListener("zoom", this.resetTimer);
+    watcher.removeEventListener("drag_start", this.pauseTimer);
+    watcher.removeEventListener("drag_end", this.resumeTimer);
   }
 }
