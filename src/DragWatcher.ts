@@ -1,8 +1,4 @@
-import {
-  RAFTicker,
-  RAFTickerEvent,
-  RAFTickerEventType,
-} from "@masatomakino/raf-ticker";
+import { RAFTicker, RAFTickerEventContext } from "@masatomakino/raf-ticker";
 import { EventDispatcher, Vector4 } from "three";
 import { DragEvent, DragEventType } from "./DragEvent";
 
@@ -42,10 +38,10 @@ export class DragWatcher extends EventDispatcher<DragEvent> {
     );
     this.canvas.addEventListener("wheel", this.onMouseWheel, false);
 
-    RAFTicker.on(RAFTickerEventType.tick, this.onTick);
+    RAFTicker.on("tick", this.onTick);
   }
 
-  protected onTick = (e: RAFTickerEvent) => {
+  protected onTick = (e: RAFTickerEventContext) => {
     this.throttlingDelta += e.delta;
     if (this.throttlingDelta < this.throttlingTime_ms) return;
     this.hasThrottled = false;
@@ -188,6 +184,6 @@ export class DragWatcher extends EventDispatcher<DragEvent> {
       this.onDocumentMouseLeave,
       false
     );
-    RAFTicker.off(RAFTickerEventType.tick, this.onTick);
+    RAFTicker.off("tick", this.onTick);
   }
 }

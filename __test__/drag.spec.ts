@@ -2,7 +2,7 @@ import {
   FakeMouseEventInit,
   getMouseEvent,
 } from "@masatomakino/fake-mouse-event";
-import { RAFTicker, RAFTickerEventType } from "@masatomakino/raf-ticker";
+import { RAFTicker } from "@masatomakino/raf-ticker";
 import { DragEventType } from "../src";
 import { generateWatcher } from "./WatcherGenerator";
 import Mock = jest.Mock;
@@ -71,7 +71,7 @@ describe("threejs-drag-watcher", () => {
     expectMouseNotCall(mockCallback);
 
     //連続呼び出しをしてもスロットリングされる
-    RAFTicker.emit(RAFTickerEventType.tick, {
+    RAFTicker.emit("tick", {
       timestamp: 0,
       delta: watcher.throttlingTime_ms / 2,
     });
@@ -83,7 +83,7 @@ describe("threejs-drag-watcher", () => {
     expectMouseNotCall(mockCallback);
 
     //時間経過後にスロットリングは解除される。
-    RAFTicker.emit(RAFTickerEventType.tick, {
+    RAFTicker.emit("tick", {
       timestamp: 0,
       delta: watcher.throttlingTime_ms * 3,
     });
@@ -131,7 +131,7 @@ const dispatchMouseEvent = (type: string, option?: FakeMouseEventInit) => {
 
 const clearCanvas = () => {
   dispatchMouseEvent("mouseleave");
-  RAFTicker.emit(RAFTickerEventType.tick, {
+  RAFTicker.emit("tick", {
     timestamp: 0,
     delta: watcher.throttlingTime_ms * 2,
   });

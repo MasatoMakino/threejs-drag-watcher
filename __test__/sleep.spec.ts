@@ -2,7 +2,7 @@ import {
   FakeMouseEventInit,
   getMouseEvent,
 } from "@masatomakino/fake-mouse-event";
-import { RAFTicker, RAFTickerEventType } from "@masatomakino/raf-ticker";
+import { RAFTicker } from "@masatomakino/raf-ticker";
 import { SleepEventType, SleepWatcher } from "../src";
 import { generateWatcher } from "./WatcherGenerator";
 
@@ -194,7 +194,7 @@ const clearMockFunctions = () => {
  */
 const interval = (timeout_ms: number) => {
   jest.advanceTimersByTime(timeout_ms);
-  RAFTicker.emit(RAFTickerEventType.tick, {
+  RAFTicker.emit("tick", {
     timestamp: 0,
     delta: timeout_ms,
   });
