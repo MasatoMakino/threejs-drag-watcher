@@ -1,14 +1,7 @@
-import {Event} from "three";
+import { Event } from "three";
 
-export enum SleepEventType {
-  SLEEP = "SLEEP_EVENT_TYPE_SLEEP",
-  WAKEUP = "SLEEP_EVENT_TYPE_WAKEUP"
-}
+export type SleepEventType = "sleep" | "wakeup";
 
-export class SleepEvent implements Event{
+export interface SleepEvent extends Event {
   type: SleepEventType;
-
-  constructor(type: SleepEventType) {
-    this.type = type;
-  }
 }

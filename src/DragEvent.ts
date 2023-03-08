@@ -1,23 +1,17 @@
 import { Event } from "three";
 
-export class DragEvent implements Event {
+export interface DragEvent extends Event {
   type: DragEventType;
-
-  public positionX!: number;
-  public positionY!: number;
-  public deltaX!: number;
-  public deltaY!: number;
-  public deltaScroll!: number;
-
-  constructor(type: DragEventType) {
-    this.type = type;
-  }
+  positionX?: number;
+  positionY?: number;
+  deltaX?: number;
+  deltaY?: number;
+  deltaScroll?: number;
 }
 
-export enum DragEventType {
-  DRAG_START = "THREE_CANVAS_EVENT_DRAG_START",
-  DRAG = "THREE_CANVAS_EVENT_DRAG",
-  DRAG_END = "THREE_CANVAS_EVENT_DRAG_END",
-  MOVE = "THREE_CANVAS_EVENT_MOVE",
-  ZOOM = "THREE_CANVAS_EVENT_ZOOM",
-}
+export type DragEventType =
+  | "drag_start"
+  | "drag"
+  | "drag_end"
+  | "move"
+  | "zoom";

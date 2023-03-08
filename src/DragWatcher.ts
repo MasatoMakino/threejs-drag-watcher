@@ -56,17 +56,17 @@ export class DragWatcher extends EventDispatcher<DragEvent> {
     this.isDrag = true;
     this.updatePosition(event);
 
-    this.dispatchDragEvent(DragEventType.DRAG_START, event);
+    this.dispatchDragEvent("drag_start", event);
   };
 
   protected onDocumentMouseMove = (event: MouseEvent) => {
     if (this.hasThrottled) return;
     this.hasThrottled = true;
 
-    this.dispatchDragEvent(DragEventType.MOVE, event);
+    this.dispatchDragEvent("move", event);
 
     if (!this.isDrag) return;
-    this.dispatchDragEvent(DragEventType.DRAG, event);
+    this.dispatchDragEvent("drag", event);
     this.updatePosition(event);
   };
 
@@ -76,13 +76,13 @@ export class DragWatcher extends EventDispatcher<DragEvent> {
   }
 
   private dispatchDragEvent(type: DragEventType, event: MouseEvent): void {
-    const evt: DragEvent = new DragEvent(type);
+    const evt: DragEvent = { type };
 
     const { x, y } = this.convertToLocalMousePoint(event);
     evt.positionX = x;
     evt.positionY = y;
 
-    if (type === DragEventType.DRAG) {
+    if (type === "drag") {
       evt.deltaX = event.offsetX - this.positionX;
       evt.deltaY = event.offsetY - this.positionY;
     }
@@ -112,11 +112,11 @@ export class DragWatcher extends EventDispatcher<DragEvent> {
 
     this.isDrag = false;
 
-    this.dispatchDragEvent(DragEventType.DRAG_END, event);
+    this.dispatchDragEvent("drag_end", event);
   };
 
   private onMouseWheel = (e: any) => {
-    const evt: DragEvent = new DragEvent(DragEventType.ZOOM);
+    const evt: DragEvent = { type: "zoom" };
 
     if (e.detail != null) {
       evt.deltaScroll = e.detail < 0 ? 1 : -1;

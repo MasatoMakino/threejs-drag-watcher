@@ -1,4 +1,4 @@
-import { DragEvent, DragEventType } from "../src";
+import { DragEvent } from "../src";
 import { generateWatcher } from "./WatcherGenerator";
 
 const getBasicOption = () => {
@@ -11,10 +11,10 @@ describe("threejs-drag-watcher", () => {
     const spy = jest
       .spyOn(watcher, "dispatchEvent")
       .mockImplementation((e: DragEvent) => null);
-    watcher.addEventListener(DragEventType.ZOOM, (e) => {});
+    watcher.addEventListener("zoom", (e) => {});
 
     const expectWheel = (scroll: number) => {
-      const dragEvt = new DragEvent(DragEventType.ZOOM);
+      const dragEvt: DragEvent = { type: "zoom" };
       dragEvt.deltaScroll = scroll;
       expect(spy).toHaveBeenLastCalledWith(dragEvt);
     };
@@ -31,7 +31,7 @@ describe("threejs-drag-watcher", () => {
     dispatchWheelEvent({ deltaY: -1 });
     expectWheel(-1);
 
-    watcher.removeEventListener(DragEventType.ZOOM, (e) => {});
+    watcher.removeEventListener("zoom", (e) => {});
     spy.mockClear();
   });
 });
