@@ -1,6 +1,6 @@
 {
   "name": "@masatomakino/threejs-drag-watcher",
-  "version": "0.7.9",
+  "version": "0.8.0",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "module": "./esm/index.js",
