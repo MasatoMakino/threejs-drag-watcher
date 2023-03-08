@@ -41,13 +41,13 @@ export class SleepWatcher extends EventDispatcher<SleepEvent> {
 
   private sleep = () => {
     if (this.isSleep) return;
-    this.dispatchEvent(new SleepEvent(SleepEventType.SLEEP));
+    this.dispatchEvent({ type: "sleep" });
     this.isSleep = true;
   };
 
   private wakeup = () => {
     if (!this.isSleep) return;
-    this.dispatchEvent(new SleepEvent(SleepEventType.WAKEUP));
+    this.dispatchEvent({ type: "wakeup" });
     this.isSleep = false;
   };
 

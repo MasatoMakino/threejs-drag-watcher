@@ -14,8 +14,8 @@ const timeout_ms = 10 * 1000;
 const sleepWatcher = new SleepWatcher(watcher, { timeOut_ms: timeout_ms });
 
 describe("threejs-drag-watcher", () => {
-  sleepWatcher.addEventListener(SleepEventType.WAKEUP, mockWakeup);
-  sleepWatcher.addEventListener(SleepEventType.SLEEP, mockSleep);
+  sleepWatcher.addEventListener("wakeup", mockWakeup);
+  sleepWatcher.addEventListener("sleep", mockSleep);
 
   beforeEach(() => {
     jest.useFakeTimers();
