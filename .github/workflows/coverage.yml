@@ -20,7 +20,7 @@ jobs:
           cache: "npm"
       - run: npm ci
       - name: Code Climate Coverage Action
-        uses: paambaati/codeclimate-action@v3.2.0
+        uses: paambaati/codeclimate-action@v4.0.0
         env:
           CC_TEST_REPORTER_ID: f9bf8ccfdd5856c7c475cf07f6aff9d652e6b4278ed3032094e3a542604995bb
         with:
