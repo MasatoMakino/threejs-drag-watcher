@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { DragEventType, DragWatcher } from "../";
+import { DragWatcher } from "../";
 import { TorusKnotGeometry, Mesh, MeshPhongMaterial } from "three";
 
 const W = 1280;
@@ -82,8 +82,10 @@ class SceneSet {
     spot2.position.set(-8, -6, 2);
     this.scene.add(spot2);
 
-    this.dragManager = new DragWatcher(renderer.domElement, { viewport: this.viewPort });
-    this.dragManager.addEventListener(DragEventType.DRAG, (e) => {
+    this.dragManager = new DragWatcher(renderer.domElement, {
+      viewport: this.viewPort,
+    });
+    this.dragManager.addEventListener("drag", (e) => {
       console.log(
         this.bgColor,
         `throttlingTime_ms : ${this.dragManager.throttlingTime_ms}`,
@@ -91,13 +93,13 @@ class SceneSet {
         e
       );
     });
-    this.dragManager.addEventListener(DragEventType.DRAG_START, (e) => {
+    this.dragManager.addEventListener("drag_start", (e) => {
       console.log(e);
     });
-    this.dragManager.addEventListener(DragEventType.DRAG_END, (e) => {
+    this.dragManager.addEventListener("drag_end", (e) => {
       console.log(e);
     });
-    this.dragManager.addEventListener(DragEventType.ZOOM, (e) => {
+    this.dragManager.addEventListener("zoom", (e) => {
       console.log(e);
     });
   }
