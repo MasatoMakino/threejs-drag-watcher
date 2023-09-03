@@ -20,11 +20,13 @@ export class DragWatcher extends EventDispatcher<DragEvent> {
 
   constructor(
     canvas: HTMLCanvasElement,
-    option?: { throttlingTime_ms?: number; viewport?: Vector4 }
+    option?: { throttlingTime_ms?: number; viewport?: Vector4 },
   ) {
     super();
 
-    this.throttlingTime_ms ??= option?.throttlingTime_ms;
+    if (option?.throttlingTime_ms != null) {
+      this.throttlingTime_ms = option.throttlingTime_ms;
+    }
     this.viewport ??= option?.viewport;
 
     this.canvas = canvas;
@@ -34,7 +36,7 @@ export class DragWatcher extends EventDispatcher<DragEvent> {
     this.canvas.addEventListener(
       "mouseleave",
       this.onDocumentMouseLeave,
-      false
+      false,
     );
     this.canvas.addEventListener("wheel", this.onMouseWheel, false);
 
@@ -151,7 +153,7 @@ export class DragWatcher extends EventDispatcher<DragEvent> {
 
   private static convertToRect(
     canvas: HTMLCanvasElement,
-    viewport: Vector4
+    viewport: Vector4,
   ): { x1: number; x2: number; y1: number; y2: number } {
     let height = 0;
     if (canvas.style.width != null && canvas.style.height) {
@@ -171,18 +173,18 @@ export class DragWatcher extends EventDispatcher<DragEvent> {
     this.canvas.removeEventListener(
       "mousemove",
       this.onDocumentMouseMove,
-      false
+      false,
     );
     this.canvas.removeEventListener(
       "mousedown",
       this.onDocumentMouseDown,
-      false
+      false,
     );
     this.canvas.removeEventListener("mouseup", this.onDocumentMouseUp, false);
     this.canvas.removeEventListener(
       "mouseleave",
       this.onDocumentMouseLeave,
-      false
+      false,
     );
     RAFTicker.off("tick", this.onTick);
   }

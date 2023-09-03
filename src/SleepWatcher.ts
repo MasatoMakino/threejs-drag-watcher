@@ -2,13 +2,13 @@ import { EventDispatcher } from "three";
 import { DragEventType, DragWatcher, SleepEvent, SleepEventType } from "./";
 
 export class SleepWatcher extends EventDispatcher<SleepEvent> {
-  private sleepTimerID;
+  private sleepTimerID?: number;
   private timeOut_ms: number = 10 * 1000; //ミリsec
   private isSleep = false;
 
   constructor(
     private dragWatcher: DragWatcher,
-    option?: { timeOut_ms?: number }
+    option?: { timeOut_ms?: number },
   ) {
     super();
     if (!option) option = {};
@@ -22,7 +22,7 @@ export class SleepWatcher extends EventDispatcher<SleepEvent> {
     this.stopTimer();
     this.wakeup();
 
-    this.sleepTimerID = setTimeout(this.sleep, this.timeOut_ms);
+    this.sleepTimerID = window.setTimeout(this.sleep, this.timeOut_ms);
   }
 
   /**
@@ -36,7 +36,7 @@ export class SleepWatcher extends EventDispatcher<SleepEvent> {
   private stopTimer(): void {
     if (this.sleepTimerID == null) return;
     clearTimeout(this.sleepTimerID);
-    this.sleepTimerID = null;
+    this.sleepTimerID = undefined;
   }
 
   private sleep = () => {
