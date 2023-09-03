@@ -139,7 +139,11 @@ const clearCanvas = () => {
   mockMoveCallback.mockClear();
 };
 
-const expectMouse = (mockFunc: Mock, type: DragEventType, option: object) => {
+const expectMouse = (
+  mockFunc: Mock,
+  type: DragEventType,
+  option: { [key: string]: unknown },
+) => {
   const evt = mockFunc.mock.calls[0][0];
   expect(evt.type).toBe(type);
   Object.keys(option).forEach((key) => {
