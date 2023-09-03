@@ -36,7 +36,7 @@ export class SleepWatcher extends EventDispatcher<SleepEvent> {
   private stopTimer(): void {
     if (this.sleepTimerID == null) return;
     clearTimeout(this.sleepTimerID);
-    this.sleepTimerID = null;
+    this.sleepTimerID = undefined;
   }
 
   private sleep = () => {
