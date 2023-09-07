@@ -18,10 +18,8 @@
     "threejs"
   ],
   "peerDependencies": {
+    "@masatomakino/raf-ticker": "^0.5.3",
     "three": ">=0.126.0 <1.0.0"
-  },
-  "dependencies": {
-    "@masatomakino/raf-ticker": "^0.5.1"
   },
   "devDependencies": {
     "@masatomakino/fake-mouse-event": "^0.0.12",
@@ -35,7 +33,6 @@
     "lint-staged": "^14.0.0",
     "prettier": "^3.0.1",
     "ts-jest": "^29.1.0",
-    "ts-node": "^10.9.1",
     "typedoc": "^0.25.0",
     "typescript": "^5.1.3"
   },
