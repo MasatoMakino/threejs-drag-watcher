@@ -1,5 +1,5 @@
-import { DragEvent } from "../src";
-import { generateWatcher } from "./WatcherGenerator";
+import { DragEvent } from "../src/index.js";
+import { generateWatcher } from "./WatcherGenerator.js";
 
 const getBasicOption = () => {
   return { bubbles: true, cancelable: true };
