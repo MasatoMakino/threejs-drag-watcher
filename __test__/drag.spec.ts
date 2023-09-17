@@ -3,8 +3,8 @@ import {
   getMouseEvent,
 } from "@masatomakino/fake-mouse-event";
 import { RAFTicker } from "@masatomakino/raf-ticker";
-import { DragEventType } from "../src";
-import { generateWatcher } from "./WatcherGenerator";
+import { DragEventType } from "../src/index.js";
+import { generateWatcher } from "./WatcherGenerator.js";
 import Mock = jest.Mock;
 
 const { canvas, watcher } = generateWatcher();

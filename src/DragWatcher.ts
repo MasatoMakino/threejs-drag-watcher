@@ -1,6 +1,6 @@
 import { RAFTicker, RAFTickerEventContext } from "@masatomakino/raf-ticker";
 import { EventDispatcher, Vector4 } from "three";
-import { DragEvent, DragEventType } from "./DragEvent";
+import { DragEvent, DragEventType } from "./DragEvent.js";
 
 /**
  * 1.カンバス全体がドラッグされている状態を確認する

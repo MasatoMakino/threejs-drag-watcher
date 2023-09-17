@@ -1,4 +1,4 @@
-import { DragWatcher } from "../src";
+import { DragWatcher } from "../src/index.js";
 
 export function generateWatcher(): {
   canvas: HTMLCanvasElement;
