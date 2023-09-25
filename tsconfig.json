@@ -1,11 +1,18 @@
 {
   "compilerOptions": {
-    "target": "ES2015",
+    "target": "ES2021",
+    "module": "ES2022",
+    "lib": ["ES2021"],
+    "outDir": "esm",
 
+    "declaration": true,
+    "declarationMap": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "strict": true,
     "noImplicitOverride": true
-  }
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "__test__"]
 }

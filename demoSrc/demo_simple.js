@@ -1,4 +1,4 @@
-import { DragWatcher, SleepWatcher } from "../";
+import { DragWatcher, SleepWatcher } from "../esm/index.js";
 import * as THREE from "three";
 
 const W = 1280;
@@ -31,7 +31,7 @@ const onDomContentsLoaded = () => {
     console.log(
       `throttlingTime_ms : ${watcher.throttlingTime_ms}`,
       `TimeStamp : ${performance.now()}`,
-      e
+      e,
     );
   });
   watcher.addEventListener("drag_start", (e) => {

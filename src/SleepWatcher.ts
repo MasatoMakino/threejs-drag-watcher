@@ -1,5 +1,5 @@
 import { EventDispatcher } from "three";
-import { DragEventType, DragWatcher, SleepEvent, SleepEventType } from "./";
+import { DragWatcher, SleepEvent } from "./index.js";
 
 export class SleepWatcher extends EventDispatcher<SleepEvent> {
   private sleepTimerID?: number;

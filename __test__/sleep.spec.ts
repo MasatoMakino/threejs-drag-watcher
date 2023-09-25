@@ -3,7 +3,7 @@ import {
   getMouseEvent,
 } from "@masatomakino/fake-mouse-event";
 import { RAFTicker } from "@masatomakino/raf-ticker";
-import { SleepEventType, SleepWatcher } from "../src";
+import { SleepWatcher } from "../src/index.js";
 import { generateWatcher } from "./WatcherGenerator";
 
 const { canvas, watcher } = generateWatcher();

@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { DragWatcher } from "../";
+import { DragWatcher } from "../esm/index.js";
 import { TorusKnotGeometry, Mesh, MeshPhongMaterial } from "three";
 
 const W = 1280;
@@ -21,7 +21,7 @@ const onDomContentsLoaded = () => {
       color: 0xff0000,
       specular: 0xffffff,
       shininess: 30,
-    })
+    }),
   );
   const tri = new Mesh(
     new TorusKnotGeometry(10, 3, 100, 16),
@@ -29,7 +29,7 @@ const onDomContentsLoaded = () => {
       color: 0x0000ff,
       specular: 0xffffff,
       shininess: 30,
-    })
+    }),
   );
   const scene1 = new SceneSet(renderer, 20, 20, 400, 300, box, 0x222222);
   const scene2 = new SceneSet(renderer, 480, 360, 120, 60, tri, 0x444444);
@@ -90,7 +90,7 @@ class SceneSet {
         this.bgColor,
         `throttlingTime_ms : ${this.dragManager.throttlingTime_ms}`,
         `TimeStamp : ${performance.now()}`,
-        e
+        e,
       );
     });
     this.dragManager.addEventListener("drag_start", (e) => {
