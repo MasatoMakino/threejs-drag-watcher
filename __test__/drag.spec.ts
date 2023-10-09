@@ -3,9 +3,9 @@ import {
   getMouseEvent,
 } from "@masatomakino/fake-mouse-event";
 import { RAFTicker } from "@masatomakino/raf-ticker";
-import { DragEventType } from "../src/index.js";
 import { generateWatcher } from "./WatcherGenerator.js";
 import Mock = jest.Mock;
+import { DragEventMap } from "../src/index.js";
 
 const { canvas, watcher } = generateWatcher();
 const mockCallback = jest.fn((e) => {
@@ -16,10 +16,10 @@ const mockMoveCallback = jest.fn((e) => {
 });
 
 describe("threejs-drag-watcher", () => {
-  watcher.addEventListener("drag_start", mockCallback);
-  watcher.addEventListener("move", mockMoveCallback);
-  watcher.addEventListener("drag", mockCallback);
-  watcher.addEventListener("drag_end", mockCallback);
+  watcher.on("drag_start", mockCallback);
+  watcher.on("move", mockMoveCallback);
+  watcher.on("drag", mockCallback);
+  watcher.on("drag_end", mockCallback);
 
   test("drag : mouse down", () => {
     dispatchMouseEvent("mousedown", {
@@ -141,7 +141,7 @@ const clearCanvas = () => {
 
 const expectMouse = (
   mockFunc: Mock,
-  type: DragEventType,
+  type: keyof DragEventMap,
   option: { [key: string]: unknown },
 ) => {
   const evt = mockFunc.mock.calls[0][0];

@@ -8,15 +8,13 @@ const getBasicOption = () => {
 describe("threejs-drag-watcher", () => {
   test("wheel", () => {
     const { canvas, watcher } = generateWatcher();
-    const spy = jest
-      .spyOn(watcher, "dispatchEvent")
-      .mockImplementation((e: DragEvent) => null);
-    watcher.addEventListener("zoom", (e) => {});
+    const mockZoom = jest.fn((e) => e);
+    watcher.on("zoom", mockZoom);
 
     const expectWheel = (scroll: number) => {
       const dragEvt: DragEvent = { type: "zoom" };
       dragEvt.deltaScroll = scroll;
-      expect(spy).toHaveBeenLastCalledWith(dragEvt);
+      expect(mockZoom).toHaveBeenLastCalledWith(dragEvt);
     };
 
     const dispatchWheelEvent = (option: object) => {
@@ -31,7 +29,7 @@ describe("threejs-drag-watcher", () => {
     dispatchWheelEvent({ deltaY: -1 });
     expectWheel(-1);
 
-    watcher.removeEventListener("zoom", (e) => {});
-    spy.mockClear();
+    watcher.off("zoom", mockZoom);
+    mockZoom.mockClear();
   });
 });

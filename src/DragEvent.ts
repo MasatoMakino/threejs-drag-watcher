@@ -1,7 +1,5 @@
-import { Event } from "three";
-
-export interface DragEvent extends Event {
-  type: DragEventType;
+export interface DragEvent {
+  type: keyof DragEventMap;
   positionX?: number;
   positionY?: number;
   deltaX?: number;
@@ -9,9 +7,10 @@ export interface DragEvent extends Event {
   deltaScroll?: number;
 }
 
-export type DragEventType =
-  | "drag_start"
-  | "drag"
-  | "drag_end"
-  | "move"
-  | "zoom";
+export interface DragEventMap {
+  drag_start: (e: DragEvent) => void;
+  drag: (e: DragEvent) => void;
+  drag_end: (e: DragEvent) => void;
+  move: (e: DragEvent) => void;
+  zoom: (e: DragEvent) => void;
+}
