@@ -1,7 +1,7 @@
-import { Event } from "three";
-
-export type SleepEventType = "sleep" | "wakeup";
-
-export interface SleepEvent extends Event {
-  type: SleepEventType;
+export interface SleepEvent {
+  type: keyof SleepEventMap;
+}
+export interface SleepEventMap {
+  sleep: (e: SleepEvent) => void;
+  wakeup: (e: SleepEvent) => void;
 }

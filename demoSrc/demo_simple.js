@@ -27,20 +27,20 @@ const onDomContentsLoaded = () => {
 
   //ドラッグ監視処理を開始
   const watcher = new DragWatcher(renderer.domElement);
-  watcher.addEventListener("drag", (e) => {
+  watcher.on("drag", (e) => {
     console.log(
       `throttlingTime_ms : ${watcher.throttlingTime_ms}`,
       `TimeStamp : ${performance.now()}`,
       e,
     );
   });
-  watcher.addEventListener("drag_start", (e) => {
+  watcher.on("drag_start", (e) => {
     console.log(e);
   });
-  watcher.addEventListener("drag_end", (e) => {
+  watcher.on("drag_end", (e) => {
     console.log(e);
   });
-  watcher.addEventListener("zoom", (e) => {
+  watcher.on("zoom", (e) => {
     console.log(e);
   });
 

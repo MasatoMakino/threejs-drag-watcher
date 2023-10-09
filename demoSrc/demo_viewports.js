@@ -85,7 +85,7 @@ class SceneSet {
     this.dragManager = new DragWatcher(renderer.domElement, {
       viewport: this.viewPort,
     });
-    this.dragManager.addEventListener("drag", (e) => {
+    this.dragManager.on("drag", (e) => {
       console.log(
         this.bgColor,
         `throttlingTime_ms : ${this.dragManager.throttlingTime_ms}`,
@@ -93,13 +93,13 @@ class SceneSet {
         e,
       );
     });
-    this.dragManager.addEventListener("drag_start", (e) => {
+    this.dragManager.on("drag_start", (e) => {
       console.log(e);
     });
-    this.dragManager.addEventListener("drag_end", (e) => {
+    this.dragManager.on("drag_end", (e) => {
       console.log(e);
     });
-    this.dragManager.addEventListener("zoom", (e) => {
+    this.dragManager.on("zoom", (e) => {
       console.log(e);
     });
   }

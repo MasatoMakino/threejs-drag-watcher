@@ -1,7 +1,7 @@
-import { EventDispatcher } from "three";
-import { DragWatcher, SleepEvent } from "./index.js";
+import { DragWatcher, SleepEventMap } from "./index.js";
+import EventEmitter from "eventemitter3";
 
-export class SleepWatcher extends EventDispatcher<SleepEvent> {
+export class SleepWatcher extends EventEmitter<SleepEventMap> {
   private sleepTimerID?: number;
   private timeOut_ms: number = 10 * 1000; //ミリsec
   private isSleep = false;
@@ -41,13 +41,13 @@ export class SleepWatcher extends EventDispatcher<SleepEvent> {
 
   private sleep = () => {
     if (this.isSleep) return;
-    this.dispatchEvent({ type: "sleep" });
+    this.emit("sleep", { type: "sleep" });
     this.isSleep = true;
   };
 
   private wakeup = () => {
     if (!this.isSleep) return;
-    this.dispatchEvent({ type: "wakeup" });
+    this.emit("wakeup", { type: "wakeup" });
     this.isSleep = false;
   };
 
@@ -62,8 +62,8 @@ export class SleepWatcher extends EventDispatcher<SleepEvent> {
 
   protected startMouseEventListeners(): void {
     const watcher = this.dragWatcher;
-    watcher.addEventListener("zoom", this.resetTimer);
-    watcher.addEventListener("drag_start", this.pauseTimer);
+    watcher.on("zoom", this.resetTimer);
+    watcher.on("drag_start", this.pauseTimer);
   }
 
   private pauseTimer = () => {
@@ -71,16 +71,16 @@ export class SleepWatcher extends EventDispatcher<SleepEvent> {
     this.wakeup();
 
     const watcher = this.dragWatcher;
-    watcher.removeEventListener("drag_start", this.pauseTimer);
-    watcher.addEventListener("drag_end", this.resumeTimer);
+    watcher.off("drag_start", this.pauseTimer);
+    watcher.on("drag_end", this.resumeTimer);
   };
 
   private resumeTimer = () => {
     this.resetTimer();
 
     const watcher = this.dragWatcher;
-    watcher.addEventListener("drag_start", this.pauseTimer);
-    watcher.removeEventListener("drag_end", this.resumeTimer);
+    watcher.on("drag_start", this.pauseTimer);
+    watcher.off("drag_end", this.resumeTimer);
   };
 
   /**
@@ -94,8 +94,8 @@ export class SleepWatcher extends EventDispatcher<SleepEvent> {
 
   protected stopMouseEventListeners(): void {
     const watcher = this.dragWatcher;
-    watcher.removeEventListener("zoom", this.resetTimer);
-    watcher.removeEventListener("drag_start", this.pauseTimer);
-    watcher.removeEventListener("drag_end", this.resumeTimer);
+    watcher.off("zoom", this.resetTimer);
+    watcher.off("drag_start", this.pauseTimer);
+    watcher.off("drag_end", this.resumeTimer);
   }
 }

@@ -1,13 +1,14 @@
 import { RAFTicker, RAFTickerEventContext } from "@masatomakino/raf-ticker";
-import { EventDispatcher, Vector4 } from "three";
-import { DragEvent, DragEventType } from "./DragEvent.js";
+import { Vector4 } from "three";
+import { DragEvent, DragEventMap } from "./DragEvent.js";
+import EventEmitter from "eventemitter3";
 
 /**
  * 1.カンバス全体がドラッグされている状態を確認する
  * 2.マウスホイールが操作されている状態を確認する
  * この二つを実行するためのクラスです。
  */
-export class DragWatcher extends EventDispatcher<DragEvent> {
+export class DragWatcher extends EventEmitter<DragEventMap> {
   private positionX!: number;
   private positionY!: number;
   private isDrag: boolean = false;
@@ -77,7 +78,7 @@ export class DragWatcher extends EventDispatcher<DragEvent> {
     this.positionY = event.offsetY;
   }
 
-  private dispatchDragEvent(type: DragEventType, event: MouseEvent): void {
+  private dispatchDragEvent(type: keyof DragEventMap, event: MouseEvent): void {
     const evt: DragEvent = { type };
 
     const { x, y } = this.convertToLocalMousePoint(event);
@@ -88,7 +89,7 @@ export class DragWatcher extends EventDispatcher<DragEvent> {
       evt.deltaX = event.offsetX - this.positionX;
       evt.deltaY = event.offsetY - this.positionY;
     }
-    this.dispatchEvent(evt);
+    this.emit(type, evt);
   }
   private convertToLocalMousePoint(e: MouseEvent): { x: number; y: number } {
     if (!this.viewport) {
@@ -130,7 +131,7 @@ export class DragWatcher extends EventDispatcher<DragEvent> {
       evt.deltaScroll = e.deltaY > 0 ? 1 : -1;
     }
 
-    this.dispatchEvent(evt);
+    this.emit(evt.type, evt);
   };
 
   /**
