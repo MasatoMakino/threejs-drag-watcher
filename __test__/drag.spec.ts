@@ -1,53 +1,53 @@
-import {
-  FakeMouseEventInit,
-  getMouseEvent,
-} from "@masatomakino/fake-mouse-event";
 import { RAFTicker } from "@masatomakino/raf-ticker";
-import { generateWatcher } from "./WatcherGenerator.js";
-import { describe, expect, test, vi, Mock } from "vitest";
-import { DragEventMap } from "../src/index.js";
+import {
+  clearCanvas,
+  dispatchMouseEvent,
+  expectMouse,
+  expectMouseNotCall,
+  generateWatcher,
+} from "./WatcherGenerator.js";
+import { describe, test, vi } from "vitest";
 
 const { canvas, watcher } = generateWatcher();
-const mockCallback = vi.fn((e) => {
+const mockDragCallback = vi.fn((e) => {
   e;
 });
 const mockMoveCallback = vi.fn((e) => {
   e;
 });
-
 describe("threejs-drag-watcher", () => {
-  watcher.on("drag_start", mockCallback);
+  watcher.on("drag_start", mockDragCallback);
   watcher.on("move", mockMoveCallback);
-  watcher.on("drag", mockCallback);
-  watcher.on("drag_end", mockCallback);
+  watcher.on("drag", mockDragCallback);
+  watcher.on("drag_end", mockDragCallback);
 
   test("drag : mouse down", () => {
-    dispatchMouseEvent("mousedown", {
+    dispatchMouseEvent(canvas, "mousedown", {
       offsetX: 100,
       offsetY: 100,
     });
-    expectMouse(mockCallback, "drag_start", {
+    expectMouse(mockDragCallback, "drag_start", {
       positionX: 100,
       positionY: 100,
     });
 
-    dispatchMouseEvent("mousedown", {
+    dispatchMouseEvent(canvas, "mousedown", {
       offsetX: 100,
       offsetY: 100,
     });
-    expectMouseNotCall(mockCallback);
+    expectMouseNotCall(mockDragCallback);
 
-    clearCanvas();
+    clearCanvas(canvas, watcher, mockDragCallback, mockMoveCallback);
   });
 
   test("drag : hasThrottled", () => {
-    dispatchMouseEvent("mousedown", {
+    dispatchMouseEvent(canvas, "mousedown", {
       offsetX: 100,
       offsetY: 100,
     });
-    mockCallback.mockClear();
+    mockDragCallback.mockClear();
 
-    dispatchMouseEvent("mousemove", {
+    dispatchMouseEvent(canvas, "mousemove", {
       offsetX: 105,
       offsetY: 105,
     });
@@ -55,7 +55,7 @@ describe("threejs-drag-watcher", () => {
       positionX: 105,
       positionY: 105,
     });
-    expectMouse(mockCallback, "drag", {
+    expectMouse(mockDragCallback, "drag", {
       positionX: 105,
       positionY: 105,
       deltaX: 5,
@@ -63,31 +63,31 @@ describe("threejs-drag-watcher", () => {
     });
 
     //連続呼び出しをしてもスロットリングされる
-    dispatchMouseEvent("mousemove", {
+    dispatchMouseEvent(canvas, "mousemove", {
       offsetX: 110,
       offsetY: 110,
     });
     expectMouseNotCall(mockMoveCallback);
-    expectMouseNotCall(mockCallback);
+    expectMouseNotCall(mockDragCallback);
 
     //連続呼び出しをしてもスロットリングされる
     RAFTicker.emit("tick", {
       timestamp: 0,
       delta: watcher.throttlingTime_ms / 2,
     });
-    dispatchMouseEvent("mousemove", {
+    dispatchMouseEvent(canvas, "mousemove", {
       offsetX: 115,
       offsetY: 115,
     });
     expectMouseNotCall(mockMoveCallback);
-    expectMouseNotCall(mockCallback);
+    expectMouseNotCall(mockDragCallback);
 
     //時間経過後にスロットリングは解除される。
     RAFTicker.emit("tick", {
       timestamp: 0,
       delta: watcher.throttlingTime_ms * 3,
     });
-    dispatchMouseEvent("mousemove", {
+    dispatchMouseEvent(canvas, "mousemove", {
       offsetX: 120,
       offsetY: 120,
     });
@@ -96,21 +96,21 @@ describe("threejs-drag-watcher", () => {
       positionY: 120,
     });
     //delta値はスロットリング前の最後のものが利用される
-    expectMouse(mockCallback, "drag", {
+    expectMouse(mockDragCallback, "drag", {
       positionX: 120,
       positionY: 120,
       deltaX: 15,
       deltaY: 15,
     });
 
-    clearCanvas();
+    clearCanvas(canvas, watcher, mockDragCallback, mockMoveCallback);
   });
 
   test("drag : not down", () => {
     /**
      * マウスダウン前にmoveをすると、moveは発行されるがdragは発行されない
      */
-    dispatchMouseEvent("mousemove", {
+    dispatchMouseEvent(canvas, "mousemove", {
       offsetX: 105,
       offsetY: 105,
     });
@@ -118,41 +118,8 @@ describe("threejs-drag-watcher", () => {
       positionX: 105,
       positionY: 105,
     });
-    expectMouseNotCall(mockCallback);
+    expectMouseNotCall(mockDragCallback);
 
-    clearCanvas();
+    clearCanvas(canvas, watcher, mockDragCallback, mockMoveCallback);
   });
 });
-
-const dispatchMouseEvent = (type: string, option?: FakeMouseEventInit) => {
-  const evt = getMouseEvent(type, option);
-  canvas.dispatchEvent(evt);
-};
-
-const clearCanvas = () => {
-  dispatchMouseEvent("mouseleave");
-  RAFTicker.emit("tick", {
-    timestamp: 0,
-    delta: watcher.throttlingTime_ms * 2,
-  });
-  mockCallback.mockClear();
-  mockMoveCallback.mockClear();
-};
-
-const expectMouse = (
-  mockFunc: Mock,
-  type: keyof DragEventMap,
-  option: { [key: string]: unknown },
-) => {
-  const evt = mockFunc.mock.calls[0][0];
-  expect(evt.type).toBe(type);
-  Object.keys(option).forEach((key) => {
-    expect(evt[key]).toBe(option[key]);
-  });
-  mockFunc.mockClear();
-};
-
-const expectMouseNotCall = (mockFunc: Mock) => {
-  expect(mockFunc).toBeCalledTimes(0);
-  mockFunc.mockClear();
-};

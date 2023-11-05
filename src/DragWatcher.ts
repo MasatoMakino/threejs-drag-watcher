@@ -17,6 +17,12 @@ export class DragWatcher extends EventEmitter<DragEventMap> {
   private hasThrottled: boolean = false;
   public throttlingTime_ms: number = 16;
   private throttlingDelta: number = 0;
+  /**
+   * Sets the viewport to render from (x, y) to (x + width, y + height).
+   * (x, y) is the lower-left corner of the region.
+   * @see https://threejs.org/docs/#api/en/renderers/WebGLRenderer.setViewport
+   * @private
+   */
   private viewport?: Vector4;
 
   constructor(
