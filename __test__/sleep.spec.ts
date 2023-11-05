@@ -5,11 +5,12 @@ import {
 import { RAFTicker } from "@masatomakino/raf-ticker";
 import { SleepWatcher } from "../src/index.js";
 import { generateWatcher } from "./WatcherGenerator";
+import { describe, expect, test, vi, beforeEach, afterEach } from "vitest";
 
 const { canvas, watcher } = generateWatcher();
 
-const mockWakeup = jest.fn((e) => e);
-const mockSleep = jest.fn((e) => e);
+const mockWakeup = vi.fn((e) => e);
+const mockSleep = vi.fn((e) => e);
 const timeout_ms = 10 * 1000;
 const sleepWatcher = new SleepWatcher(watcher, { timeOut_ms: timeout_ms });
 
@@ -18,7 +19,7 @@ describe("threejs-drag-watcher", () => {
   sleepWatcher.on("sleep", mockSleep);
 
   beforeEach(() => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
   });
 
   afterEach(() => {
@@ -193,7 +194,7 @@ const clearMockFunctions = () => {
  * @param timeout_ms
  */
 const interval = (timeout_ms: number) => {
-  jest.advanceTimersByTime(timeout_ms);
+  vi.advanceTimersByTime(timeout_ms);
   RAFTicker.emit("tick", {
     timestamp: 0,
     delta: timeout_ms,

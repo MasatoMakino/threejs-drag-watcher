@@ -4,14 +4,14 @@ import {
 } from "@masatomakino/fake-mouse-event";
 import { RAFTicker } from "@masatomakino/raf-ticker";
 import { generateWatcher } from "./WatcherGenerator.js";
-import Mock = jest.Mock;
+import { describe, expect, test, vi, Mock } from "vitest";
 import { DragEventMap } from "../src/index.js";
 
 const { canvas, watcher } = generateWatcher();
-const mockCallback = jest.fn((e) => {
+const mockCallback = vi.fn((e) => {
   e;
 });
-const mockMoveCallback = jest.fn((e) => {
+const mockMoveCallback = vi.fn((e) => {
   e;
 });
 
