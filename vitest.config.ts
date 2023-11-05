@@ -4,6 +4,7 @@ export default defineConfig({
   test: {
     name: "jsdomTest",
     environment: "jsdom",
+    threads: false,
     environmentOptions: {
       jsdom: {
         resources: "usable",
@@ -12,7 +13,7 @@ export default defineConfig({
     coverage: {
       provider: "istanbul",
       reporter: ["text", "lcov"],
-      include: ["src/ts/**/*.{ts,tsx}"],
+      include: ["src/**/*.{ts,tsx}"],
     },
   },
 });
