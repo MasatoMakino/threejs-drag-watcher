@@ -1,5 +1,6 @@
 import { DragEvent } from "../src/index.js";
 import { generateWatcher } from "./WatcherGenerator.js";
+import { describe, expect, test, vi } from "vitest";
 
 const getBasicOption = () => {
   return { bubbles: true, cancelable: true };
@@ -8,7 +9,7 @@ const getBasicOption = () => {
 describe("threejs-drag-watcher", () => {
   test("wheel", () => {
     const { canvas, watcher } = generateWatcher();
-    const mockZoom = jest.fn((e) => e);
+    const mockZoom = vi.fn((e) => e);
     watcher.on("zoom", mockZoom);
 
     const expectWheel = (scroll: number) => {
@@ -19,7 +20,7 @@ describe("threejs-drag-watcher", () => {
 
     const dispatchWheelEvent = (option: object) => {
       option = Object.assign(getBasicOption(), option);
-      const evt = new (<any>WheelEvent)("wheel", option);
+      const evt = new WheelEvent("wheel", option);
       canvas.dispatchEvent(evt);
     };
 
