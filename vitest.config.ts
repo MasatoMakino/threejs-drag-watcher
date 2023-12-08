@@ -4,7 +4,12 @@ export default defineConfig({
   test: {
     name: "jsdomTest",
     environment: "jsdom",
-    threads: false,
+    pool: "forks",
+    poolOptions: {
+      threads: {
+        singleThread: true,
+      },
+    },
     environmentOptions: {
       jsdom: {
         resources: "usable",
