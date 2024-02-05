@@ -45,10 +45,10 @@ const onDomContentsLoaded = () => {
   });
 
   const sleepWatcher = new SleepWatcher(watcher, { timeOut_ms: 2 * 1000 });
-  sleepWatcher.addEventListener("sleep", (e) => {
+  sleepWatcher.on("sleep", (e) => {
     console.log(e);
   });
-  sleepWatcher.addEventListener("wakeup", (e) => {
+  sleepWatcher.on("wakeup", (e) => {
     console.log(e);
   });
   sleepWatcher.start();
