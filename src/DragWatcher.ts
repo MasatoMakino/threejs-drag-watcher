@@ -37,11 +37,19 @@ export class DragWatcher extends EventEmitter<DragEventMap> {
     this.viewport ??= option?.viewport;
 
     this.canvas = canvas;
-    this.canvas.addEventListener("mousemove", this.onDocumentMouseMove, false);
-    this.canvas.addEventListener("mousedown", this.onDocumentMouseDown, false);
-    this.canvas.addEventListener("mouseup", this.onDocumentMouseUp, false);
     this.canvas.addEventListener(
-      "mouseleave",
+      "pointermove",
+      this.onDocumentMouseMove,
+      false,
+    );
+    this.canvas.addEventListener(
+      "pointerdown",
+      this.onDocumentMouseDown,
+      false,
+    );
+    this.canvas.addEventListener("pointerup", this.onDocumentMouseUp, false);
+    this.canvas.addEventListener(
+      "pointerleave",
       this.onDocumentMouseLeave,
       false,
     );
@@ -178,18 +186,18 @@ export class DragWatcher extends EventEmitter<DragEventMap> {
 
   public dispose(): void {
     this.canvas.removeEventListener(
-      "mousemove",
+      "pointermove",
       this.onDocumentMouseMove,
       false,
     );
     this.canvas.removeEventListener(
-      "mousedown",
+      "pointerdown",
       this.onDocumentMouseDown,
       false,
     );
-    this.canvas.removeEventListener("mouseup", this.onDocumentMouseUp, false);
+    this.canvas.removeEventListener("pointerup", this.onDocumentMouseUp, false);
     this.canvas.removeEventListener(
-      "mouseleave",
+      "pointerleave",
       this.onDocumentMouseLeave,
       false,
     );

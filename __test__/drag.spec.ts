@@ -22,7 +22,7 @@ describe("threejs-drag-watcher", () => {
   watcher.on("drag_end", mockDragCallback);
 
   test("drag : mouse down", () => {
-    dispatchMouseEvent(canvas, "mousedown", {
+    dispatchMouseEvent(canvas, "pointerdown", {
       offsetX: 100,
       offsetY: 100,
     });
@@ -31,7 +31,7 @@ describe("threejs-drag-watcher", () => {
       positionY: 100,
     });
 
-    dispatchMouseEvent(canvas, "mousedown", {
+    dispatchMouseEvent(canvas, "pointerdown", {
       offsetX: 100,
       offsetY: 100,
     });
@@ -41,13 +41,13 @@ describe("threejs-drag-watcher", () => {
   });
 
   test("drag : hasThrottled", () => {
-    dispatchMouseEvent(canvas, "mousedown", {
+    dispatchMouseEvent(canvas, "pointerdown", {
       offsetX: 100,
       offsetY: 100,
     });
     mockDragCallback.mockClear();
 
-    dispatchMouseEvent(canvas, "mousemove", {
+    dispatchMouseEvent(canvas, "pointermove", {
       offsetX: 105,
       offsetY: 105,
     });
@@ -63,7 +63,7 @@ describe("threejs-drag-watcher", () => {
     });
 
     //連続呼び出しをしてもスロットリングされる
-    dispatchMouseEvent(canvas, "mousemove", {
+    dispatchMouseEvent(canvas, "pointermove", {
       offsetX: 110,
       offsetY: 110,
     });
@@ -75,7 +75,7 @@ describe("threejs-drag-watcher", () => {
       timestamp: 0,
       delta: watcher.throttlingTime_ms / 2,
     });
-    dispatchMouseEvent(canvas, "mousemove", {
+    dispatchMouseEvent(canvas, "pointermove", {
       offsetX: 115,
       offsetY: 115,
     });
@@ -87,7 +87,7 @@ describe("threejs-drag-watcher", () => {
       timestamp: 0,
       delta: watcher.throttlingTime_ms * 3,
     });
-    dispatchMouseEvent(canvas, "mousemove", {
+    dispatchMouseEvent(canvas, "pointermove", {
       offsetX: 120,
       offsetY: 120,
     });
@@ -110,7 +110,7 @@ describe("threejs-drag-watcher", () => {
     /**
      * マウスダウン前にmoveをすると、moveは発行されるがdragは発行されない
      */
-    dispatchMouseEvent(canvas, "mousemove", {
+    dispatchMouseEvent(canvas, "pointermove", {
       offsetX: 105,
       offsetY: 105,
     });

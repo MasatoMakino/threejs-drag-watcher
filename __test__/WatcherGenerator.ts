@@ -36,7 +36,7 @@ export const clearCanvas = (
   mockDragCallback: Mock,
   mockMoveCallback: Mock,
 ) => {
-  dispatchMouseEvent(canvas, "mouseleave");
+  dispatchMouseEvent(canvas, "pointerleave");
   RAFTicker.emit("tick", {
     timestamp: 0,
     delta: watcher.throttlingTime_ms * 2,
