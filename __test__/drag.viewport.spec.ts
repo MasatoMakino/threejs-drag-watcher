@@ -25,14 +25,14 @@ describe("drag.viewport", () => {
 
   test("drag : mouse down", () => {
     //viewportはcanvasの右下を原点とするため、0,0は操作の範囲外
-    dispatchMouseEvent(canvas, "mousedown", {
+    dispatchMouseEvent(canvas, "pointerdown", {
       offsetX: 0,
       offsetY: 0,
     });
     expectMouseNotCall(mockDragCallback);
 
     //viewportの左上は、1080(canvasのheight) - 400(viewportのheight) で 680になる。
-    dispatchMouseEvent(canvas, "mousedown", {
+    dispatchMouseEvent(canvas, "pointerdown", {
       offsetX: 150,
       offsetY: 1080 - 400 + 150,
     });
@@ -42,7 +42,7 @@ describe("drag.viewport", () => {
     });
 
     //スロットリングが有効なため、同じ点を連続してマウスダウンしてもイベントは発生しない。
-    dispatchMouseEvent(canvas, "mousedown", {
+    dispatchMouseEvent(canvas, "pointerdown", {
       offsetX: 150,
       offsetY: 1080 - 400 + 150,
     });
