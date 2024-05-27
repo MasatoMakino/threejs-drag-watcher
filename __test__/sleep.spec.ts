@@ -160,7 +160,7 @@ describe("threejs-drag-watcher", () => {
     clearMockFunctions();
   });
 
-  test("reset timer", () => {
+  test("restart timer", () => {
     sleepWatcher.start();
 
     interval(timeout_ms * 0.6);
@@ -170,7 +170,7 @@ describe("threejs-drag-watcher", () => {
 
     dispatchMouseEvent("pointerdown", { offsetX: 0, offsetY: 0 });
     interval(timeout_ms * 0.6);
-    sleepWatcher.reset();
+    sleepWatcher.restart();
     interval(timeout_ms * 0.6);
     expect(mockSleep).not.toBeCalled();
     clearMockFunctions();

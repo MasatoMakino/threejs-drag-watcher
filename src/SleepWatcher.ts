@@ -17,20 +17,19 @@ export class SleepWatcher extends EventEmitter<SleepEventMap> {
 
   /**
    * 無操作タイマーをリセットし、再度カウントを開始する。
+   * @deprecated This method will be removed in v0.13.0. Please use restart() instead.
    */
   public reset(): void {
-    this.stopTimer();
-    this.wakeup();
-
-    this.sleepTimerID = window.setTimeout(this.sleep, this.timeOut_ms);
+    this.restart();
   }
 
   /**
    * 無操作タイマーをリセットし、再度カウントを開始する。
-   * zoomイベントハンドラー
    */
-  private resetTimer = () => {
-    this.reset();
+  public restart = (): void => {
+    this.stopTimer();
+    this.wakeup();
+    this.sleepTimerID = window.setTimeout(this.sleep, this.timeOut_ms);
   };
 
   private stopTimer(): void {
@@ -57,12 +56,12 @@ export class SleepWatcher extends EventEmitter<SleepEventMap> {
   public start(): void {
     this.stopMouseEventListeners();
     this.startMouseEventListeners();
-    this.resetTimer();
+    this.restart();
   }
 
   protected startMouseEventListeners(): void {
     const watcher = this.dragWatcher;
-    watcher.on("zoom", this.resetTimer);
+    watcher.on("zoom", this.restart);
     watcher.on("drag_start", this.pauseTimer);
   }
 
@@ -76,7 +75,7 @@ export class SleepWatcher extends EventEmitter<SleepEventMap> {
   };
 
   private resumeTimer = () => {
-    this.resetTimer();
+    this.restart();
 
     const watcher = this.dragWatcher;
     watcher.on("drag_start", this.pauseTimer);
@@ -94,7 +93,7 @@ export class SleepWatcher extends EventEmitter<SleepEventMap> {
 
   protected stopMouseEventListeners(): void {
     const watcher = this.dragWatcher;
-    watcher.off("zoom", this.resetTimer);
+    watcher.off("zoom", this.restart);
     watcher.off("drag_start", this.pauseTimer);
     watcher.off("drag_end", this.resumeTimer);
   }
