@@ -6,7 +6,7 @@ import {
   expectMouseNotCall,
   generateWatcher,
 } from "./WatcherGenerator.js";
-import { describe, test, vi } from "vitest";
+import { describe, test, vi, beforeEach } from "vitest";
 
 const { canvas, watcher } = generateWatcher();
 const mockDragCallback = vi.fn((e) => {
@@ -20,6 +20,16 @@ describe("threejs-drag-watcher", () => {
   watcher.on("move", mockMoveCallback);
   watcher.on("drag", mockDragCallback);
   watcher.on("drag_end", mockDragCallback);
+
+  beforeEach(() => {
+    RAFTicker.stop();
+    RAFTicker.emit("tick", {
+      timestamp: 0,
+      delta: watcher.throttlingTime_ms * 2,
+    });
+    //@ts-ignore
+    watcher.throttlingDelta = 0;
+  });
 
   test("drag : mouse down", () => {
     dispatchMouseEvent(canvas, "pointerdown", {
