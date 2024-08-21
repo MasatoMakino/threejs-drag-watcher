@@ -7,9 +7,8 @@
 
     "declaration": true,
     "declarationMap": true,
-    "moduleResolution": "node",
+    "moduleResolution": "Bundler",
     "esModuleInterop": true,
-    "skipLibCheck": true,
     "strict": true,
     "noImplicitOverride": true
   },
