@@ -2,7 +2,7 @@ import { DragEventMap, DragWatcher } from "../src/index.js";
 import { Vector4 } from "three";
 import {
   FakePointerEventInit,
-  getMouseEvent,
+  getPointerEvent,
 } from "@masatomakino/fake-mouse-event";
 import { expect, Mock } from "vitest";
 import { RAFTicker } from "@masatomakino/raf-ticker";
@@ -27,7 +27,7 @@ export const dispatchMouseEvent = (
   type: string,
   option?: FakePointerEventInit,
 ) => {
-  const evt = getMouseEvent(type, option);
+  const evt = getPointerEvent(type, option);
   canvas.dispatchEvent(evt);
 };
 
@@ -38,6 +38,7 @@ export const clearCanvas = (
   mockMoveCallback: Mock,
 ) => {
   dispatchMouseEvent(canvas, "pointerleave");
+  watcher.reset();
   RAFTicker.emit("tick", {
     timestamp: 0,
     delta: watcher.throttlingTime_ms * 2,

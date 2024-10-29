@@ -189,6 +189,14 @@ export class DragWatcher extends EventEmitter<DragEventMap> {
     };
   }
 
+  /**
+   * ポインターの情報をリセットする。
+   * 主に単体テストで使用する。
+   */
+  public reset(): void {
+    this.pointers.clear();
+  }
+
   public dispose(): void {
     this.canvas.removeEventListener(
       "pointermove",

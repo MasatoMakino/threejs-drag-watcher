@@ -1,6 +1,6 @@
 import {
-  FakeMouseEventInit,
-  getMouseEvent,
+  FakePointerEventInit,
+  getPointerEvent,
 } from "@masatomakino/fake-mouse-event";
 import { RAFTicker } from "@masatomakino/raf-ticker";
 import { SleepWatcher } from "../src/index.js";
@@ -25,6 +25,7 @@ describe("threejs-drag-watcher", () => {
   afterEach(() => {
     sleepWatcher.stop();
     dispatchMouseEvent("pointerup", { offsetX: 0, offsetY: 0 });
+    watcher.reset();
     clearMockFunctions();
   });
 
@@ -206,7 +207,10 @@ const interval = (timeout_ms: number) => {
  * @param type
  * @param option
  */
-const dispatchMouseEvent = (type: string, option?: FakeMouseEventInit) => {
-  const evt = getMouseEvent(type, option);
+const dispatchMouseEvent = (type: string, option?: FakePointerEventInit) => {
+  if (option != null) {
+    option.pointerId ??= 1;
+  }
+  const evt = getPointerEvent(type, option);
   canvas.dispatchEvent(evt);
 };

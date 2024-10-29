@@ -41,6 +41,7 @@ describe("drag.viewport", () => {
     expectMouse(mockDragCallback, "drag_start", {
       positionX: 150,
       positionY: 150,
+      pointerId: 1,
     });
 
     dispatchMouseEvent(canvas, "pointerdown", {
@@ -51,6 +52,7 @@ describe("drag.viewport", () => {
     expectMouse(mockDragCallback, "drag_start", {
       positionX: 150,
       positionY: 150,
+      pointerId: 1,
     });
 
     clearCanvas(canvas, watcher, mockDragCallback, mockMoveCallback);

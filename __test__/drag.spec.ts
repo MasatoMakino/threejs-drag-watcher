@@ -40,6 +40,7 @@ describe("threejs-drag-watcher", () => {
     expectMouse(mockDragCallback, "drag_start", {
       positionX: 100,
       positionY: 100,
+      pointerId: 1,
     });
 
     dispatchMouseEvent(canvas, "pointerdown", {
@@ -52,6 +53,7 @@ describe("threejs-drag-watcher", () => {
     expectMouse(mockDragCallback, "drag_start", {
       positionX: 100,
       positionY: 100,
+      pointerId: 1,
     });
 
     clearCanvas(canvas, watcher, mockDragCallback, mockMoveCallback);
@@ -61,12 +63,14 @@ describe("threejs-drag-watcher", () => {
     dispatchMouseEvent(canvas, "pointerdown", {
       offsetX: 100,
       offsetY: 100,
+      pointerId: 1,
     });
     mockDragCallback.mockClear();
 
     dispatchMouseEvent(canvas, "pointermove", {
       offsetX: 105,
       offsetY: 105,
+      pointerId: 1,
     });
     expectMouse(mockMoveCallback, "move", {
       positionX: 105,
@@ -83,6 +87,7 @@ describe("threejs-drag-watcher", () => {
     dispatchMouseEvent(canvas, "pointermove", {
       offsetX: 110,
       offsetY: 110,
+      pointerId: 1,
     });
     expectMouseNotCall(mockMoveCallback);
     expectMouseNotCall(mockDragCallback);
@@ -95,6 +100,7 @@ describe("threejs-drag-watcher", () => {
     dispatchMouseEvent(canvas, "pointermove", {
       offsetX: 115,
       offsetY: 115,
+      pointerId: 1,
     });
     expectMouseNotCall(mockMoveCallback);
     expectMouseNotCall(mockDragCallback);
@@ -107,6 +113,7 @@ describe("threejs-drag-watcher", () => {
     dispatchMouseEvent(canvas, "pointermove", {
       offsetX: 120,
       offsetY: 120,
+      pointerId: 1,
     });
     expectMouse(mockMoveCallback, "move", {
       positionX: 120,
@@ -130,6 +137,7 @@ describe("threejs-drag-watcher", () => {
     dispatchMouseEvent(canvas, "pointermove", {
       offsetX: 105,
       offsetY: 105,
+      pointerId: 1,
     });
     expectMouse(mockMoveCallback, "move", {
       positionX: 105,
