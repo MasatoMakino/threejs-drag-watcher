@@ -35,6 +35,7 @@ describe("threejs-drag-watcher", () => {
     dispatchMouseEvent(canvas, "pointerdown", {
       offsetX: 100,
       offsetY: 100,
+      pointerId: 1,
     });
     expectMouse(mockDragCallback, "drag_start", {
       positionX: 100,
@@ -44,8 +45,14 @@ describe("threejs-drag-watcher", () => {
     dispatchMouseEvent(canvas, "pointerdown", {
       offsetX: 100,
       offsetY: 100,
+      pointerId: 1,
     });
-    expectMouseNotCall(mockDragCallback);
+
+    //同じポインターIDでダウンをしても、drag_startは発行される
+    expectMouse(mockDragCallback, "drag_start", {
+      positionX: 100,
+      positionY: 100,
+    });
 
     clearCanvas(canvas, watcher, mockDragCallback, mockMoveCallback);
   });

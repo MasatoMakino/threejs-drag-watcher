@@ -1,7 +1,7 @@
 import { DragEventMap, DragWatcher } from "../src/index.js";
 import { Vector4 } from "three";
 import {
-  FakeMouseEventInit,
+  FakePointerEventInit,
   getMouseEvent,
 } from "@masatomakino/fake-mouse-event";
 import { expect, Mock } from "vitest";
@@ -18,13 +18,14 @@ export function generateWatcher(option?: {
   canvas.width = 1920;
   canvas.height = 1080;
   const watcher = new DragWatcher(canvas, option);
+  document.body.appendChild(canvas);
   return { canvas, watcher };
 }
 
 export const dispatchMouseEvent = (
   canvas: HTMLCanvasElement,
   type: string,
-  option?: FakeMouseEventInit,
+  option?: FakePointerEventInit,
 ) => {
   const evt = getMouseEvent(type, option);
   canvas.dispatchEvent(evt);

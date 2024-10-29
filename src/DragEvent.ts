@@ -5,6 +5,7 @@ export interface DragEvent {
   deltaX?: number;
   deltaY?: number;
   deltaScroll?: number;
+  pointerId?: number;
 }
 
 export interface DragEventMap {

@@ -9,9 +9,7 @@ import EventEmitter from "eventemitter3";
  * この二つを実行するためのクラスです。
  */
 export class DragWatcher extends EventEmitter<DragEventMap> {
-  private positionX!: number;
-  private positionY!: number;
-  private isDrag: boolean = false;
+  private pointers: Map<number, PointerEvent> = new Map();
   private canvas: HTMLCanvasElement;
 
   private hasThrottled: boolean = false;
@@ -65,47 +63,55 @@ export class DragWatcher extends EventEmitter<DragEventMap> {
     this.throttlingDelta %= this.throttlingTime_ms;
   };
 
-  protected onDocumentMouseDown = (event: MouseEvent) => {
-    if (this.isDrag) return;
-
+  protected onDocumentMouseDown = (event: PointerEvent) => {
     if (!this.isContain(event)) return;
 
-    this.isDrag = true;
-    this.updatePosition(event);
-
+    console.log(event.pointerId);
+    this.pointers.set(event.pointerId, event);
     this.dispatchDragEvent("drag_start", event);
   };
 
-  protected onDocumentMouseMove = (event: MouseEvent) => {
+  protected onDocumentMouseMove = (event: PointerEvent) => {
     if (this.hasThrottled) return;
     this.hasThrottled = true;
 
     this.dispatchDragEvent("move", event);
 
-    if (!this.isDrag) return;
-    this.dispatchDragEvent("drag", event);
-    this.updatePosition(event);
+    //シングルタッチかつ、ドラッグ中のポインタのみ処理を行う
+    if (this.pointers.size === 1 && this.pointers.has(event.pointerId)) {
+      this.dispatchDragEvent(
+        "drag",
+        event,
+        this.pointers.get(event.pointerId) as PointerEvent,
+      );
+    }
+
+    // ポインターの位置を更新
+    if (this.pointers.has(event.pointerId)) {
+      this.pointers.set(event.pointerId, event);
+    }
   };
 
-  private updatePosition(event: MouseEvent): void {
-    this.positionX = event.offsetX;
-    this.positionY = event.offsetY;
-  }
-
-  private dispatchDragEvent(type: keyof DragEventMap, event: MouseEvent): void {
+  private dispatchDragEvent(
+    type: keyof DragEventMap,
+    event: PointerEvent,
+    prevEvent?: PointerEvent,
+  ): void {
     const evt: DragEvent = { type };
 
     const { x, y } = this.convertToLocalMousePoint(event);
     evt.positionX = x;
     evt.positionY = y;
+    evt.pointerId = event.pointerId;
 
-    if (type === "drag") {
-      evt.deltaX = event.offsetX - this.positionX;
-      evt.deltaY = event.offsetY - this.positionY;
+    if (type === "drag" && prevEvent) {
+      evt.deltaX = event.offsetX - prevEvent.offsetX;
+      evt.deltaY = event.offsetY - prevEvent.offsetY;
     }
     this.emit(type, evt);
   }
-  private convertToLocalMousePoint(e: MouseEvent): { x: number; y: number } {
+
+  private convertToLocalMousePoint(e: PointerEvent): { x: number; y: number } {
     if (!this.viewport) {
       return {
         x: e.offsetX,
@@ -120,16 +126,15 @@ export class DragWatcher extends EventEmitter<DragEventMap> {
     }
   }
 
-  private onDocumentMouseLeave = (event: MouseEvent) => {
+  private onDocumentMouseLeave = (event: PointerEvent) => {
     this.onDocumentMouseUp(event);
   };
 
-  private onDocumentMouseUp = (event: MouseEvent) => {
-    if (!this.isDrag) return;
-
-    this.isDrag = false;
-
-    this.dispatchDragEvent("drag_end", event);
+  private onDocumentMouseUp = (event: PointerEvent) => {
+    if (this.pointers.has(event.pointerId)) {
+      this.dispatchDragEvent("drag_end", event);
+    }
+    this.pointers.delete(event.pointerId);
   };
 
   private onMouseWheel = (e: any) => {
@@ -153,7 +158,7 @@ export class DragWatcher extends EventEmitter<DragEventMap> {
    * @param event
    * @private
    */
-  private isContain(event: MouseEvent): boolean {
+  private isContain(event: PointerEvent): boolean {
     if (!this.viewport) return true;
 
     const rect = DragWatcher.convertToRect(this.canvas, this.viewport);

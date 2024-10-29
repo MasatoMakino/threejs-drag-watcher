@@ -28,6 +28,7 @@ describe("drag.viewport", () => {
     dispatchMouseEvent(canvas, "pointerdown", {
       offsetX: 0,
       offsetY: 0,
+      pointerId: 1,
     });
     expectMouseNotCall(mockDragCallback);
 
@@ -35,18 +36,22 @@ describe("drag.viewport", () => {
     dispatchMouseEvent(canvas, "pointerdown", {
       offsetX: 150,
       offsetY: 1080 - 400 + 150,
+      pointerId: 1,
     });
     expectMouse(mockDragCallback, "drag_start", {
       positionX: 150,
       positionY: 150,
     });
 
-    //スロットリングが有効なため、同じ点を連続してマウスダウンしてもイベントは発生しない。
     dispatchMouseEvent(canvas, "pointerdown", {
       offsetX: 150,
       offsetY: 1080 - 400 + 150,
+      pointerId: 1,
     });
-    expectMouseNotCall(mockDragCallback);
+    expectMouse(mockDragCallback, "drag_start", {
+      positionX: 150,
+      positionY: 150,
+    });
 
     clearCanvas(canvas, watcher, mockDragCallback, mockMoveCallback);
   });
