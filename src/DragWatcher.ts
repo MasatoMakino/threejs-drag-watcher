@@ -174,6 +174,7 @@ export class DragWatcher extends EventEmitter<DragEventMap> {
   /**
    * 座標値をviewportの座標値に変換する
    * 注意 : canvasがstyleで拡大縮小されている場合、正しい座標が取得できない。
+   * TODO : styleではなく、要素のwidth,heightを優先的に使用することを検証すること
    *
    * @param canvas
    * @param viewport
