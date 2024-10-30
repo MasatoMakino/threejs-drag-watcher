@@ -1,6 +1,6 @@
 import { RAFTicker, RAFTickerEventContext } from "@masatomakino/raf-ticker";
 import { Vector4 } from "three";
-import { DragEvent, DragEventMap } from "./DragEvent.js";
+import { DragEvent, PinchEvent, DragEventMap } from "./DragEvent.js";
 import EventEmitter from "eventemitter3";
 
 /**
@@ -66,7 +66,6 @@ export class DragWatcher extends EventEmitter<DragEventMap> {
   protected onDocumentMouseDown = (event: PointerEvent) => {
     if (!this.isContain(event)) return;
 
-    console.log(event.pointerId);
     this.pointers.set(event.pointerId, event);
     this.dispatchDragEvent("drag_start", event);
   };
@@ -76,6 +75,12 @@ export class DragWatcher extends EventEmitter<DragEventMap> {
     this.hasThrottled = true;
 
     this.dispatchDragEvent("move", event);
+
+    //ダブルタッチの場合、ズーム処理を行う
+    if (this.pointers.size === 2 && this.pointers.has(event.pointerId)) {
+      const evt = DragWatcher.generatePinchEvent(this.pointers, event);
+      this.emit(evt.type, evt);
+    }
 
     //シングルタッチかつ、ドラッグ中のポインタのみ処理を行う
     if (this.pointers.size === 1 && this.pointers.has(event.pointerId)) {
@@ -91,6 +96,31 @@ export class DragWatcher extends EventEmitter<DragEventMap> {
       this.pointers.set(event.pointerId, event);
     }
   };
+
+  private static generatePinchEvent(
+    pointers: Map<number, PointerEvent>,
+    nextPointer: PointerEvent,
+  ): PinchEvent {
+    const pointerArray = Array.from(pointers.values());
+    const distance = DragWatcher.calculateDistance(pointerArray);
+
+    const nextPointerMap = new Map(pointers);
+    nextPointerMap.set(nextPointer.pointerId, nextPointer);
+    const nextPointerArray = Array.from(nextPointerMap.values());
+    const nextDistance = DragWatcher.calculateDistance(nextPointerArray);
+
+    return {
+      type: "pinch",
+      delta: nextDistance - distance,
+      pointers: nextPointerArray,
+    };
+  }
+  private static calculateDistance(pointers: PointerEvent[]): number {
+    return Math.sqrt(
+      Math.pow(pointers[0].offsetX - pointers[1].offsetX, 2) +
+        Math.pow(pointers[0].offsetY - pointers[1].offsetY, 2),
+    );
+  }
 
   private dispatchDragEvent(
     type: keyof DragEventMap,
