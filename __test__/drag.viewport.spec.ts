@@ -6,10 +6,13 @@ import {
   expectMouseNotCall,
   generateWatcher,
 } from "./WatcherGenerator";
-import { Vector4 } from "three";
+import { Vector2, Vector4 } from "three";
 
 const { canvas, watcher } = generateWatcher({
-  viewport: new Vector4(0, 0, 400, 400),
+  viewport: {
+    area: new Vector4(0, 0, 400, 400),
+    canvasRect: new Vector2(1920, 1080),
+  },
 });
 const mockDragCallback = vi.fn((e) => {
   e;

@@ -1,8 +1,31 @@
 import { RAFTicker, RAFTickerEventContext } from "@masatomakino/raf-ticker";
-import { Vector4 } from "three";
+import { Vector2, Vector4 } from "three";
 import { DragEvent, PinchEvent, DragEventMap } from "./DragEvent.js";
 import EventEmitter from "eventemitter3";
 
+/**
+ * DragWatcherの初期化オプション
+ */
+export interface DragWatcherInitOption {
+  /**
+   * ドラッグイベントの間引き間隔を設定します。単位はミリ秒です。
+   */
+  throttlingTime_ms?: number;
+  /**
+   * Viewportの設定を行います。
+   * areaとcanvasRectはセットで設定する必要があります。
+   */
+  viewport?: {
+    /*
+     * Viewportの範囲を示す矩形です。
+     */
+    area: Vector4;
+    /**
+     * Viewportが描画されるキャンバスの範囲を示す矩形です。
+     */
+    canvasRect: Vector2;
+  };
+}
 /**
  * 1.カンバス全体がドラッグされている状態を確認する
  * 2.マウスホイールが操作されている状態を確認する
@@ -22,17 +45,18 @@ export class DragWatcher extends EventEmitter<DragEventMap> {
    * @private
    */
   private viewport?: Vector4;
+  private canvasRect?: Vector2;
 
-  constructor(
-    canvas: HTMLCanvasElement,
-    option?: { throttlingTime_ms?: number; viewport?: Vector4 },
-  ) {
+  constructor(canvas: HTMLCanvasElement, option?: DragWatcherInitOption) {
     super();
 
     if (option?.throttlingTime_ms != null) {
       this.throttlingTime_ms = option.throttlingTime_ms;
     }
-    this.viewport ??= option?.viewport;
+    if (option?.viewport != null) {
+      this.viewport ??= option.viewport.area;
+      this.canvasRect ??= option.viewport.canvasRect;
+    }
 
     this.canvas = canvas;
     this.canvas.addEventListener(
@@ -142,16 +166,19 @@ export class DragWatcher extends EventEmitter<DragEventMap> {
   }
 
   private convertToLocalMousePoint(e: PointerEvent): { x: number; y: number } {
-    if (!this.viewport) {
+    if (!this.viewport || !this.canvasRect) {
       return {
         x: e.offsetX,
         y: e.offsetY,
       };
     } else {
-      const rect = DragWatcher.convertToRect(this.canvas, this.viewport);
+      const rect = DragWatcher.convertToRect(this.viewport, this.canvasRect);
+      const scale = this.canvas.clientWidth / this.canvasRect.width;
+      const offsetX = e.offsetX / scale;
+      const offsetY = e.offsetY / scale;
       return {
-        x: e.offsetX - rect.x1,
-        y: e.offsetY - rect.y1,
+        x: offsetX - rect.x1,
+        y: offsetY - rect.y1,
       };
     }
   }
@@ -189,42 +216,36 @@ export class DragWatcher extends EventEmitter<DragEventMap> {
    * @private
    */
   private isContain(event: PointerEvent): boolean {
-    if (!this.viewport) return true;
+    if (!this.viewport || !this.canvasRect) return true;
 
-    const rect = DragWatcher.convertToRect(this.canvas, this.viewport);
-
+    const rect = DragWatcher.convertToRect(this.viewport, this.canvasRect);
+    const scale = this.canvas.clientWidth / this.canvasRect.width;
+    const offsetX = event.offsetX / scale;
+    const offsetY = event.offsetY / scale;
     return (
-      event.offsetX >= rect.x1 &&
-      event.offsetX <= rect.x2 &&
-      event.offsetY >= rect.y1 &&
-      event.offsetY <= rect.y2
+      offsetX >= rect.x1 &&
+      offsetX <= rect.x2 &&
+      offsetY >= rect.y1 &&
+      offsetY <= rect.y2
     );
   }
 
   /**
    * 座標値をviewportの座標値に変換する
-   * 注意 : canvasがstyleで拡大縮小されている場合、正しい座標が取得できない。
-   * TODO : styleではなく、要素のwidth,heightを優先的に使用することを検証すること
    *
    * @param canvas
    * @param viewport
    * @returns
    */
   private static convertToRect(
-    canvas: HTMLCanvasElement,
     viewport: Vector4,
+    canvasRect: Vector2,
   ): { x1: number; x2: number; y1: number; y2: number } {
-    let height = 0;
-    if (canvas.style.width != null && canvas.style.height) {
-      height = parseInt(canvas.style.height);
-    } else {
-      height = canvas.height / window.devicePixelRatio;
-    }
     return {
       x1: viewport.x,
       x2: viewport.x + viewport.width,
-      y1: height - (viewport.y + viewport.height),
-      y2: height - viewport.y,
+      y1: canvasRect.height - (viewport.y + viewport.height),
+      y2: canvasRect.height - viewport.y,
     };
   }
 

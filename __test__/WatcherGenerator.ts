@@ -1,4 +1,8 @@
-import { DragEventMap, DragWatcher } from "../src/index.js";
+import {
+  DragEventMap,
+  DragWatcher,
+  DragWatcherInitOption,
+} from "../src/index.js";
 import { Vector4 } from "three";
 import {
   FakePointerEventInit,
@@ -7,10 +11,7 @@ import {
 import { expect, Mock } from "vitest";
 import { RAFTicker } from "@masatomakino/raf-ticker";
 
-export function generateWatcher(option?: {
-  throttlingTime_ms?: number;
-  viewport?: Vector4;
-}): {
+export function generateWatcher(option?: DragWatcherInitOption): {
   canvas: HTMLCanvasElement;
   watcher: DragWatcher;
 } {
