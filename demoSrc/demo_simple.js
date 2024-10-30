@@ -52,6 +52,8 @@ const onDomContentsLoaded = () => {
     console.log(e);
   });
   sleepWatcher.start();
+
+  renderer.domElement.style.touchAction = "none";
 };
 
 /**

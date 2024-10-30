@@ -1,17 +1,38 @@
 import { RAFTicker, RAFTickerEventContext } from "@masatomakino/raf-ticker";
-import { Vector4 } from "three";
-import { DragEvent, DragEventMap } from "./DragEvent.js";
+import { Vector2, Vector4 } from "three";
+import { DragEvent, PinchEvent, DragEventMap } from "./DragEvent.js";
 import EventEmitter from "eventemitter3";
 
+/**
+ * DragWatcherの初期化オプション
+ */
+export interface DragWatcherInitOption {
+  /**
+   * ドラッグイベントの間引き間隔を設定します。単位はミリ秒です。
+   */
+  throttlingTime_ms?: number;
+  /**
+   * Viewportの設定を行います。
+   * areaとcanvasRectはセットで設定する必要があります。
+   */
+  viewport?: {
+    /*
+     * Viewportの範囲を示す矩形です。
+     */
+    area: Vector4;
+    /**
+     * Viewportが描画されるキャンバスの範囲を示す矩形です。
+     */
+    canvasRect: Vector2;
+  };
+}
 /**
  * 1.カンバス全体がドラッグされている状態を確認する
  * 2.マウスホイールが操作されている状態を確認する
  * この二つを実行するためのクラスです。
  */
 export class DragWatcher extends EventEmitter<DragEventMap> {
-  private positionX!: number;
-  private positionY!: number;
-  private isDrag: boolean = false;
+  private pointers: Map<number, PointerEvent> = new Map();
   private canvas: HTMLCanvasElement;
 
   private hasThrottled: boolean = false;
@@ -24,17 +45,18 @@ export class DragWatcher extends EventEmitter<DragEventMap> {
    * @private
    */
   private viewport?: Vector4;
+  private canvasRect?: Vector2;
 
-  constructor(
-    canvas: HTMLCanvasElement,
-    option?: { throttlingTime_ms?: number; viewport?: Vector4 },
-  ) {
+  constructor(canvas: HTMLCanvasElement, option?: DragWatcherInitOption) {
     super();
 
     if (option?.throttlingTime_ms != null) {
       this.throttlingTime_ms = option.throttlingTime_ms;
     }
-    this.viewport ??= option?.viewport;
+    if (option?.viewport != null) {
+      this.viewport ??= option.viewport.area;
+      this.canvasRect ??= option.viewport.canvasRect;
+    }
 
     this.canvas = canvas;
     this.canvas.addEventListener(
@@ -65,71 +87,111 @@ export class DragWatcher extends EventEmitter<DragEventMap> {
     this.throttlingDelta %= this.throttlingTime_ms;
   };
 
-  protected onDocumentMouseDown = (event: MouseEvent) => {
-    if (this.isDrag) return;
-
+  protected onDocumentMouseDown = (event: PointerEvent) => {
     if (!this.isContain(event)) return;
 
-    this.isDrag = true;
-    this.updatePosition(event);
-
+    this.pointers.set(event.pointerId, event);
     this.dispatchDragEvent("drag_start", event);
   };
 
-  protected onDocumentMouseMove = (event: MouseEvent) => {
+  protected onDocumentMouseMove = (event: PointerEvent) => {
     if (this.hasThrottled) return;
     this.hasThrottled = true;
 
     this.dispatchDragEvent("move", event);
 
-    if (!this.isDrag) return;
-    this.dispatchDragEvent("drag", event);
-    this.updatePosition(event);
+    //ダブルタッチの場合、ズーム処理を行う
+    if (this.pointers.size === 2 && this.pointers.has(event.pointerId)) {
+      const evt = DragWatcher.generatePinchEvent(this.pointers, event);
+      this.emit(evt.type, evt);
+    }
+
+    //シングルタッチかつ、ドラッグ中のポインタのみ処理を行う
+    if (this.pointers.size === 1 && this.pointers.has(event.pointerId)) {
+      this.dispatchDragEvent(
+        "drag",
+        event,
+        this.pointers.get(event.pointerId) as PointerEvent,
+      );
+    }
+
+    // ポインターの位置を更新
+    if (this.pointers.has(event.pointerId)) {
+      this.pointers.set(event.pointerId, event);
+    }
   };
 
-  private updatePosition(event: MouseEvent): void {
-    this.positionX = event.offsetX;
-    this.positionY = event.offsetY;
+  private static generatePinchEvent(
+    pointers: Map<number, PointerEvent>,
+    nextPointer: PointerEvent,
+  ): PinchEvent {
+    const pointerArray = Array.from(pointers.values());
+    const distance = DragWatcher.calculateDistance(pointerArray);
+
+    const nextPointerMap = new Map(pointers);
+    nextPointerMap.set(nextPointer.pointerId, nextPointer);
+    const nextPointerArray = Array.from(nextPointerMap.values());
+    const nextDistance = DragWatcher.calculateDistance(nextPointerArray);
+
+    return {
+      type: "pinch",
+      delta: nextDistance - distance,
+      pointers: nextPointerArray,
+    };
+  }
+  private static calculateDistance(pointers: PointerEvent[]): number {
+    return Math.sqrt(
+      Math.pow(pointers[0].offsetX - pointers[1].offsetX, 2) +
+        Math.pow(pointers[0].offsetY - pointers[1].offsetY, 2),
+    );
   }
 
-  private dispatchDragEvent(type: keyof DragEventMap, event: MouseEvent): void {
+  private dispatchDragEvent(
+    type: keyof DragEventMap,
+    event: PointerEvent,
+    prevEvent?: PointerEvent,
+  ): void {
     const evt: DragEvent = { type };
 
     const { x, y } = this.convertToLocalMousePoint(event);
     evt.positionX = x;
     evt.positionY = y;
+    evt.pointerId = event.pointerId;
 
-    if (type === "drag") {
-      evt.deltaX = event.offsetX - this.positionX;
-      evt.deltaY = event.offsetY - this.positionY;
+    if (type === "drag" && prevEvent) {
+      evt.deltaX = event.offsetX - prevEvent.offsetX;
+      evt.deltaY = event.offsetY - prevEvent.offsetY;
     }
     this.emit(type, evt);
   }
-  private convertToLocalMousePoint(e: MouseEvent): { x: number; y: number } {
-    if (!this.viewport) {
+
+  private convertToLocalMousePoint(e: PointerEvent): { x: number; y: number } {
+    if (!this.viewport || !this.canvasRect) {
       return {
         x: e.offsetX,
         y: e.offsetY,
       };
     } else {
-      const rect = DragWatcher.convertToRect(this.canvas, this.viewport);
+      const rect = DragWatcher.convertToRect(this.viewport, this.canvasRect);
+      const scale = this.canvas.clientWidth / this.canvasRect.width;
+      const offsetX = e.offsetX / scale;
+      const offsetY = e.offsetY / scale;
       return {
-        x: e.offsetX - rect.x1,
-        y: e.offsetY - rect.y1,
+        x: offsetX - rect.x1,
+        y: offsetY - rect.y1,
       };
     }
   }
 
-  private onDocumentMouseLeave = (event: MouseEvent) => {
+  private onDocumentMouseLeave = (event: PointerEvent) => {
     this.onDocumentMouseUp(event);
   };
 
-  private onDocumentMouseUp = (event: MouseEvent) => {
-    if (!this.isDrag) return;
-
-    this.isDrag = false;
-
-    this.dispatchDragEvent("drag_end", event);
+  private onDocumentMouseUp = (event: PointerEvent) => {
+    if (this.pointers.has(event.pointerId)) {
+      this.dispatchDragEvent("drag_end", event);
+    }
+    this.pointers.delete(event.pointerId);
   };
 
   private onMouseWheel = (e: any) => {
@@ -153,35 +215,46 @@ export class DragWatcher extends EventEmitter<DragEventMap> {
    * @param event
    * @private
    */
-  private isContain(event: MouseEvent): boolean {
-    if (!this.viewport) return true;
+  private isContain(event: PointerEvent): boolean {
+    if (!this.viewport || !this.canvasRect) return true;
 
-    const rect = DragWatcher.convertToRect(this.canvas, this.viewport);
-
+    const rect = DragWatcher.convertToRect(this.viewport, this.canvasRect);
+    const scale = this.canvas.clientWidth / this.canvasRect.width;
+    const offsetX = event.offsetX / scale;
+    const offsetY = event.offsetY / scale;
     return (
-      event.offsetX >= rect.x1 &&
-      event.offsetX <= rect.x2 &&
-      event.offsetY >= rect.y1 &&
-      event.offsetY <= rect.y2
+      offsetX >= rect.x1 &&
+      offsetX <= rect.x2 &&
+      offsetY >= rect.y1 &&
+      offsetY <= rect.y2
     );
   }
 
+  /**
+   * 座標値をviewportの座標値に変換する
+   *
+   * @param canvas
+   * @param viewport
+   * @returns
+   */
   private static convertToRect(
-    canvas: HTMLCanvasElement,
     viewport: Vector4,
+    canvasRect: Vector2,
   ): { x1: number; x2: number; y1: number; y2: number } {
-    let height = 0;
-    if (canvas.style.width != null && canvas.style.height) {
-      height = parseInt(canvas.style.height);
-    } else {
-      height = canvas.height / window.devicePixelRatio;
-    }
     return {
       x1: viewport.x,
       x2: viewport.x + viewport.width,
-      y1: height - (viewport.y + viewport.height),
-      y2: height - viewport.y,
+      y1: canvasRect.height - (viewport.y + viewport.height),
+      y2: canvasRect.height - viewport.y,
     };
+  }
+
+  /**
+   * ポインターの情報をリセットする。
+   * 主に単体テストで使用する。
+   */
+  public reset(): void {
+    this.pointers.clear();
   }
 
   public dispose(): void {

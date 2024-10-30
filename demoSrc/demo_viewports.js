@@ -5,15 +5,40 @@ import { TorusKnotGeometry, Mesh, MeshPhongMaterial } from "three";
 const W = 1280;
 const H = 640;
 
+const resizeCanvasStyle = (container, canvas, canvasWidth, canvasHeight) => {
+  const containerWidth = container.clientWidth;
+  const containerHeight = container.clientHeight;
+  const aspectRatio = canvasWidth / canvasHeight;
+
+  if (containerWidth / containerHeight > aspectRatio) {
+    canvas.style.width = `${containerHeight * aspectRatio}px`;
+    canvas.style.height = `${containerHeight}px`;
+  } else {
+    canvas.style.width = `${containerWidth}px`;
+    canvas.style.height = `${containerWidth / aspectRatio}px`;
+  }
+};
+
 const onDomContentsLoaded = () => {
+  const container = document.createElement("div");
+  container.style.width = "100vw";
+  container.style.height = "100vh";
+  container.style.overflow = "hidden";
+  container.style.display = "flex";
+  container.style.justifyContent = "center";
+  container.style.alignItems = "center";
+  document.body.appendChild(container);
+
   const canvas = document.getElementById("webgl-canvas");
+  canvas.parentElement.removeChild(canvas);
+  container.appendChild(canvas);
+
   const renderOption = {
     canvas,
   };
   const renderer = new THREE.WebGLRenderer(renderOption);
   renderer.autoClear = false;
   renderer.setSize(W, H);
-  renderer.setPixelRatio(window.devicePixelRatio);
 
   const box = new Mesh(
     new TorusKnotGeometry(10, 3, 100, 16),
@@ -43,6 +68,11 @@ const onDomContentsLoaded = () => {
     requestAnimationFrame(render);
   };
   render();
+
+  resizeCanvasStyle(container, canvas, W, H);
+  window.addEventListener("resize", () => {
+    resizeCanvasStyle(container, canvas, W, H);
+  });
 };
 
 /**
@@ -83,7 +113,7 @@ class SceneSet {
     this.scene.add(spot2);
 
     this.dragManager = new DragWatcher(renderer.domElement, {
-      viewport: this.viewPort,
+      viewport: { area: this.viewPort, canvasRect: new THREE.Vector2(W, H) },
     });
     this.dragManager.on("drag", (e) => {
       console.log(

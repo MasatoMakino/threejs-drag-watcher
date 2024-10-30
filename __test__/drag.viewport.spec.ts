@@ -6,10 +6,13 @@ import {
   expectMouseNotCall,
   generateWatcher,
 } from "./WatcherGenerator";
-import { Vector4 } from "three";
+import { Vector2, Vector4 } from "three";
 
 const { canvas, watcher } = generateWatcher({
-  viewport: new Vector4(0, 0, 400, 400),
+  viewport: {
+    area: new Vector4(0, 0, 400, 400),
+    canvasRect: new Vector2(1920, 1080),
+  },
 });
 const mockDragCallback = vi.fn((e) => {
   e;
@@ -28,6 +31,7 @@ describe("drag.viewport", () => {
     dispatchMouseEvent(canvas, "pointerdown", {
       offsetX: 0,
       offsetY: 0,
+      pointerId: 1,
     });
     expectMouseNotCall(mockDragCallback);
 
@@ -35,18 +39,24 @@ describe("drag.viewport", () => {
     dispatchMouseEvent(canvas, "pointerdown", {
       offsetX: 150,
       offsetY: 1080 - 400 + 150,
+      pointerId: 1,
     });
     expectMouse(mockDragCallback, "drag_start", {
       positionX: 150,
       positionY: 150,
+      pointerId: 1,
     });
 
-    //スロットリングが有効なため、同じ点を連続してマウスダウンしてもイベントは発生しない。
     dispatchMouseEvent(canvas, "pointerdown", {
       offsetX: 150,
       offsetY: 1080 - 400 + 150,
+      pointerId: 1,
     });
-    expectMouseNotCall(mockDragCallback);
+    expectMouse(mockDragCallback, "drag_start", {
+      positionX: 150,
+      positionY: 150,
+      pointerId: 1,
+    });
 
     clearCanvas(canvas, watcher, mockDragCallback, mockMoveCallback);
   });
