@@ -35,9 +35,9 @@ export class DragWatcher extends EventEmitter<DragEventMap> {
   private pointers: Map<number, PointerEvent> = new Map();
   private canvas: HTMLCanvasElement;
 
-  private hasThrottled: boolean = false;
   public throttlingTime_ms: number = 16;
-  private throttlingDelta: number = 0;
+  private throttlingDeltas: Map<number, number> = new Map();
+  private hasThrottledMap: Map<number, boolean> = new Map();
   /**
    * Sets the viewport to render from (x, y) to (x + width, y + height).
    * (x, y) is the lower-left corner of the region.
@@ -81,10 +81,15 @@ export class DragWatcher extends EventEmitter<DragEventMap> {
   }
 
   protected onTick = (e: RAFTickerEventContext) => {
-    this.throttlingDelta += e.delta;
-    if (this.throttlingDelta < this.throttlingTime_ms) return;
-    this.hasThrottled = false;
-    this.throttlingDelta %= this.throttlingTime_ms;
+    for (const [pointerId, delta] of this.throttlingDeltas.entries()) {
+      const newDelta = delta + e.delta;
+      if (newDelta >= this.throttlingTime_ms) {
+        this.hasThrottledMap.set(pointerId, false);
+        this.throttlingDeltas.set(pointerId, newDelta % this.throttlingTime_ms);
+      } else {
+        this.throttlingDeltas.set(pointerId, newDelta);
+      }
+    }
   };
 
   protected onDocumentMouseDown = (event: PointerEvent) => {
@@ -95,50 +100,49 @@ export class DragWatcher extends EventEmitter<DragEventMap> {
   };
 
   protected onDocumentMouseMove = (event: PointerEvent) => {
-    if (this.hasThrottled) return;
-    this.hasThrottled = true;
+    const hasThrottled = this.hasThrottledMap.get(event.pointerId) ?? false;
+    if (hasThrottled) return;
+    this.hasThrottledMap.set(event.pointerId, true);
+    this.throttlingDeltas.set(event.pointerId, 0);
 
     this.dispatchDragEvent("move", event);
 
-    //ダブルタッチの場合、ズーム処理を行う
-    if (this.pointers.size === 2 && this.pointers.has(event.pointerId)) {
-      const evt = DragWatcher.generatePinchEvent(this.pointers, event);
-      this.emit(evt.type, evt);
-    }
-
-    //シングルタッチかつ、ドラッグ中のポインタのみ処理を行う
-    if (this.pointers.size === 1 && this.pointers.has(event.pointerId)) {
-      this.dispatchDragEvent(
-        "drag",
-        event,
-        this.pointers.get(event.pointerId) as PointerEvent,
-      );
-    }
-
-    // ポインターの位置を更新
+    // ポインターの位置を更新し、イベントを処理
     if (this.pointers.has(event.pointerId)) {
+      const prevPointers = new Map(this.pointers);
       this.pointers.set(event.pointerId, event);
+
+      if (this.pointers.size === 2) {
+        // ダブルタッチの場合、ピンチ処理を行う
+        if (prevPointers.size === 2) {
+          const evt = this.generatePinchEvent(prevPointers);
+          this.emit(evt.type, evt);
+        }
+      } else if (this.pointers.size === 1) {
+        // シングルタッチかつ、ドラッグ中のポインタのみ処理を行う
+        this.dispatchDragEvent(
+          "drag",
+          event,
+          prevPointers.get(event.pointerId) as PointerEvent,
+        );
+      }
     }
   };
 
-  private static generatePinchEvent(
-    pointers: Map<number, PointerEvent>,
-    nextPointer: PointerEvent,
+  private generatePinchEvent(
+    prevPointers: Map<number, PointerEvent>,
   ): PinchEvent {
-    const pointerArray = Array.from(pointers.values());
-    const distance = DragWatcher.calculateDistance(pointerArray);
+    const currentPointerArray = Array.from(this.pointers.values());
+    const prevPointerArray = Array.from(prevPointers.values());
 
-    const nextPointerMap = new Map(pointers);
-    nextPointerMap.set(nextPointer.pointerId, nextPointer);
-    const nextPointerArray = Array.from(nextPointerMap.values());
-    const nextDistance = DragWatcher.calculateDistance(nextPointerArray);
+    const currentDistance = DragWatcher.calculateDistance(currentPointerArray);
+    const prevDistance = DragWatcher.calculateDistance(prevPointerArray);
 
-    return {
-      type: "pinch",
-      delta: nextDistance - distance,
-      pointers: nextPointerArray,
-    };
+    const delta = currentDistance - prevDistance;
+
+    return { type: "pinch", delta: delta, pointers: currentPointerArray };
   }
+
   private static calculateDistance(pointers: PointerEvent[]): number {
     return Math.sqrt(
       Math.pow(pointers[0].offsetX - pointers[1].offsetX, 2) +
@@ -167,19 +171,13 @@ export class DragWatcher extends EventEmitter<DragEventMap> {
 
   private convertToLocalMousePoint(e: PointerEvent): { x: number; y: number } {
     if (!this.viewport || !this.canvasRect) {
-      return {
-        x: e.offsetX,
-        y: e.offsetY,
-      };
+      return { x: e.offsetX, y: e.offsetY };
     } else {
       const rect = DragWatcher.convertToRect(this.viewport, this.canvasRect);
       const scale = this.canvas.clientWidth / this.canvasRect.width;
       const offsetX = e.offsetX / scale;
       const offsetY = e.offsetY / scale;
-      return {
-        x: offsetX - rect.x1,
-        y: offsetY - rect.y1,
-      };
+      return { x: offsetX - rect.x1, y: offsetY - rect.y1 };
     }
   }
 
