@@ -8,6 +8,7 @@ import {
 import { describe, test, vi, beforeEach, expect } from "vitest";
 
 const { canvas, watcher } = generateWatcher();
+
 const mockDragCallback = vi.fn((e) => {
   e;
 });
@@ -134,6 +135,37 @@ describe("threejs-drag-watcher.dragWatcher.pinch", () => {
     });
     expect(mockPinchCallback).toHaveBeenCalledTimes(1);
     mockPinchCallback.mockClear();
+
+    clearCanvas(canvas, watcher, mockDragCallback, mockMoveCallback);
+  });
+
+  test("should not emit drag events during pinch operation", () => {
+    /**
+     * 2本のポインターでドラッグを開始した場合、moveは発行されない
+     */
+    dispatchMouseEvent(canvas, "pointerdown", {
+      offsetX: 100,
+      offsetY: 100,
+      pointerId: 1,
+    });
+    dispatchMouseEvent(canvas, "pointerdown", {
+      offsetX: 200,
+      offsetY: 200,
+      pointerId: 2,
+    });
+    mockDragCallback.mockClear();
+
+    dispatchMouseEvent(canvas, "pointermove", {
+      offsetX: 101,
+      offsetY: 101,
+      pointerId: 1,
+    });
+    dispatchMouseEvent(canvas, "pointermove", {
+      offsetX: 201,
+      offsetY: 201,
+      pointerId: 2,
+    });
+    expectMouseNotCall(mockDragCallback);
 
     clearCanvas(canvas, watcher, mockDragCallback, mockMoveCallback);
   });
