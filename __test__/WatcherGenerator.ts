@@ -3,7 +3,6 @@ import {
   DragWatcher,
   DragWatcherInitOption,
 } from "../src/index.js";
-import { Vector4 } from "three";
 import {
   FakePointerEventInit,
   getPointerEvent,

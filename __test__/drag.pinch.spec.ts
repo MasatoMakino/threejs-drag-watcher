@@ -74,6 +74,70 @@ describe("threejs-drag-watcher.dragWatcher.pinch", () => {
     clearCanvas(canvas, watcher, mockDragCallback, mockMoveCallback);
   });
 
+  test("multi-touch throttling", () => {
+    // 2本のポインターを設定
+    dispatchMouseEvent(canvas, "pointerdown", {
+      offsetX: 100,
+      offsetY: 100,
+      pointerId: 1,
+    });
+    dispatchMouseEvent(canvas, "pointerdown", {
+      offsetX: 200,
+      offsetY: 200,
+      pointerId: 2,
+    });
+    expectMouseNotCall(mockPinchCallback);
+
+    // 1本目のポインターを動かす
+    dispatchMouseEvent(canvas, "pointermove", {
+      offsetX: 101,
+      offsetY: 101,
+      pointerId: 1,
+    });
+    expect(mockPinchCallback).toHaveBeenCalledTimes(1);
+    mockPinchCallback.mockClear();
+
+    // スロットリング中の移動
+    dispatchMouseEvent(canvas, "pointermove", {
+      offsetX: 110,
+      offsetY: 110,
+      pointerId: 1,
+    });
+    expectMouseNotCall(mockPinchCallback);
+
+    // スロットリングはポインターごとに行われる
+    dispatchMouseEvent(canvas, "pointermove", {
+      offsetX: 205,
+      offsetY: 205,
+      pointerId: 2,
+    });
+    expect(mockPinchCallback).toHaveBeenCalledTimes(1);
+    mockPinchCallback.mockClear();
+
+    // スロットリング解除後の移動
+    RAFTicker.emit("tick", {
+      timestamp: 0,
+      delta: watcher.throttlingTime_ms * 2,
+    });
+    dispatchMouseEvent(canvas, "pointermove", {
+      offsetX: 115,
+      offsetY: 115,
+      pointerId: 1,
+    });
+    expect(mockPinchCallback).toHaveBeenCalledTimes(1);
+    mockPinchCallback.mockClear();
+
+    dispatchMouseEvent(canvas, "pointermove", {
+      offsetX: 210,
+      offsetY: 210,
+      pointerId: 2,
+    });
+    expect(mockPinchCallback).toHaveBeenCalledTimes(1);
+    mockPinchCallback.mockClear();
+
+    clearCanvas(canvas, watcher, mockDragCallback, mockMoveCallback);
+  });
+
   test("pinch : not down", () => {
     /**
      * ポインターダウン前にmoveをしても、pinchは発行されない
