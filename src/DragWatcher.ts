@@ -96,37 +96,38 @@ export class DragWatcher extends EventEmitter<DragEventMap> {
     if (!this.isContain(event)) return;
 
     this.pointers.set(event.pointerId, event);
-    this.dispatchDragEvent("drag_start", event);
+    if (this.pointers.size === 1) {
+      this.dispatchDragEvent("drag_start", event);
+    }
   };
 
   protected onDocumentMouseMove = (event: PointerEvent) => {
     const hasThrottled = this.hasThrottledMap.get(event.pointerId) ?? false;
     if (hasThrottled) return;
-    this.hasThrottledMap.set(event.pointerId, true);
-    this.throttlingDeltas.set(event.pointerId, 0);
 
     this.dispatchDragEvent("move", event);
 
-    // ポインターの位置を更新し、イベントを処理
     if (this.pointers.has(event.pointerId)) {
       const prevPointers = new Map(this.pointers);
       this.pointers.set(event.pointerId, event);
 
-      if (this.pointers.size === 2) {
-        // ダブルタッチの場合、ピンチ処理を行う
-        if (prevPointers.size === 2) {
-          const evt = this.generatePinchEvent(prevPointers);
-          this.emit(evt.type, evt);
-        }
+      if (this.pointers.size === 2 && prevPointers.size === 2) {
+        const evt = this.generatePinchEvent(prevPointers);
+        this.emit(evt.type, evt);
       } else if (this.pointers.size === 1) {
-        // シングルタッチかつ、ドラッグ中のポインタのみ処理を行う
-        this.dispatchDragEvent(
-          "drag",
-          event,
-          prevPointers.get(event.pointerId) as PointerEvent,
-        );
+        // 2本目のポインターが離れた後はドラッグイベントを発行しない
+        if (prevPointers.size === 1) {
+          this.dispatchDragEvent(
+            "drag",
+            event,
+            prevPointers.get(event.pointerId) as PointerEvent,
+          );
+        }
       }
     }
+
+    this.hasThrottledMap.set(event.pointerId, true);
+    this.throttlingDeltas.set(event.pointerId, 0);
   };
 
   private generatePinchEvent(
@@ -187,7 +188,9 @@ export class DragWatcher extends EventEmitter<DragEventMap> {
 
   private onDocumentMouseUp = (event: PointerEvent) => {
     if (this.pointers.has(event.pointerId)) {
-      this.dispatchDragEvent("drag_end", event);
+      if (this.pointers.size === 1) {
+        this.dispatchDragEvent("drag_end", event);
+      }
     }
     this.pointers.delete(event.pointerId);
   };

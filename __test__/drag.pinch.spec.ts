@@ -140,21 +140,27 @@ describe("threejs-drag-watcher.dragWatcher.pinch", () => {
   });
 
   test("should not emit drag events during pinch operation", () => {
-    /**
-     * 2本のポインターでドラッグを開始した場合、moveは発行されない
-     */
+    //1本目のポインターでは、drag_startが発行される
     dispatchMouseEvent(canvas, "pointerdown", {
       offsetX: 100,
       offsetY: 100,
       pointerId: 1,
     });
+    expect(mockDragCallback).toHaveBeenCalledTimes(1);
+    mockDragCallback.mockClear();
+
+    //2本目のポインターを追加、drag_startは発行されない
     dispatchMouseEvent(canvas, "pointerdown", {
       offsetX: 200,
       offsetY: 200,
       pointerId: 2,
     });
+    expectMouseNotCall(mockDragCallback);
     mockDragCallback.mockClear();
 
+    /**
+     * 2本のポインターでドラッグを開始した場合、moveは発行されない
+     */
     dispatchMouseEvent(canvas, "pointermove", {
       offsetX: 101,
       offsetY: 101,
@@ -166,6 +172,21 @@ describe("threejs-drag-watcher.dragWatcher.pinch", () => {
       pointerId: 2,
     });
     expectMouseNotCall(mockDragCallback);
+
+    //1本目のポインターでは、drag_endが発行されない
+    dispatchMouseEvent(canvas, "pointerup", {
+      offsetX: 100,
+      offsetY: 100,
+      pointerId: 1,
+    });
+    expectMouseNotCall(mockDragCallback);
+    dispatchMouseEvent(canvas, "pointerup", {
+      offsetX: 201,
+      offsetY: 201,
+      pointerId: 2,
+    });
+    expect(mockDragCallback).toHaveBeenCalledTimes(1);
+    mockDragCallback.mockClear();
 
     clearCanvas(canvas, watcher, mockDragCallback, mockMoveCallback);
   });
