@@ -1,6 +1,6 @@
 import * as THREE from "three";
+import { Mesh, MeshPhongMaterial, TorusKnotGeometry } from "three";
 import { DragWatcher } from "../esm/index.js";
-import { TorusKnotGeometry, Mesh, MeshPhongMaterial } from "three";
 
 const W = 1280;
 const H = 640;

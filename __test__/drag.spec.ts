@@ -1,4 +1,5 @@
 import { RAFTicker } from "@masatomakino/raf-ticker";
+import { beforeEach, describe, test, vi } from "vitest";
 import {
   clearCanvas,
   dispatchMouseEvent,
@@ -6,7 +7,6 @@ import {
   expectMouseNotCall,
   generateWatcher,
 } from "./WatcherGenerator.js";
-import { describe, test, vi, beforeEach } from "vitest";
 
 const { canvas, watcher } = generateWatcher();
 const mockDragCallback = vi.fn((e) => {

@@ -1,6 +1,6 @@
-import { DragEvent } from "../src/index.js";
-import { generateWatcher } from "./WatcherGenerator.js";
 import { describe, expect, test, vi } from "vitest";
+import type { DragEvent } from "../src/index.js";
+import { generateWatcher } from "./WatcherGenerator.js";
 
 const getBasicOption = () => {
   return { bubbles: true, cancelable: true };

@@ -1,11 +1,11 @@
 import {
-  FakePointerEventInit,
+  type FakePointerEventInit,
   getPointerEvent,
 } from "@masatomakino/fake-mouse-event";
 import { RAFTicker } from "@masatomakino/raf-ticker";
+import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import { SleepWatcher } from "../src/index.js";
 import { generateWatcher } from "./WatcherGenerator";
-import { describe, expect, test, vi, beforeEach, afterEach } from "vitest";
 
 const { canvas, watcher } = generateWatcher();
 

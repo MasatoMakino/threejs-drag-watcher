@@ -1,7 +1,10 @@
-import { RAFTicker, RAFTickerEventContext } from "@masatomakino/raf-ticker";
-import { Vector2, Vector4 } from "three";
-import { DragEvent, PinchEvent, DragEventMap } from "./DragEvent.js";
+import {
+  RAFTicker,
+  type RAFTickerEventContext,
+} from "@masatomakino/raf-ticker";
 import EventEmitter from "eventemitter3";
+import type { Vector2, Vector4 } from "three";
+import type { DragEvent, DragEventMap, PinchEvent } from "./DragEvent.js";
 
 /**
  * DragWatcherの初期化オプション
@@ -146,8 +149,8 @@ export class DragWatcher extends EventEmitter<DragEventMap> {
 
   private static calculateDistance(pointers: PointerEvent[]): number {
     return Math.sqrt(
-      Math.pow(pointers[0].offsetX - pointers[1].offsetX, 2) +
-        Math.pow(pointers[0].offsetY - pointers[1].offsetY, 2),
+      (pointers[0].offsetX - pointers[1].offsetX) ** 2 +
+        (pointers[0].offsetY - pointers[1].offsetY) ** 2,
     );
   }
 
@@ -195,14 +198,11 @@ export class DragWatcher extends EventEmitter<DragEventMap> {
     this.pointers.delete(event.pointerId);
   };
 
-  private onMouseWheel = (e: any) => {
+  private onMouseWheel = (e: WheelEvent) => {
     const evt: DragEvent = { type: "zoom" };
 
     if (e.detail != null) {
       evt.deltaScroll = e.detail < 0 ? 1 : -1;
-    }
-    if (e.wheelDelta != null) {
-      evt.deltaScroll = e.wheelDelta > 0 ? 1 : -1;
     }
     if (e.deltaY != null) {
       evt.deltaScroll = e.deltaY > 0 ? 1 : -1;
