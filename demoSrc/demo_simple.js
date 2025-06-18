@@ -1,5 +1,5 @@
-import { DragWatcher, SleepWatcher } from "../esm/index.js";
 import * as THREE from "three";
+import { DragWatcher, SleepWatcher } from "../esm/index.js";
 
 const W = 1280;
 const H = 640;

@@ -1,3 +1,4 @@
+import { Vector2, Vector4 } from "three";
 import { describe, test, vi } from "vitest";
 import {
   clearCanvas,
@@ -6,7 +7,6 @@ import {
   expectMouseNotCall,
   generateWatcher,
 } from "./WatcherGenerator";
-import { Vector2, Vector4 } from "three";
 
 const { canvas, watcher } = generateWatcher({
   viewport: {

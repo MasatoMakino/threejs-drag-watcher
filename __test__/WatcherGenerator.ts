@@ -1,14 +1,14 @@
 import {
-  DragEventMap,
-  DragWatcher,
-  DragWatcherInitOption,
-} from "../src/index.js";
-import {
-  FakePointerEventInit,
+  type FakePointerEventInit,
   getPointerEvent,
 } from "@masatomakino/fake-mouse-event";
-import { expect, Mock } from "vitest";
 import { RAFTicker } from "@masatomakino/raf-ticker";
+import { expect, type Mock } from "vitest";
+import {
+  type DragEventMap,
+  DragWatcher,
+  type DragWatcherInitOption,
+} from "../src/index.js";
 
 export function generateWatcher(option?: DragWatcherInitOption): {
   canvas: HTMLCanvasElement;

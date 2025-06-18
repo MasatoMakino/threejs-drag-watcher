@@ -1,11 +1,11 @@
 import { RAFTicker } from "@masatomakino/raf-ticker";
+import { beforeEach, describe, expect, test, vi } from "vitest";
 import {
   clearCanvas,
   dispatchMouseEvent,
   expectMouseNotCall,
   generateWatcher,
 } from "./WatcherGenerator.js";
-import { describe, test, vi, beforeEach, expect } from "vitest";
 
 const { canvas, watcher } = generateWatcher();
 

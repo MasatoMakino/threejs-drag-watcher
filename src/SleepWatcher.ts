@@ -1,5 +1,5 @@
-import { DragWatcher, SleepEventMap } from "./index.js";
 import EventEmitter from "eventemitter3";
+import type { DragWatcher, SleepEventMap } from "./index.js";
 
 export class SleepWatcher extends EventEmitter<SleepEventMap> {
   private sleepTimerID?: number;
