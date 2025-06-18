@@ -35,6 +35,7 @@
     "eventemitter3": "^5.0.1"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.0.0",
     "@masatomakino/fake-mouse-event": "^0.2.0",
     "@masatomakino/gulptask-demo-page": "^0.10.0",
     "@masatomakino/release-helper": "^0.2.0",
