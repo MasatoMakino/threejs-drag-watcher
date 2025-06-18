@@ -5,7 +5,7 @@ import {
 import { RAFTicker } from "@masatomakino/raf-ticker";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import { SleepWatcher } from "../src/index.js";
-import { generateWatcher } from "./WatcherGenerator";
+import { generateWatcher } from "./WatcherGenerator.js";
 
 const { canvas, watcher } = generateWatcher();
 
