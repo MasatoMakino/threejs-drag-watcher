@@ -42,7 +42,7 @@
     "@types/three": "^0.178.0",
     "@types/webxr": "^0.5.19",
     "@vitest/browser": "*",
-    "@vitest/coverage-istanbul": "^3.0.2",
+    "@vitest/coverage-istanbul": "^4.1.8",
     "browser-sync": "^3.0.2",
     "husky": "^9.0.10",
     "lint-staged": "^16.1.2",
