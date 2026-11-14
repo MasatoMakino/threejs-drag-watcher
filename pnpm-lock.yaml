@@ -177,8 +177,8 @@ importers:
         specifier: 2.1.4
         version: 2.1.4
       '@masatomakino/fake-mouse-event':
-        specifier: ^0.2.0
-        version: 0.2.0
+        specifier: ^0.3.0
+        version: 0.3.0
       '@masatomakino/gulptask-demo-page':
         specifier: ^0.10.0
         version: 0.10.1(supports-color@8.1.1)
@@ -931,8 +931,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@masatomakino/fake-mouse-event@0.2.0':
-    resolution: {integrity: sha512-o1pE+uw8Wuzar1d9SHamQ7tOoGlAmsVdEMsVck4x/CJep3iTh+ADPWXbVEYe8fFKEpcttwynhHm/VN59R+fRdw==}
+  '@masatomakino/fake-mouse-event@0.3.0':
+    resolution: {integrity: sha512-Th2ob+0RCMBgy7wVEUdlzTiwaDs5pvqPspV3jnCBMCmGaamXv/bwpcewH9LH0PySirHSLmT/lNZi0OZWbUG9rg==}
 
   '@masatomakino/gulptask-demo-page@0.10.1':
     resolution: {integrity: sha512-hxDOM75jPcsLo/XfhqIVA8b/elVObqiDof6MrCDGoTmHS4t3cORCq2kR59OKKQSJdsdN48hQm5MUJE2+CGgslQ==}
@@ -4063,7 +4063,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.1
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@masatomakino/fake-mouse-event@0.2.0': {}
+  '@masatomakino/fake-mouse-event@0.3.0': {}
 
   '@masatomakino/gulptask-demo-page@0.10.1(supports-color@8.1.1)':
     dependencies:

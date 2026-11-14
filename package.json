@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.1.4",
-    "@masatomakino/fake-mouse-event": "^0.2.0",
+    "@masatomakino/fake-mouse-event": "^0.3.0",
     "@masatomakino/gulptask-demo-page": "^0.10.0",
     "@types/three": "^0.187.0",
     "@types/webxr": "^0.5.19",
