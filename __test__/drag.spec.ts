@@ -31,7 +31,7 @@ describe("threejs-drag-watcher", () => {
     watcher.throttlingDelta = 0;
   });
 
-  test("drag : mouse down", () => {
+  test("pointerdown emits drag_start, also again for the same pointerId", () => {
     dispatchMouseEvent(canvas, "pointerdown", {
       offsetX: 100,
       offsetY: 100,
@@ -48,8 +48,6 @@ describe("threejs-drag-watcher", () => {
       offsetY: 100,
       pointerId: 1,
     });
-
-    //同じポインターIDでダウンをしても、drag_startは発行される
     expectMouse(mockDragCallback, "drag_start", {
       positionX: 100,
       positionY: 100,
@@ -59,7 +57,7 @@ describe("threejs-drag-watcher", () => {
     clearCanvas(canvas, watcher, mockDragCallback, mockMoveCallback);
   });
 
-  test("drag : hasThrottled", () => {
+  test("pointermove within throttlingTime_ms is dropped, and the next drag delta covers the dropped moves", () => {
     dispatchMouseEvent(canvas, "pointerdown", {
       offsetX: 100,
       offsetY: 100,
@@ -82,8 +80,6 @@ describe("threejs-drag-watcher", () => {
       deltaX: 5,
       deltaY: 5,
     });
-
-    //連続呼び出しをしてもスロットリングされる
     dispatchMouseEvent(canvas, "pointermove", {
       offsetX: 110,
       offsetY: 110,
@@ -91,8 +87,6 @@ describe("threejs-drag-watcher", () => {
     });
     expectMouseNotCall(mockMoveCallback);
     expectMouseNotCall(mockDragCallback);
-
-    //連続呼び出しをしてもスロットリングされる
     RAFTicker.emit("tick", {
       timestamp: 0,
       delta: watcher.throttlingTime_ms / 2,
@@ -104,8 +98,6 @@ describe("threejs-drag-watcher", () => {
     });
     expectMouseNotCall(mockMoveCallback);
     expectMouseNotCall(mockDragCallback);
-
-    //時間経過後にスロットリングは解除される。
     RAFTicker.emit("tick", {
       timestamp: 0,
       delta: watcher.throttlingTime_ms * 3,
@@ -119,7 +111,6 @@ describe("threejs-drag-watcher", () => {
       positionX: 120,
       positionY: 120,
     });
-    //delta値はスロットリング前の最後のものが利用される
     expectMouse(mockDragCallback, "drag", {
       positionX: 120,
       positionY: 120,
@@ -130,10 +121,7 @@ describe("threejs-drag-watcher", () => {
     clearCanvas(canvas, watcher, mockDragCallback, mockMoveCallback);
   });
 
-  test("drag : not down", () => {
-    /**
-     * マウスダウン前にmoveをすると、moveは発行されるがdragは発行されない
-     */
+  test("pointermove without pointerdown emits move but not drag", () => {
     dispatchMouseEvent(canvas, "pointermove", {
       offsetX: 105,
       offsetY: 105,

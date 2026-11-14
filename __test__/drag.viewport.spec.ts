@@ -26,8 +26,8 @@ describe("drag.viewport", () => {
   watcher.on("drag", mockDragCallback);
   watcher.on("drag_end", mockDragCallback);
 
-  test("drag : mouse down", () => {
-    //viewportはcanvasの右下を原点とするため、0,0は操作の範囲外
+  test("pointerdown outside the viewport emits no drag_start, and drag_start positions are relative to the viewport", () => {
+    //viewportはcanvasの左下を原点とするため、0,0は操作の範囲外
     dispatchMouseEvent(canvas, "pointerdown", {
       offsetX: 0,
       offsetY: 0,
