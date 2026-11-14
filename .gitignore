@@ -177,6 +177,7 @@ Temporary Items
 docs/
 lib
 esm
+.claude/worktrees/
 
 # AI agent harness files
 **/.claude/**/*.local.*
