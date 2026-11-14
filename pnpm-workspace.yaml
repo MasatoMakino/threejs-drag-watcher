@@ -1,0 +1,18 @@
+allowBuilds:
+  edgedriver: false
+  esbuild: false
+  geckodriver: false
+minimumReleaseAge: 10080
+trustPolicy: no-downgrade
+trustPolicyExclude:
+  - "@wdio/config@9.19.2"
+  - "@wdio/logger@9.18.0"
+  - "@wdio/protocols@9.16.2"
+  - "@wdio/repl@9.16.2"
+  - "@wdio/types@9.19.2"
+  - "@wdio/utils@9.19.2"
+  - semver@6.3.1
+  - undici-types@6.19.8
+  - undici-types@6.21.0
+  - webdriver@9.19.2
+  - webdriverio@9.19.2

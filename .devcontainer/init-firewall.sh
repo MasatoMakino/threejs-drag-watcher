@@ -1,7 +1,7 @@
 #!/bin/bash
-# npm runner firewall configuration
+# pnpm runner firewall configuration
 FIREWALL_ALLOW_SSH=false
-# package-lock.json resolves every package from the npm registry
+# pnpm-lock.yaml resolves every package from the npm registry
 FIREWALL_ALLOW_GITHUB=false
 
 FIREWALL_DOMAINS="registry.npmjs.org"

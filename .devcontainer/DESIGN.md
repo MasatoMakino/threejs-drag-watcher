@@ -4,17 +4,17 @@ The container runs third-party package code. The configuration keeps that code a
 
 ## Read-only mounts
 
-The container mounts `.git`, `.devcontainer`, `.github`, `.claude`, `.vscode`, `CLAUDE.md`, and `AGENTS.md` read-only. The host runs or loads these files (git hooks, git config, the container configuration, CI workflows, agent settings and instructions, editor tasks and settings). The workspace stays writable for `npm install` and for the `prettier --write` pre-commit hook.
+The container mounts `.git`, `.devcontainer`, `.github`, `.claude`, `.vscode`, `CLAUDE.md`, and `AGENTS.md` read-only. The host runs or loads these files (git hooks, git config, the container configuration, CI workflows, agent settings and instructions, editor tasks and settings). The workspace stays writable for `pnpm add` and for the `prettier --write` pre-commit hook.
 
-## npm settings
+## pnpm settings
 
-`containerEnv` sets `NPM_CONFIG_IGNORE_SCRIPTS`. The lifecycle scripts of dependencies and of the root package do not run on install. `npm run` still runs the named script.
+The image sets `pnpm_config_ignore_scripts` and `pnpm_config_ignore_pnpmfile`. Code that a dependency plants in the workspace (a root lifecycle script or `.pnpmfile.cjs`) does not run on the next install. `pnpm run` still runs the named script.
 
-`postCreateCommand` starts the firewall before `npm ci`, so the install never runs with the host services reachable.
+`postCreateCommand` starts the firewall before `pnpm install`, so the install never runs with the host services reachable.
 
 ## node_modules volume
 
-`node_modules` lives in a named volume, so package code never lands on the host file system. The host IDE does not resolve the dependencies.
+`node_modules` lives in a named volume, so package code never lands on the host file system. The host IDE does not resolve the dependencies. pnpm puts its store at the root of the volume, next to the packages.
 
 The Dockerfile creates the mount point owned by `node`. Docker copies that ownership into the empty volume on the first mount.
 
