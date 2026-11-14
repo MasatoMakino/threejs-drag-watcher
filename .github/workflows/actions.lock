@@ -5,12 +5,12 @@ version: 'v0.0.3'
 workflows:
     '.github/workflows/ci_main.yml':
         - 'actions/checkout@v5.0.0'
-        - 'actions/setup-node@v5.0.0'
+        - 'actions/setup-node@v7.1.0'
         - 'pnpm/action-setup@v6.1.1'
     '.github/workflows/gh-pages.yml':
         - 'actions/checkout@v5.1.0'
         - 'actions/deploy-pages@v4.0.5'
-        - 'actions/setup-node@v6.5.0'
+        - 'actions/setup-node@v7.1.0'
         - 'actions/upload-pages-artifact@v4.0.0'
         - 'pnpm/action-setup@v6.1.1'
     '.github/workflows/npm_publish.yml':
@@ -50,16 +50,6 @@ dependencies:
         commit: 'sha1-9000827ccba6bdab643e8b6fd33ac0654aef8333'
         owner_id: 44036562
         repo_id: 192626254
-    'actions/setup-node@v5.0.0':
-        ref: 'v5.0.0'
-        commit: 'sha1-a0853c24544627f65ddf259abe73b1d18a591444'
-        owner_id: 44036562
-        repo_id: 189476904
-    'actions/setup-node@v6.5.0':
-        ref: 'v6.5.0'
-        commit: 'sha1-249970729cb0ef3589644e2896645e5dc5ba9c38'
-        owner_id: 44036562
-        repo_id: 189476904
     'actions/setup-node@v7.1.0':
         ref: 'v7.1.0'
         commit: 'sha1-949feb2413d6458794dcd2491c4babbbce0c15c1'
