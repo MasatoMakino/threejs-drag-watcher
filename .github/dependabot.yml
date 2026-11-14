@@ -23,3 +23,10 @@ updates:
       semver-patch-days: 3
     ignore:
       - dependency-name: "@vitest/browser"
+
+  - package-ecosystem: "docker"
+    directory: "/.devcontainer"
+    schedule:
+      interval: "weekly"
+    cooldown:
+      default-days: 7
