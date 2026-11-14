@@ -15,6 +15,12 @@ updates:
       default-days: 7
     ignore:
       - dependency-name: "@vitest/browser"
+    groups:
+      vite:
+        patterns:
+          - "vite"
+          - "vitest"
+          - "@vitest/*"
 
   - package-ecosystem: "docker"
     directory: "/.devcontainer"
