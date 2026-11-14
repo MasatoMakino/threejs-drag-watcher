@@ -57,6 +57,7 @@
     "test": "vitest --run",
     "coverage": "vitest --run --coverage",
     "test:watch": "vitest",
+    "lint": "biome check .",
     "pre-commit": "biome format --write --no-errors-on-unmatched --files-ignore-unknown=true",
     "pre-push": "biome ci . && pnpm test",
     "start:dev": "pnpm run server & pnpm run watch:tsc & pnpm run watch:demo",
