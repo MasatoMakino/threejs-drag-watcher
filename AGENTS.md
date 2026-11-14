@@ -15,4 +15,4 @@ devcontainer exec --workspace-folder . pnpm run build
 devcontainer exec --workspace-folder . pnpm run start:dev
 ```
 
-`pnpm run start:dev` serves the demo on container port 3000. Run `docker port <container> 3000` on the host to find the mapped host port.
+`pnpm run start:dev` serves the demo on container port 3456. Run `docker port <container> 3456` on the host to find the mapped host port.
