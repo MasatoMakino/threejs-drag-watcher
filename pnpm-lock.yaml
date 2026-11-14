@@ -2400,8 +2400,8 @@ packages:
   lodash.zip@4.2.0:
     resolution: {integrity: sha512-C7IOaBBK/0gMORRBd8OETNx3kmOkgIWIPvyDpZSCTwUrpYmgZwJkjZeOD8ww4xbOUOs4/attY+pciKvadNfFbg==}
 
-  lodash@4.17.21:
-    resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
+  lodash@4.18.1:
+    resolution: {integrity: sha512-dMInicTPVE8d1e5otfwmmjlxkZoUpiVLwyeTdUsi/Caj/gfzzblBcCE5sRHV/AsjuCmxWrte2TNGSYuCeCq+0Q==}
 
   loglevel-plugin-prefix@0.8.4:
     resolution: {integrity: sha512-WpG9CcFAOjz/FtNht+QJeGpvVl/cdR6P0z6OcXSkr8wFJOsV2GRj2j10JLfjuA4aYkcKCNIEqRGCyTife9R8/g==}
@@ -4728,7 +4728,7 @@ snapshots:
       graceful-fs: 4.2.11
       is-stream: 2.0.1
       lazystream: 1.0.1
-      lodash: 4.17.21
+      lodash: 4.18.1
       normalize-path: 3.0.0
       readable-stream: 4.5.2
 
@@ -4758,7 +4758,7 @@ snapshots:
 
   async@2.6.4:
     dependencies:
-      lodash: 4.17.21
+      lodash: 4.18.1
 
   async@3.2.5: {}
 
@@ -5156,7 +5156,7 @@ snapshots:
 
   easy-extender@2.3.4:
     dependencies:
-      lodash: 4.17.21
+      lodash: 4.18.1
 
   eazy-logger@4.1.0:
     dependencies:
@@ -5703,7 +5703,7 @@ snapshots:
 
   lodash.zip@4.2.0: {}
 
-  lodash@4.17.21: {}
+  lodash@4.18.1: {}
 
   loglevel-plugin-prefix@0.8.4: {}
 
