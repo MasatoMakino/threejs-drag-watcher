@@ -7,7 +7,16 @@
     "defaultBranch": "main"
   },
   "files": {
-    "ignoreUnknown": false
+    "ignoreUnknown": false,
+    "includes": [
+      "**",
+      "!.devcontainer/**",
+      "!.github/**",
+      "!.claude/**",
+      "!.vscode/**",
+      "!CLAUDE.md",
+      "!AGENTS.md"
+    ]
   },
   "formatter": {
     "enabled": true,
