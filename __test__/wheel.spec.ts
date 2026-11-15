@@ -7,7 +7,7 @@ const getBasicOption = () => {
 };
 
 describe("threejs-drag-watcher", () => {
-  test("wheel", () => {
+  test("wheel emits zoom with deltaY as deltaScroll", () => {
     const { canvas, watcher } = generateWatcher();
     const mockZoom = vi.fn((e) => e);
     watcher.on("zoom", mockZoom);

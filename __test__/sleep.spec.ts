@@ -29,15 +29,7 @@ describe("threejs-drag-watcher", () => {
     clearMockFunctions();
   });
 
-  test("constructor", () => {
-    expect(sleepWatcher).toBeTruthy();
-    expect(typeof sleepWatcher.start).toBe("function");
-  });
-
-  /**
-   * 稼働していないWatcherをStopしても、何も起きない。
-   */
-  test("stop", () => {
+  test("stop before start emits no event, even after the timeout", () => {
     sleepWatcher.stop();
     expect(mockSleep).not.toBeCalled();
     expect(mockWakeup).not.toBeCalled();
@@ -49,17 +41,14 @@ describe("threejs-drag-watcher", () => {
     clearMockFunctions();
   });
 
-  /**
-   * 連続で呼び出しをしてもイベントは発行しない。
-   */
-  test("start and stop", () => {
+  test("stop right after start emits no event", () => {
     sleepWatcher.start();
     sleepWatcher.stop();
     expect(mockSleep).not.toBeCalled();
     expect(mockWakeup).not.toBeCalled();
   });
 
-  test("start and < timeout_ms", () => {
+  test("no sleep before the timeout passes", () => {
     sleepWatcher.start();
     interval(timeout_ms * 0.1);
     expect(mockSleep).not.toBeCalled();
@@ -67,7 +56,7 @@ describe("threejs-drag-watcher", () => {
     clearMockFunctions();
   });
 
-  test("start", () => {
+  test("sleep after the timeout, and wakeup on stop while sleeping", () => {
     sleepWatcher.start();
     expect(mockSleep).not.toBeCalled();
     expect(mockWakeup).not.toBeCalled();
@@ -84,7 +73,7 @@ describe("threejs-drag-watcher", () => {
     clearMockFunctions();
   });
 
-  test("pointer down and wakeup", () => {
+  test("pointerdown while sleeping emits wakeup", () => {
     sleepWatcher.start();
 
     interval(timeout_ms);
@@ -98,7 +87,7 @@ describe("threejs-drag-watcher", () => {
     clearMockFunctions();
   });
 
-  test("drag", () => {
+  test("each pointer event restarts the timeout", () => {
     sleepWatcher.start();
 
     dispatchMouseEvent("pointerdown", { offsetX: 0, offsetY: 0 });
@@ -123,7 +112,7 @@ describe("threejs-drag-watcher", () => {
     clearMockFunctions();
   });
 
-  test("DRAG_START and pause", () => {
+  test("no sleep while a drag continues past the timeout", () => {
     sleepWatcher.start();
 
     dispatchMouseEvent("pointerdown", { offsetX: 0, offsetY: 0 });
@@ -139,7 +128,7 @@ describe("threejs-drag-watcher", () => {
     clearMockFunctions();
   });
 
-  test("DRAG_END and SLEEP", () => {
+  test("sleep after the timeout that follows drag_end, and wakeup on the next pointerdown", () => {
     sleepWatcher.start();
 
     dispatchMouseEvent("pointerdown", { offsetX: 0, offsetY: 0 });
@@ -161,7 +150,7 @@ describe("threejs-drag-watcher", () => {
     clearMockFunctions();
   });
 
-  test("restart timer", () => {
+  test("restart() resets the timeout", () => {
     sleepWatcher.start();
 
     interval(timeout_ms * 0.6);
@@ -182,18 +171,11 @@ describe("threejs-drag-watcher", () => {
   });
 });
 
-/**
- * モック関数のリセット処理
- */
 const clearMockFunctions = () => {
   mockWakeup.mockClear();
   mockSleep.mockClear();
 };
 
-/**
- * SleepWatcherとCanvasの時間を進める
- * @param timeout_ms
- */
 const interval = (timeout_ms: number) => {
   vi.advanceTimersByTime(timeout_ms);
   RAFTicker.emit("tick", {
@@ -202,11 +184,6 @@ const interval = (timeout_ms: number) => {
   });
 };
 
-/**
- * 偽のマウスイベントをCanvasから発行する。
- * @param type
- * @param option
- */
 const dispatchMouseEvent = (type: string, option?: FakePointerEventInit) => {
   if (option != null) {
     option.pointerId ??= 1;
