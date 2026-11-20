@@ -1,6 +1,6 @@
 # threejs-drag-watcher
 
-> Mouse drag watcher for three.js
+> Pointer drag watcher for three.js
 
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 [![npm version](https://img.shields.io/npm/v/@masatomakino/threejs-drag-watcher.svg?style=flat)](https://www.npmjs.com/package/@masatomakino/threejs-drag-watcher)
