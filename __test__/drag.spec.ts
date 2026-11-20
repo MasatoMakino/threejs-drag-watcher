@@ -27,8 +27,6 @@ describe("threejs-drag-watcher", () => {
       timestamp: 0,
       delta: watcher.throttlingTime_ms * 2,
     });
-    //@ts-ignore
-    watcher.throttlingDelta = 0;
   });
 
   test("pointerdown emits drag_start, also again for the same pointerId", () => {

@@ -32,8 +32,6 @@ describe("threejs-drag-watcher.dragWatcher.pinch", () => {
       timestamp: 0,
       delta: watcher.throttlingTime_ms * 2,
     });
-    //@ts-ignore
-    watcher.throttlingDelta = 0;
   });
 
   test("two pointers emit pinch with the change of their distance, and one pointer emits none", () => {

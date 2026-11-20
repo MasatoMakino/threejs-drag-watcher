@@ -10,10 +10,10 @@
     "ignoreUnknown": false,
     "includes": [
       "**",
-      "!.devcontainer/**",
-      "!.github/**",
-      "!.claude/**",
-      "!.vscode/**",
+      "!.devcontainer",
+      "!.github",
+      "!.claude",
+      "!.vscode",
       "!CLAUDE.md",
       "!AGENTS.md"
     ]
