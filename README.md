@@ -16,10 +16,6 @@
 npm i @masatomakino/threejs-drag-watcher --save-dev
 ```
 
-## API 
-
-[API Document](https://masatomakino.github.io/threejs-drag-watcher/api/index.html)
-
 ## License
 
 [MIT licensed](LICENSE).
