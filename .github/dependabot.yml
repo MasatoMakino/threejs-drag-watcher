@@ -19,6 +19,8 @@ updates:
           - "vite"
           - "vitest"
           - "@vitest/*"
+          - "vite-plus"
+          - "@voidzero-dev/*"
 
   - package-ecosystem: "docker"
     directory: "/.devcontainer"

@@ -1,7 +1,4 @@
-import {
-  RAFTicker,
-  type RAFTickerEventContext,
-} from "@masatomakino/raf-ticker";
+import { RAFTicker, type RAFTickerEventContext } from "@masatomakino/raf-ticker";
 import EventEmitter from "eventemitter3";
 import type { Vector2, Vector4 } from "three";
 import type { DragEvent, DragEventMap, PinchEvent } from "./DragEvent.js";
@@ -62,22 +59,10 @@ export class DragWatcher extends EventEmitter<DragEventMap> {
     }
 
     this.canvas = canvas;
-    this.canvas.addEventListener(
-      "pointermove",
-      this.onDocumentMouseMove,
-      false,
-    );
-    this.canvas.addEventListener(
-      "pointerdown",
-      this.onDocumentMouseDown,
-      false,
-    );
+    this.canvas.addEventListener("pointermove", this.onDocumentMouseMove, false);
+    this.canvas.addEventListener("pointerdown", this.onDocumentMouseDown, false);
     this.canvas.addEventListener("pointerup", this.onDocumentMouseUp, false);
-    this.canvas.addEventListener(
-      "pointerleave",
-      this.onDocumentMouseLeave,
-      false,
-    );
+    this.canvas.addEventListener("pointerleave", this.onDocumentMouseLeave, false);
     this.canvas.addEventListener("wheel", this.onMouseWheel, false);
 
     RAFTicker.on("tick", this.onTick);
@@ -120,11 +105,7 @@ export class DragWatcher extends EventEmitter<DragEventMap> {
       } else if (this.pointers.size === 1) {
         // 2本目のポインターが離れた後はドラッグイベントを発行しない
         if (prevPointers.size === 1) {
-          this.dispatchDragEvent(
-            "drag",
-            event,
-            prevPointers.get(event.pointerId) as PointerEvent,
-          );
+          this.dispatchDragEvent("drag", event, prevPointers.get(event.pointerId) as PointerEvent);
         }
       }
     }
@@ -133,9 +114,7 @@ export class DragWatcher extends EventEmitter<DragEventMap> {
     this.throttlingDeltas.set(event.pointerId, 0);
   };
 
-  private generatePinchEvent(
-    prevPointers: Map<number, PointerEvent>,
-  ): PinchEvent {
+  private generatePinchEvent(prevPointers: Map<number, PointerEvent>): PinchEvent {
     const currentPointerArray = Array.from(this.pointers.values());
     const prevPointerArray = Array.from(prevPointers.values());
 
@@ -223,12 +202,7 @@ export class DragWatcher extends EventEmitter<DragEventMap> {
     const scale = this.canvas.clientWidth / this.canvasRect.width;
     const offsetX = event.offsetX / scale;
     const offsetY = event.offsetY / scale;
-    return (
-      offsetX >= rect.x1 &&
-      offsetX <= rect.x2 &&
-      offsetY >= rect.y1 &&
-      offsetY <= rect.y2
-    );
+    return offsetX >= rect.x1 && offsetX <= rect.x2 && offsetY >= rect.y1 && offsetY <= rect.y2;
   }
 
   /**
@@ -259,22 +233,10 @@ export class DragWatcher extends EventEmitter<DragEventMap> {
   }
 
   public dispose(): void {
-    this.canvas.removeEventListener(
-      "pointermove",
-      this.onDocumentMouseMove,
-      false,
-    );
-    this.canvas.removeEventListener(
-      "pointerdown",
-      this.onDocumentMouseDown,
-      false,
-    );
+    this.canvas.removeEventListener("pointermove", this.onDocumentMouseMove, false);
+    this.canvas.removeEventListener("pointerdown", this.onDocumentMouseDown, false);
     this.canvas.removeEventListener("pointerup", this.onDocumentMouseUp, false);
-    this.canvas.removeEventListener(
-      "pointerleave",
-      this.onDocumentMouseLeave,
-      false,
-    );
+    this.canvas.removeEventListener("pointerleave", this.onDocumentMouseLeave, false);
     RAFTicker.off("tick", this.onTick);
   }
 }

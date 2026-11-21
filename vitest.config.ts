@@ -1,5 +1,5 @@
 import { webdriverio } from "@vitest/browser-webdriverio";
-import { defineConfig } from "vitest/config";
+import { defineConfig } from "vite-plus";
 
 // The DevContainer sets both to the Debian packages. CI leaves them unset and
 // uses the runner's Chrome with a driver that WebdriverIO downloads.

@@ -1,4 +1,4 @@
-import { describe, expect, test, vi } from "vitest";
+import { describe, expect, test, vi } from "vite-plus/test";
 import type { DragEvent } from "../src/index.js";
 import { generateWatcher } from "./WatcherGenerator.js";
 
