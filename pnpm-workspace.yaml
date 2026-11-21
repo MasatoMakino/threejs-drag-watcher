@@ -8,3 +8,20 @@ trustPolicyExclude:
   - semver@6.3.1
   - undici-types@6.19.8
   - undici-types@6.21.0
+catalog:
+  vite: npm:@voidzero-dev/vite-plus-core@1.6.0
+  vitest: 5.1.0
+  vite-plus: 1.6.0
+  "@vitest/coverage-istanbul": 5.1.0
+  "@vitest/browser": 5.1.0
+overrides:
+  vite@*: "catalog:"
+  vitest@*: "catalog:"
+  "@vitest/browser@*": "catalog:"
+peerDependencyRules:
+  allowAny:
+    - vite
+    - vitest
+  allowedVersions:
+    vite: "*"
+    vitest: "*"

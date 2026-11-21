@@ -1,5 +1,5 @@
 import { Vector2, Vector4 } from "three";
-import { describe, test, vi } from "vitest";
+import { describe, test, vi } from "vite-plus/test";
 import {
   clearCanvas,
   dispatchMouseEvent,
@@ -14,12 +14,8 @@ const { canvas, watcher } = generateWatcher({
     canvasRect: new Vector2(1920, 1080),
   },
 });
-const mockDragCallback = vi.fn((e) => {
-  e;
-});
-const mockMoveCallback = vi.fn((e) => {
-  e;
-});
+const mockDragCallback = vi.fn();
+const mockMoveCallback = vi.fn();
 describe("drag.viewport", () => {
   watcher.on("drag_start", mockDragCallback);
   watcher.on("move", mockMoveCallback);

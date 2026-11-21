@@ -10,7 +10,7 @@ Git runs on the host. pnpm and the project scripts run in the DevContainer. Each
 devcontainer up --workspace-folder .
 devcontainer exec --workspace-folder . pnpm install --frozen-lockfile
 devcontainer exec --workspace-folder . pnpm test
-devcontainer exec --workspace-folder . pnpm exec biome ci .
+devcontainer exec --workspace-folder . pnpm exec vp check
 devcontainer exec --workspace-folder . pnpm run build
 devcontainer exec --workspace-folder . pnpm run start:dev
 ```

@@ -1,5 +1,5 @@
 import { RAFTicker } from "@masatomakino/raf-ticker";
-import { beforeEach, describe, test, vi } from "vitest";
+import { beforeEach, describe, test, vi } from "vite-plus/test";
 import {
   clearCanvas,
   dispatchMouseEvent,
@@ -9,12 +9,8 @@ import {
 } from "./WatcherGenerator.js";
 
 const { canvas, watcher } = generateWatcher();
-const mockDragCallback = vi.fn((e) => {
-  e;
-});
-const mockMoveCallback = vi.fn((e) => {
-  e;
-});
+const mockDragCallback = vi.fn();
+const mockMoveCallback = vi.fn();
 describe("threejs-drag-watcher", () => {
   watcher.on("drag_start", mockDragCallback);
   watcher.on("move", mockMoveCallback);
